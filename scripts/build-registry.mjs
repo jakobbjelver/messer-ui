@@ -203,8 +203,8 @@ const styleItem = {
     "The fixed frame: Lyra geometry, neutral surfaces, zero radius, Golos Text + JetBrains Mono, Phosphor icons. Install first, then a brand.",
   cssVars: {
     theme: { ...colorTheme, "--font-sans": ink["--font-sans"], "--font-mono": ink["--font-mono"] },
-    light: baseVars("light", def),
-    dark: baseVars("dark", def),
+    light: { "--radius": "0px", ...baseVars("light", def) },
+    dark: { "--radius": "0px", ...baseVars("dark", def) },
   },
 };
 
