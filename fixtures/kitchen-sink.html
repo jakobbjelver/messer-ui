@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>messer-ui — kitchen sink</title>
+<link rel="stylesheet" href="../packages/css/messer.css">
+<style>
+  /* Fixture layout only. Product code must not copy these literals. */
+  body { margin: 0; padding: var(--page-pad); }
+  .sink-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 24px; flex-wrap: wrap; }
+  .sink-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; align-items: start; }
+  .stack { display: grid; gap: 12px; }
+  .row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .col { display: grid; gap: 6px; }
+  .demo-group { display: grid; gap: 12px; padding: 16px; border: 1px solid var(--border); }
+  .swatch-row { display: flex; gap: 0; }
+  .swatch { flex: 1; height: 32px; border: 1px solid var(--border); }
+</style>
+</head>
+<body>
+<!-- icons:start -->
+<svg id="m-sprite" aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden">
+  <symbol id="m-check" viewBox="0 0 256 256"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"/></symbol>
+  <symbol id="m-x" viewBox="0 0 256 256"><path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"/></symbol>
+  <symbol id="m-warning" viewBox="0 0 256 256"><path d="M236.8,188.09,149.35,36.22h0a24.76,24.76,0,0,0-42.7,0L19.2,188.09a23.51,23.51,0,0,0,0,23.72A24.35,24.35,0,0,0,40.55,224h174.9a24.35,24.35,0,0,0,21.33-12.19A23.51,23.51,0,0,0,236.8,188.09ZM222.93,203.8a8.5,8.5,0,0,1-7.48,4.2H40.55a8.5,8.5,0,0,1-7.48-4.2,7.59,7.59,0,0,1,0-7.72L120.52,44.21a8.75,8.75,0,0,1,15,0l87.45,151.87A7.59,7.59,0,0,1,222.93,203.8ZM120,144V104a8,8,0,0,1,16,0v40a8,8,0,0,1-16,0Zm20,36a12,12,0,1,1-12-12A12,12,0,0,1,140,180Z"/></symbol>
+  <symbol id="m-info" viewBox="0 0 256 256"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm16-40a8,8,0,0,1-8,8,16,16,0,0,1-16-16V128a8,8,0,0,1,0-16,16,16,0,0,1,16,16v40A8,8,0,0,1,144,176ZM112,84a12,12,0,1,1,12,12A12,12,0,0,1,112,84Z"/></symbol>
+  <symbol id="m-gear" viewBox="0 0 256 256"><path d="M128,80a48,48,0,1,0,48,48A48.05,48.05,0,0,0,128,80Zm0,80a32,32,0,1,1,32-32A32,32,0,0,1,128,160Zm88-29.84q.06-2.16,0-4.32l14.92-18.64a8,8,0,0,0,1.48-7.06,107.21,107.21,0,0,0-10.88-26.25,8,8,0,0,0-6-3.93l-23.72-2.64q-1.48-1.56-3-3L186,40.54a8,8,0,0,0-3.94-6,107.71,107.71,0,0,0-26.25-10.87,8,8,0,0,0-7.06,1.49L130.16,40Q128,40,125.84,40L107.2,25.11a8,8,0,0,0-7.06-1.48A107.6,107.6,0,0,0,73.89,34.51a8,8,0,0,0-3.93,6L67.32,64.27q-1.56,1.49-3,3L40.54,70a8,8,0,0,0-6,3.94,107.71,107.71,0,0,0-10.87,26.25,8,8,0,0,0,1.49,7.06L40,125.84Q40,128,40,130.16L25.11,148.8a8,8,0,0,0-1.48,7.06,107.21,107.21,0,0,0,10.88,26.25,8,8,0,0,0,6,3.93l23.72,2.64q1.49,1.56,3,3L70,215.46a8,8,0,0,0,3.94,6,107.71,107.71,0,0,0,26.25,10.87,8,8,0,0,0,7.06-1.49L125.84,216q2.16.06,4.32,0l18.64,14.92a8,8,0,0,0,7.06,1.48,107.21,107.21,0,0,0,26.25-10.88,8,8,0,0,0,3.93-6l2.64-23.72q1.56-1.48,3-3L215.46,186a8,8,0,0,0,6-3.94,107.71,107.71,0,0,0,10.87-26.25,8,8,0,0,0-1.49-7.06Zm-16.1-6.5a73.93,73.93,0,0,1,0,8.68,8,8,0,0,0,1.74,5.48l14.19,17.73a91.57,91.57,0,0,1-6.23,15L187,173.11a8,8,0,0,0-5.1,2.64,74.11,74.11,0,0,1-6.14,6.14,8,8,0,0,0-2.64,5.1l-2.51,22.58a91.32,91.32,0,0,1-15,6.23l-17.74-14.19a8,8,0,0,0-5-1.75h-.48a73.93,73.93,0,0,1-8.68,0,8,8,0,0,0-5.48,1.74L100.45,215.8a91.57,91.57,0,0,1-15-6.23L82.89,187a8,8,0,0,0-2.64-5.1,74.11,74.11,0,0,1-6.14-6.14,8,8,0,0,0-5.1-2.64L46.43,170.6a91.32,91.32,0,0,1-6.23-15l14.19-17.74a8,8,0,0,0,1.74-5.48,73.93,73.93,0,0,1,0-8.68,8,8,0,0,0-1.74-5.48L40.2,100.45a91.57,91.57,0,0,1,6.23-15L69,82.89a8,8,0,0,0,5.1-2.64,74.11,74.11,0,0,1,6.14-6.14A8,8,0,0,0,82.89,69L85.4,46.43a91.32,91.32,0,0,1,15-6.23l17.74,14.19a8,8,0,0,0,5.48,1.74,73.93,73.93,0,0,1,8.68,0,8,8,0,0,0,5.48-1.74L155.55,40.2a91.57,91.57,0,0,1,15,6.23L173.11,69a8,8,0,0,0,2.64,5.1,74.11,74.11,0,0,1,6.14,6.14,8,8,0,0,0,5.1,2.64l22.58,2.51a91.32,91.32,0,0,1,6.23,15l-14.19,17.74A8,8,0,0,0,199.87,123.66Z"/></symbol>
+  <symbol id="m-magnifying-glass" viewBox="0 0 256 256"><path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"/></symbol>
+  <symbol id="m-caret-down" viewBox="0 0 256 256"><path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"/></symbol>
+  <symbol id="m-caret-right" viewBox="0 0 256 256"><path d="M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z"/></symbol>
+  <symbol id="m-plus" viewBox="0 0 256 256"><path d="M224,128a8,8,0,0,1-8,8H136v80a8,8,0,0,1-16,0V136H40a8,8,0,0,1,0-16h80V40a8,8,0,0,1,16,0v80h80A8,8,0,0,1,224,128Z"/></symbol>
+  <symbol id="m-trash" viewBox="0 0 256 256"><path d="M216,48H176V40a24,24,0,0,0-24-24H104A24,24,0,0,0,80,40v8H40a8,8,0,0,0,0,16h8V208a16,16,0,0,0,16,16H192a16,16,0,0,0,16-16V64h8a8,8,0,0,0,0-16ZM96,40a8,8,0,0,1,8-8h48a8,8,0,0,1,8,8v8H96Zm96,168H64V64H192ZM112,104v64a8,8,0,0,1-16,0V104a8,8,0,0,1,16,0Zm48,0v64a8,8,0,0,1-16,0V104a8,8,0,0,1,16,0Z"/></symbol>
+  <symbol id="m-circle-notch" viewBox="0 0 256 256"><path d="M232,128a104,104,0,0,1-208,0c0-41,23.81-78.36,60.66-95.27a8,8,0,0,1,6.68,14.54C60.15,61.59,40,93.27,40,128a88,88,0,0,0,176,0c0-34.73-20.15-66.41-51.34-80.73a8,8,0,0,1,6.68-14.54C208.19,49.64,232,87,232,128Z"/></symbol>
+  <symbol id="m-arrow-clockwise" viewBox="0 0 256 256"><path d="M240,56v48a8,8,0,0,1-8,8H184a8,8,0,0,1,0-16H211.4L184.81,71.64l-.25-.24a80,80,0,1,0-1.67,114.78,8,8,0,0,1,11,11.63A95.44,95.44,0,0,1,128,224h-1.32A96,96,0,1,1,195.75,60L224,85.8V56a8,8,0,1,1,16,0Z"/></symbol>
+  <symbol id="m-floppy-disk" viewBox="0 0 256 256"><path d="M219.31,72,184,36.69A15.86,15.86,0,0,0,172.69,32H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V83.31A15.86,15.86,0,0,0,219.31,72ZM168,208H88V152h80Zm40,0H184V152a16,16,0,0,0-16-16H88a16,16,0,0,0-16,16v56H48V48H172.69L208,83.31ZM160,72a8,8,0,0,1-8,8H96a8,8,0,0,1,0-16h56A8,8,0,0,1,160,72Z"/></symbol>
+  <symbol id="m-users" viewBox="0 0 256 256"><path d="M117.25,157.92a60,60,0,1,0-66.5,0A95.83,95.83,0,0,0,3.53,195.63a8,8,0,1,0,13.4,8.74,80,80,0,0,1,134.14,0,8,8,0,0,0,13.4-8.74A95.83,95.83,0,0,0,117.25,157.92ZM40,108a44,44,0,1,1,44,44A44.05,44.05,0,0,1,40,108Zm210.14,98.7a8,8,0,0,1-11.07-2.33A79.83,79.83,0,0,0,172,168a8,8,0,0,1,0-16,44,44,0,1,0-16.34-84.87,8,8,0,1,1-5.94-14.85,60,60,0,0,1,55.53,105.64,95.83,95.83,0,0,1,47.22,37.71A8,8,0,0,1,250.14,206.7Z"/></symbol>
+  <symbol id="m-hard-drives" viewBox="0 0 256 256"><path d="M208,136H48a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V152A16,16,0,0,0,208,136Zm0,64H48V152H208v48Zm0-160H48A16,16,0,0,0,32,56v48a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V56A16,16,0,0,0,208,40Zm0,64H48V56H208v48ZM192,80a12,12,0,1,1-12-12A12,12,0,0,1,192,80Zm0,96a12,12,0,1,1-12-12A12,12,0,0,1,192,176Z"/></symbol>
+  <symbol id="m-music-notes" viewBox="0 0 256 256"><path d="M212.92,17.69a8,8,0,0,0-6.86-1.45l-128,32A8,8,0,0,0,72,56V166.08A36,36,0,1,0,88,196V110.25l112-28v51.83A36,36,0,1,0,216,164V24A8,8,0,0,0,212.92,17.69ZM52,216a20,20,0,1,1,20-20A20,20,0,0,1,52,216ZM88,93.75V62.25l112-28v31.5ZM180,184a20,20,0,1,1,20-20A20,20,0,0,1,180,184Z"/></symbol>
+  <symbol id="m-dots-three" viewBox="0 0 256 256"><path d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128Zm56-12a12,12,0,1,0,12,12A12,12,0,0,0,196,116ZM60,116a12,12,0,1,0,12,12A12,12,0,0,0,60,116Z"/></symbol>
+  <symbol id="m-play" viewBox="0 0 256 256"><path d="M232.4,114.49,88.32,26.35a16,16,0,0,0-16.2-.3A15.86,15.86,0,0,0,64,39.87V216.13A15.94,15.94,0,0,0,80,232a16.07,16.07,0,0,0,8.36-2.35L232.4,141.51a15.81,15.81,0,0,0,0-27ZM80,215.94V40l143.83,88Z"/></symbol>
+  <symbol id="m-sign-out" viewBox="0 0 256 256"><path d="M120,216a8,8,0,0,1-8,8H48a8,8,0,0,1-8-8V40a8,8,0,0,1,8-8h64a8,8,0,0,1,0,16H56V208h56A8,8,0,0,1,120,216Zm109.66-93.66-40-40a8,8,0,0,0-11.32,11.32L204.69,120H112a8,8,0,0,0,0,16h92.69l-26.35,26.34a8,8,0,0,0,11.32,11.32l40-40A8,8,0,0,0,229.66,122.34Z"/></symbol>
+  <symbol id="m-funnel" viewBox="0 0 256 256"><path d="M230.6,49.53A15.81,15.81,0,0,0,216,40H40A16,16,0,0,0,28.19,66.76l.08.09L96,139.17V216a16,16,0,0,0,24.87,13.32l32-21.34A16,16,0,0,0,160,194.66V139.17l67.74-72.32.08-.09A15.8,15.8,0,0,0,230.6,49.53ZM40,56h0Zm106.18,74.58A8,8,0,0,0,144,136v58.66L112,216V136a8,8,0,0,0-2.16-5.47L40,56H216Z"/></symbol>
+  <symbol id="m-arrows-down-up" viewBox="0 0 256 256"><path d="M117.66,170.34a8,8,0,0,1,0,11.32l-32,32a8,8,0,0,1-11.32,0l-32-32a8,8,0,0,1,11.32-11.32L72,188.69V48a8,8,0,0,1,16,0V188.69l18.34-18.35A8,8,0,0,1,117.66,170.34Zm96-96-32-32a8,8,0,0,0-11.32,0l-32,32a8,8,0,0,0,11.32,11.32L168,67.31V208a8,8,0,0,0,16,0V67.31l18.34,18.35a8,8,0,0,0,11.32-11.32Z"/></symbol>
+  <symbol id="m-folder" viewBox="0 0 256 256"><path d="M216,72H131.31L104,44.69A15.86,15.86,0,0,0,92.69,40H40A16,16,0,0,0,24,56V200.62A15.4,15.4,0,0,0,39.38,216H216.89A15.13,15.13,0,0,0,232,200.89V88A16,16,0,0,0,216,72ZM40,56H92.69l16,16H40ZM216,200H40V88H216Z"/></symbol>
+  <symbol id="m-image" viewBox="0 0 256 256"><path d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40Zm0,16V158.75l-26.07-26.06a16,16,0,0,0-22.63,0l-20,20-44-44a16,16,0,0,0-22.62,0L40,149.37V56ZM40,172l52-52,80,80H40Zm176,28H194.63l-36-36,20-20L216,181.38V200ZM144,100a12,12,0,1,1,12,12A12,12,0,0,1,144,100Z"/></symbol>
+  <symbol id="m-file" viewBox="0 0 256 256"><path d="M213.66,82.34l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V88A8,8,0,0,0,213.66,82.34ZM160,51.31,188.69,80H160ZM200,216H56V40h88V88a8,8,0,0,0,8,8h48V216Z"/></symbol>
+  <symbol id="m-clock" viewBox="0 0 256 256"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm64-88a8,8,0,0,1-8,8H128a8,8,0,0,1-8-8V72a8,8,0,0,1,16,0v48h48A8,8,0,0,1,192,128Z"/></symbol>
+  <symbol id="m-download-simple" viewBox="0 0 256 256"><path d="M224,144v64a8,8,0,0,1-8,8H40a8,8,0,0,1-8-8V144a8,8,0,0,1,16,0v56H208V144a8,8,0,0,1,16,0Zm-101.66,5.66a8,8,0,0,0,11.32,0l40-40a8,8,0,0,0-11.32-11.32L136,124.69V32a8,8,0,0,0-16,0v92.69L93.66,98.34a8,8,0,0,0-11.32,11.32Z"/></symbol>
+  <symbol id="m-upload-simple" viewBox="0 0 256 256"><path d="M224,144v64a8,8,0,0,1-8,8H40a8,8,0,0,1-8-8V144a8,8,0,0,1,16,0v56H208V144a8,8,0,0,1,16,0ZM93.66,77.66,120,51.31V144a8,8,0,0,0,16,0V51.31l26.34,26.35a8,8,0,0,0,11.32-11.32l-40-40a8,8,0,0,0-11.32,0l-40,40A8,8,0,0,0,93.66,77.66Z"/></symbol>
+  <symbol id="m-lock" viewBox="0 0 256 256"><path d="M208,80H176V56a48,48,0,0,0-96,0V80H48A16,16,0,0,0,32,96V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V96A16,16,0,0,0,208,80ZM96,56a32,32,0,0,1,64,0V80H96ZM208,208H48V96H208V208Zm-68-56a12,12,0,1,1-12-12A12,12,0,0,1,140,152Z"/></symbol>
+  <symbol id="m-user" viewBox="0 0 256 256"><path d="M230.92,212c-15.23-26.33-38.7-45.21-66.09-54.16a72,72,0,1,0-73.66,0C63.78,166.78,40.31,185.66,25.08,212a8,8,0,1,0,13.85,8c18.84-32.56,52.14-52,89.07-52s70.23,19.44,89.07,52a8,8,0,1,0,13.85-8ZM72,96a56,56,0,1,1,56,56A56.06,56.06,0,0,1,72,96Z"/></symbol>
+  <symbol id="m-house" viewBox="0 0 256 256"><path d="M219.31,108.68l-80-80a16,16,0,0,0-22.62,0l-80,80A15.87,15.87,0,0,0,32,120v96a8,8,0,0,0,8,8h64a8,8,0,0,0,8-8V160h32v56a8,8,0,0,0,8,8h64a8,8,0,0,0,8-8V120A15.87,15.87,0,0,0,219.31,108.68ZM208,208H160V152a8,8,0,0,0-8-8H104a8,8,0,0,0-8,8v56H48V120l80-80,80,80Z"/></symbol>
+</svg>
+<!-- icons:end -->
+
+<header class="sink-head">
+  <div class="col">
+    <span class="m-label">messer-ui · fixtures</span>
+    <h1>Kitchen sink</h1>
+    <p class="m-hint">Every atom, both themes. The oracle every port renders at <code>/_ui</code>.</p>
+  </div>
+  <button class="m-btn m-btn--sm" id="theme-toggle" data-fixture="theme-toggle" aria-pressed="false">
+    <svg width="16" height="16" fill="currentColor" aria-hidden="true"><use href="#m-caret-right"></use></svg>
+    Theme
+  </button>
+</header>
+
+<div class="sink-grid">
+
+  <!-- type -->
+  <section class="demo-group stack">
+    <span class="m-label">Type</span>
+    <h1 data-fixture="h1">Milestone review</h1>
+    <h2 data-fixture="h2">Section heading</h2>
+    <h3 data-fixture="h3">Panel heading</h3>
+    <h4 data-fixture="h4">Sub-label heading</h4>
+    <p data-fixture="body" style="margin:0">Body copy sits in Golos Text at 14px. The quick brown fox jumps over the lazy dog.</p>
+    <p class="prose" data-fixture="prose" style="margin:0; max-width:68ch">Prose runs at 15px/1.6 with a 68ch measure, for anything longer than a sentence or two.</p>
+    <p class="m-hint" data-fixture="small" style="margin:0">Small text for hints and captions.</p>
+    <span class="m-label" data-fixture="label">Label</span>
+    <span class="m-data" data-fixture="data">2026-11-08 · 14,208 ms · #4A9F</span>
+    <span class="row"><code data-fixture="code">npm run check</code><kbd class="m-kbd" data-fixture="kbd">⌘K</kbd></span>
+  </section>
+
+  <!-- buttons -->
+  <section class="demo-group stack">
+    <span class="m-label">Buttons</span>
+    <div class="row">
+      <button class="m-btn m-btn--primary" data-fixture="btn-primary">
+        <svg width="16" height="16" fill="currentColor" aria-hidden="true"><use href="#m-check"></use></svg>
+        Publish
+      </button>
+      <button class="m-btn" data-fixture="btn-secondary">Cancel</button>
+      <button class="m-btn m-btn--ghost" data-fixture="btn-ghost">Skip</button>
+      <button class="m-btn m-btn--danger" data-fixture="btn-danger">Delete</button>
+    </div>
+    <div class="row">
+      <button class="m-btn m-btn--sm" data-fixture="btn-sm">Small</button>
+      <button class="m-btn m-btn--lg" data-fixture="btn-lg">Large</button>
+      <button class="m-btn m-btn--icon" data-fixture="btn-icon" aria-label="Settings">
+        <svg width="16" height="16" fill="currentColor" aria-hidden="true"><use href="#m-gear"></use></svg>
+      </button>
+      <button class="m-btn" disabled data-fixture="btn-disabled">Disabled</button>
+    </div>
+  </section>
+
+  <!-- fields -->
+  <section class="demo-group stack">
+    <span class="m-label">Fields</span>
+    <div class="m-field">
+      <label class="m-label" for="f-name">Name</label>
+      <input class="m-input" id="f-name" data-fixture="input" placeholder="Swiparr">
+      <span class="m-hint">Shown in the sidebar.</span>
+    </div>
+    <div class="m-field">
+      <label class="m-label" for="f-note">Notes</label>
+      <textarea class="m-textarea" id="f-note" data-fixture="textarea" placeholder="Anything to remember"></textarea>
+    </div>
+    <div class="m-field">
+      <label class="m-label" for="f-kind">Kind</label>
+      <span class="m-select-wrap">
+        <select class="m-select" id="f-kind" data-fixture="select">
+          <option>Movie</option><option>Series</option><option>Music</option>
+        </select>
+        <svg width="16" height="16" fill="currentColor" aria-hidden="true"><use href="#m-caret-down"></use></svg>
+      </span>
+    </div>
+    <div class="row">
+      <label class="m-check-row"><input type="checkbox" class="m-check" data-fixture="check" checked> Include subfolders</label>
+      <label class="m-check-row"><input type="checkbox" class="m-check" data-fixture="check-off"> Dry run</label>
+    </div>
+    <div class="row">
+      <label class="m-check-row"><input type="radio" name="r" class="m-radio" data-fixture="radio" checked> Keep</label>
+      <label class="m-check-row"><input type="radio" name="r" class="m-radio" data-fixture="radio-off"> Replace</label>
+      <label class="m-check-row"><input type="checkbox" class="m-switch" data-fixture="switch" checked> Enabled</label>
+    </div>
+    <div class="m-field">
+      <label class="m-label" for="f-bad">Path</label>
+      <input class="m-input" id="f-bad" aria-invalid="true" value="/volume1/../etc" data-fixture="input-invalid">
+      <span class="m-error" data-fixture="error">
+        <svg width="14" height="14" fill="currentColor" aria-hidden="true"><use href="#m-warning"></use></svg>
+        Must be inside the media root
+      </span>
+    </div>
+  </section>
+
+  <!-- panel -->
+  <section class="demo-group stack">
+    <span class="m-label">Surfaces</span>
+    <div class="m-panel" data-fixture="panel">
+      <div class="m-panel__head">
+        <h3 class="m-panel__title" data-fixture="panel-title">Library sync</h3>
+        <span class="m-badge m-badge--success" data-fixture="badge-success">
+          <svg width="12" height="12" fill="currentColor" aria-hidden="true"><use href="#m-check"></use></svg>
+          Healthy
+        </span>
+      </div>
+      <div class="m-panel__body col">
+        <span class="m-data">last run 4 min ago · 208 items</span>
+        <div class="m-progress" data-fixture="progress"><span style="width:62%"></span></div>
+        <p class="m-hint" style="margin:0">Progress reads from the accent only — it is not a status colour.</p>
+      </div>
+      <div class="m-panel__foot">
+        <button class="m-btn m-btn--sm">Run</button>
+        <button class="m-btn m-btn--sm m-btn--primary">Open</button>
+      </div>
+    </div>
+    <div class="m-alert" data-fixture="alert">
+      <svg fill="currentColor" aria-hidden="true"><use href="#m-info"></use></svg>
+      <span>Neutral note. Borders are hairlines; no shadow on static surfaces.</span>
+    </div>
+    <div class="m-alert m-alert--danger" data-fixture="alert-danger">
+      <svg fill="currentColor" aria-hidden="true"><use href="#m-warning"></use></svg>
+      <span>Mount missing — the job was skipped.</span>
+    </div>
+    <div class="col">
+      <span class="m-label">Skeleton</span>
+      <div class="m-skeleton" data-fixture="skeleton" style="height:32px"></div>
+    </div>
+  </section>
+
+  <!-- data -->
+  <section class="demo-group stack">
+    <span class="m-label">Data</span>
+    <table class="m-table" data-fixture="table">
+      <thead>
+        <tr>
+          <th data-fixture="table-th">Container</th>
+          <th>State</th>
+          <th class="num" data-fixture="table-num">Uptime</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>caddy</code></td>
+          <td>
+            <span class="m-badge m-badge--success" data-fixture="badge-table">
+              <svg width="12" height="12" fill="currentColor" aria-hidden="true"><use href="#m-check"></use></svg>
+              Running
+            </span>
+          </td>
+          <td class="num">14d 02h</td>
+        </tr>
+        <tr>
+          <td><code>immich-ml</code></td>
+          <td>
+            <span class="m-badge m-badge--warning" data-fixture="badge-warning">
+              <svg width="12" height="12" fill="currentColor" aria-hidden="true"><use href="#m-warning"></use></svg>
+              Degraded
+            </span>
+          </td>
+          <td class="num">02h 11m</td>
+        </tr>
+        <tr>
+          <td><code>romm</code></td>
+          <td>
+            <span class="m-badge m-badge--danger" data-fixture="badge-danger">
+              <svg width="12" height="12" fill="currentColor" aria-hidden="true"><use href="#m-x"></use></svg>
+              Stopped
+            </span>
+          </td>
+          <td class="num">—</td>
+        </tr>
+        <tr>
+          <td><code>portal</code></td>
+          <td><span class="m-badge" data-fixture="badge-neutral">Idle</span></td>
+          <td class="num">00h 00m</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="swatch-row" aria-hidden="true">
+      <span class="swatch" style="background:var(--chart-1)"></span>
+      <span class="swatch" style="background:var(--chart-2)"></span>
+      <span class="swatch" style="background:var(--chart-3)"></span>
+      <span class="swatch" style="background:var(--chart-4)"></span>
+      <span class="swatch" style="background:var(--chart-5)"></span>
+    </div>
+    <span class="m-hint">Chart ramp derives from the accent — five steps, no second palette.</span>
+  </section>
+
+  <!-- nav + identities -->
+  <section class="demo-group stack">
+    <span class="m-label">Navigation</span>
+    <nav class="m-tabs" data-fixture="tabs">
+      <a href="#" aria-current="page" data-fixture="tab-active">Overview</a>
+      <a href="#">Library</a>
+      <a href="#">Logs</a>
+    </nav>
+    <div class="row">
+      <span class="m-avatar" data-fixture="avatar">JB</span>
+      <span class="m-avatar" data-fixture="avatar-2">
+        <svg width="12" height="12" fill="currentColor" aria-hidden="true"><use href="#m-user"></use></svg>
+      </span>
+      <span class="m-badge"><span class="m-dot" data-fixture="dot" style="color:var(--success)"></span>Online</span>
+      <span class="m-badge"><span class="m-dot" style="color:var(--text-3)"></span>Offline</span>
+    </div>
+    <hr class="m-sep">
+    <div class="m-empty" data-fixture="empty">
+      <svg fill="currentColor" aria-hidden="true"><use href="#m-folder"></use></svg>
+      <strong>No libraries yet</strong>
+      <span class="m-hint">Add a folder to start indexing.</span>
+      <button class="m-btn m-btn--sm">Add library</button>
+    </div>
+  </section>
+
+  <!-- boundary -->
+  <section class="demo-group stack">
+    <span class="m-label">Port 1 only</span>
+    <p class="m-hint" style="margin:0">
+      Dialog, alert dialog, drawer, sheet, popover, dropdown, tooltip, command palette, combobox,
+      date picker and data table have behaviour and live in port 1 (React) only. A port-2 project
+      that needs one becomes port 1 — see the capability matrix in <code>canon/rules.md</code>.
+    </p>
+    <div class="row">
+      <button class="m-btn m-btn--sm" data-fixture="overlay-demo" disabled>Open dialog (port 1)</button>
+      <span class="m-badge m-badge--primary">registry:style</span>
+    </div>
+  </section>
+
+</div>
+
+<script>
+  const root = document.documentElement;
+  document.getElementById("theme-toggle").addEventListener("click", (e) => {
+    const dark = root.classList.toggle("dark");
+    e.currentTarget.setAttribute("aria-pressed", String(dark));
+  });
+  if (matchMedia("(prefers-color-scheme: dark)").matches) {
+    root.classList.add("dark");
+    document.getElementById("theme-toggle").setAttribute("aria-pressed", "true");
+  }
+</script>
+</body>
+</html>

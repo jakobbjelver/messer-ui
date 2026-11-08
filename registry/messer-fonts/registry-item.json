@@ -1,0 +1,13 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "messer-fonts",
+  "type": "registry:theme",
+  "title": "Messer UI — fonts",
+  "description": "Golos Text (human voice) and JetBrains Mono (machine voice). With next/font, keep this item and expose --font-golos / --font-jetbrains; the stack picks them up.",
+  "cssVars": {
+    "theme": {
+      "--font-sans": "var(--font-golos, \"Golos Text\", ui-sans-serif, system-ui, sans-serif)",
+      "--font-mono": "var(--font-jetbrains, \"JetBrains Mono\", ui-monospace, SFMono-Regular, monospace)"
+    }
+  }
+}

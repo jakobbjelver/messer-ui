@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "messer-agent",
+  "type": "registry:item",
+  "title": "Messer UI — agent files",
+  "description": "AGENTS.md and MESSER.md for a consuming project: the rules an agent must follow, the commands it must run, and where deviations are recorded.",
+  "files": [
+    {
+      "path": "registry/messer-agent/AGENTS.md",
+      "type": "registry:file",
+      "target": "~/AGENTS.md"
+    },
+    {
+      "path": "registry/messer-agent/MESSER.md",
+      "type": "registry:file",
+      "target": "~/MESSER.md"
+    }
+  ]
+}

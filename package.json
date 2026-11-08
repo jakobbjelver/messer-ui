@@ -1,0 +1,30 @@
+{
+  "name": "messer-ui",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Messer UI \u2014 the shared design system for Messer and Jakob Bjelv\u00e9r projects.",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "npm run build:registry && npm run build:sprite && npm run build:css",
+    "build:registry": "node scripts/build-registry.mjs",
+    "build:sprite": "node scripts/sprite.mjs",
+    "build:css": "node scripts/build-css.mjs",
+    "brand:check": "node scripts/brand-check.mjs",
+    "assert:config": "node scripts/assert-config.mjs",
+    "sink": "node scripts/sink-check.mjs",
+    "validate": "npx shadcn@latest registry validate jakobbjelver/messer-ui",
+    "check": "npm run brand:check && npm run build && npm run sink"
+  },
+  "devDependencies": {
+    "@fontsource-variable/golos-text": "^5.3.0",
+    "@fontsource-variable/jetbrains-mono": "^5.3.0",
+    "@phosphor-icons/core": "^2.1.1",
+    "@tailwindcss/cli": "^4.3.5",
+    "tailwindcss": "^4.3.5",
+    "playwright": "1.64.0"
+  }
+}

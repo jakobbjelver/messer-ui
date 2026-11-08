@@ -1,0 +1,8 @@
+{
+  "project": "request-games",
+  "title": "Request Games",
+  "accent": {
+    "light": "oklch(0.53 0.135 155)",
+    "dark": "oklch(0.74 0.13 155)"
+  }
+}

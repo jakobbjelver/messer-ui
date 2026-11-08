@@ -1,0 +1,17 @@
+/* Self-hosted family fonts. OFL 1.1 — see NOTICE.md. Latin subsets, variable weight. */
+
+@font-face {
+  font-family: "Golos Text";
+  src: url("./fonts/golos-text-latin-wght-normal.woff2") format("woff2-variations");
+  font-weight: 400 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("./fonts/jetbrains-mono-latin-wght-normal.woff2") format("woff2-variations");
+  font-weight: 400 800;
+  font-style: normal;
+  font-display: swap;
+}

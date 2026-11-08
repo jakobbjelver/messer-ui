@@ -1,0 +1,413 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "messer-ui",
+  "homepage": "https://github.com/jakobbjelver/messer-ui",
+  "items": [
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "messer-style",
+      "type": "registry:style",
+      "title": "Messer UI — style",
+      "description": "The fixed frame: Lyra geometry, neutral surfaces, zero radius, Golos Text + JetBrains Mono, Phosphor icons. Install first, then a brand.",
+      "registryDependencies": [
+        "utils"
+      ],
+      "cssVars": {
+        "theme": {
+          "--color-background": "var(--background)",
+          "--color-foreground": "var(--foreground)",
+          "--color-card": "var(--card)",
+          "--color-card-foreground": "var(--card-foreground)",
+          "--color-popover": "var(--popover)",
+          "--color-popover-foreground": "var(--popover-foreground)",
+          "--color-primary": "var(--primary)",
+          "--color-primary-foreground": "var(--primary-foreground)",
+          "--color-secondary": "var(--secondary)",
+          "--color-secondary-foreground": "var(--secondary-foreground)",
+          "--color-muted": "var(--muted)",
+          "--color-muted-foreground": "var(--muted-foreground)",
+          "--color-accent": "var(--accent)",
+          "--color-accent-foreground": "var(--accent-foreground)",
+          "--color-destructive": "var(--destructive)",
+          "--color-destructive-foreground": "var(--destructive-foreground)",
+          "--color-success": "var(--success)",
+          "--color-warning": "var(--warning)",
+          "--color-border": "var(--border)",
+          "--color-input": "var(--input)",
+          "--color-ring": "var(--ring)",
+          "--color-chart-1": "var(--chart-1)",
+          "--color-chart-2": "var(--chart-2)",
+          "--color-chart-3": "var(--chart-3)",
+          "--color-chart-4": "var(--chart-4)",
+          "--color-chart-5": "var(--chart-5)",
+          "--radius-sm": "0px",
+          "--radius-md": "0px",
+          "--radius-lg": "0px",
+          "--radius-xl": "0px",
+          "--radius-2xl": "0px",
+          "--radius-3xl": "0px",
+          "--radius-4xl": "0px",
+          "--font-sans": "var(--font-golos, \"Golos Text\", ui-sans-serif, system-ui, sans-serif)",
+          "--font-mono": "var(--font-jetbrains, \"JetBrains Mono\", ui-monospace, SFMono-Regular, monospace)"
+        },
+        "light": {
+          "--background": "#fafafa",
+          "--foreground": "#141414",
+          "--surface": "#ffffff",
+          "--surface-2": "#f2f2f2",
+          "--card": "#ffffff",
+          "--card-foreground": "#141414",
+          "--popover": "#ffffff",
+          "--popover-foreground": "#141414",
+          "--secondary": "#f2f2f2",
+          "--secondary-foreground": "#141414",
+          "--muted": "#f2f2f2",
+          "--muted-foreground": "#6f6f6f",
+          "--accent": "#f2f2f2",
+          "--accent-foreground": "#141414",
+          "--destructive": "oklch(0.55 0.19 25)",
+          "--destructive-foreground": "#ffffff",
+          "--success": "oklch(0.53 0.13 150)",
+          "--warning": "oklch(0.70 0.14 75)",
+          "--text-2": "#525252",
+          "--text-3": "#6f6f6f",
+          "--border": "#e4e4e4",
+          "--border-strong": "#d4d4d4",
+          "--input": "#e4e4e4",
+          "--primary": "oklch(0.30 0.008 260)",
+          "--primary-foreground": "#ffffff",
+          "--primary-hover": "color-mix(in oklab, oklch(0.30 0.008 260) 86%, #000000)",
+          "--ring": "oklch(0.30 0.008 260)",
+          "--chart-1": "oklch(0.82 0.015 205)",
+          "--chart-2": "oklch(0.7 0.02 205)",
+          "--chart-3": "oklch(0.58 0.02 205)",
+          "--chart-4": "oklch(0.46 0.02 205)",
+          "--chart-5": "oklch(0.34 0.02 205)"
+        },
+        "dark": {
+          "--background": "#0a0a0a",
+          "--foreground": "#f2f2f2",
+          "--surface": "#141414",
+          "--surface-2": "#1c1c1c",
+          "--card": "#141414",
+          "--card-foreground": "#f2f2f2",
+          "--popover": "#141414",
+          "--popover-foreground": "#f2f2f2",
+          "--secondary": "#1c1c1c",
+          "--secondary-foreground": "#f2f2f2",
+          "--muted": "#1c1c1c",
+          "--muted-foreground": "#8a8a8a",
+          "--accent": "#1c1c1c",
+          "--accent-foreground": "#f2f2f2",
+          "--destructive": "oklch(0.68 0.17 25)",
+          "--destructive-foreground": "#0a0a0a",
+          "--success": "oklch(0.70 0.12 150)",
+          "--warning": "oklch(0.80 0.13 75)",
+          "--text-2": "#a3a3a3",
+          "--text-3": "#8a8a8a",
+          "--border": "#2a2a2a",
+          "--border-strong": "#3a3a3a",
+          "--input": "#2a2a2a",
+          "--primary": "oklch(0.92 0.004 260)",
+          "--primary-foreground": "#0a0a0a",
+          "--primary-hover": "color-mix(in oklab, oklch(0.92 0.004 260) 86%, #ffffff)",
+          "--ring": "oklch(0.92 0.004 260)",
+          "--chart-1": "oklch(0.86 0.015 205)",
+          "--chart-2": "oklch(0.74 0.015 205)",
+          "--chart-3": "oklch(0.62 0.02 205)",
+          "--chart-4": "oklch(0.5 0.02 205)",
+          "--chart-5": "oklch(0.38 0.02 205)"
+        }
+      }
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "messer-fonts",
+      "type": "registry:theme",
+      "title": "Messer UI — fonts",
+      "description": "Golos Text (human voice) and JetBrains Mono (machine voice). With next/font, keep this item and expose --font-golos / --font-jetbrains; the stack picks them up.",
+      "cssVars": {
+        "theme": {
+          "--font-sans": "var(--font-golos, \"Golos Text\", ui-sans-serif, system-ui, sans-serif)",
+          "--font-mono": "var(--font-jetbrains, \"JetBrains Mono\", ui-monospace, SFMono-Regular, monospace)"
+        }
+      }
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "messer-fingerprint",
+      "type": "registry:style",
+      "title": "Messer UI — fingerprint",
+      "description": "The ten rules as CSS: heading voices, one label style, tabular numbers, hairline borders, square focus, reduced motion. No colours.",
+      "css": {
+        "*": {
+          "border-color": "var(--border)"
+        },
+        "html": {
+          "font-family": "var(--font-sans)"
+        },
+        "body": {
+          "background-color": "var(--background)",
+          "color": "var(--foreground)",
+          "font-family": "var(--font-sans)",
+          "font-size": "14px",
+          "font-weight": "400",
+          "line-height": "1.5",
+          "font-variant-numeric": "tabular-nums"
+        },
+        "h1": {
+          "font-family": "var(--font-sans)",
+          "font-size": "32px",
+          "font-weight": "600",
+          "line-height": "1.1",
+          "letter-spacing": "-0.02em"
+        },
+        "h2": {
+          "font-family": "var(--font-sans)",
+          "font-size": "24px",
+          "font-weight": "600",
+          "line-height": "1.15",
+          "letter-spacing": "-0.015em"
+        },
+        "h3": {
+          "font-family": "var(--font-mono)",
+          "font-size": "16px",
+          "font-weight": "500",
+          "line-height": "1.3"
+        },
+        "h4": {
+          "font-family": "var(--font-mono)",
+          "font-size": "14px",
+          "font-weight": "500",
+          "line-height": "1.35"
+        },
+        "h5, h6": {
+          "font-family": "var(--font-mono)",
+          "font-size": "14px",
+          "font-weight": "500",
+          "line-height": "1.35"
+        },
+        ".prose": {
+          "font-family": "var(--font-sans)",
+          "font-size": "15px",
+          "font-weight": "400",
+          "line-height": "1.6"
+        },
+        ".m-small, small": {
+          "font-family": "var(--font-sans)",
+          "font-size": "12.5px",
+          "font-weight": "400",
+          "line-height": "1.45"
+        },
+        ".m-label": {
+          "font-family": "var(--font-mono)",
+          "font-size": "10.5px",
+          "font-weight": "500",
+          "line-height": "1",
+          "letter-spacing": "0.1em",
+          "text-transform": "uppercase",
+          "color": "var(--text-3)"
+        },
+        ".m-data": {
+          "font-family": "var(--font-mono)",
+          "font-size": "12px",
+          "font-weight": "400",
+          "line-height": "1.3",
+          "font-variant-numeric": "tabular-nums"
+        },
+        "code, kbd, pre, samp": {
+          "font-family": "var(--font-mono)",
+          "font-size": "12.5px",
+          "font-weight": "400",
+          "line-height": "1.4"
+        },
+        "table": {
+          "font-variant-numeric": "tabular-nums"
+        },
+        "::selection": {
+          "background-color": "var(--primary)",
+          "color": "var(--primary-foreground)"
+        },
+        ":focus-visible": {
+          "outline": "2px solid var(--ring)",
+          "outline-offset": "2px",
+          "border-radius": "0"
+        }
+      }
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "messer-agent",
+      "type": "registry:item",
+      "title": "Messer UI — agent files",
+      "description": "AGENTS.md and MESSER.md for a consuming project: the rules an agent must follow, the commands it must run, and where deviations are recorded.",
+      "files": [
+        {
+          "path": "registry/messer-agent/AGENTS.md",
+          "type": "registry:file",
+          "target": "~/AGENTS.md"
+        },
+        {
+          "path": "registry/messer-agent/MESSER.md",
+          "type": "registry:file",
+          "target": "~/MESSER.md"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "brand-ai-router",
+      "type": "registry:theme",
+      "title": "Messer UI — AI Router",
+      "description": "Accent and chart ramp for AI Router. Nothing else: radii, type and geometry come from messer-style.",
+      "cssVars": {
+        "light": {
+          "--primary": "oklch(0.52 0.10 205)",
+          "--primary-foreground": "#ffffff",
+          "--primary-hover": "color-mix(in oklab, oklch(0.52 0.10 205) 86%, #000000)",
+          "--ring": "oklch(0.52 0.10 205)",
+          "--chart-1": "oklch(0.82 0.075 205)",
+          "--chart-2": "oklch(0.7 0.1 205)",
+          "--chart-3": "oklch(0.58 0.1 205)",
+          "--chart-4": "oklch(0.46 0.1 205)",
+          "--chart-5": "oklch(0.34 0.1 205)"
+        },
+        "dark": {
+          "--primary": "oklch(0.72 0.10 205)",
+          "--primary-foreground": "#0a0a0a",
+          "--primary-hover": "color-mix(in oklab, oklch(0.72 0.10 205) 86%, #ffffff)",
+          "--ring": "oklch(0.72 0.10 205)",
+          "--chart-1": "oklch(0.86 0.075 205)",
+          "--chart-2": "oklch(0.74 0.075 205)",
+          "--chart-3": "oklch(0.62 0.1 205)",
+          "--chart-4": "oklch(0.5 0.1 205)",
+          "--chart-5": "oklch(0.38 0.1 205)"
+        }
+      }
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "brand-portal",
+      "type": "registry:theme",
+      "title": "Messer UI — Server Portal",
+      "description": "Accent and chart ramp for Server Portal. Nothing else: radii, type and geometry come from messer-style.",
+      "cssVars": {
+        "light": {
+          "--primary": "oklch(0.30 0.008 260)",
+          "--primary-foreground": "#ffffff",
+          "--primary-hover": "color-mix(in oklab, oklch(0.30 0.008 260) 86%, #000000)",
+          "--ring": "oklch(0.30 0.008 260)",
+          "--chart-1": "oklch(0.82 0.015 205)",
+          "--chart-2": "oklch(0.7 0.02 205)",
+          "--chart-3": "oklch(0.58 0.02 205)",
+          "--chart-4": "oklch(0.46 0.02 205)",
+          "--chart-5": "oklch(0.34 0.02 205)"
+        },
+        "dark": {
+          "--primary": "oklch(0.92 0.004 260)",
+          "--primary-foreground": "#0a0a0a",
+          "--primary-hover": "color-mix(in oklab, oklch(0.92 0.004 260) 86%, #ffffff)",
+          "--ring": "oklch(0.92 0.004 260)",
+          "--chart-1": "oklch(0.86 0.015 205)",
+          "--chart-2": "oklch(0.74 0.015 205)",
+          "--chart-3": "oklch(0.62 0.02 205)",
+          "--chart-4": "oklch(0.5 0.02 205)",
+          "--chart-5": "oklch(0.38 0.02 205)"
+        }
+      }
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "brand-request-games",
+      "type": "registry:theme",
+      "title": "Messer UI — Request Games",
+      "description": "Accent and chart ramp for Request Games. Nothing else: radii, type and geometry come from messer-style.",
+      "cssVars": {
+        "light": {
+          "--primary": "oklch(0.53 0.135 155)",
+          "--primary-foreground": "#ffffff",
+          "--primary-hover": "color-mix(in oklab, oklch(0.53 0.135 155) 86%, #000000)",
+          "--ring": "oklch(0.53 0.135 155)",
+          "--chart-1": "oklch(0.82 0.1013 155)",
+          "--chart-2": "oklch(0.7 0.135 155)",
+          "--chart-3": "oklch(0.58 0.135 155)",
+          "--chart-4": "oklch(0.46 0.135 155)",
+          "--chart-5": "oklch(0.34 0.135 155)"
+        },
+        "dark": {
+          "--primary": "oklch(0.74 0.13 155)",
+          "--primary-foreground": "#0a0a0a",
+          "--primary-hover": "color-mix(in oklab, oklch(0.74 0.13 155) 86%, #ffffff)",
+          "--ring": "oklch(0.74 0.13 155)",
+          "--chart-1": "oklch(0.86 0.0975 155)",
+          "--chart-2": "oklch(0.74 0.0975 155)",
+          "--chart-3": "oklch(0.62 0.13 155)",
+          "--chart-4": "oklch(0.5 0.13 155)",
+          "--chart-5": "oklch(0.38 0.13 155)"
+        }
+      }
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "brand-studio",
+      "type": "registry:theme",
+      "title": "Messer UI — Site Studio",
+      "description": "Accent and chart ramp for Site Studio. Nothing else: radii, type and geometry come from messer-style.",
+      "cssVars": {
+        "light": {
+          "--primary": "oklch(0.30 0.008 260)",
+          "--primary-foreground": "#ffffff",
+          "--primary-hover": "color-mix(in oklab, oklch(0.30 0.008 260) 86%, #000000)",
+          "--ring": "oklch(0.30 0.008 260)",
+          "--chart-1": "oklch(0.82 0.015 205)",
+          "--chart-2": "oklch(0.7 0.02 205)",
+          "--chart-3": "oklch(0.58 0.02 205)",
+          "--chart-4": "oklch(0.46 0.02 205)",
+          "--chart-5": "oklch(0.34 0.02 205)"
+        },
+        "dark": {
+          "--primary": "oklch(0.92 0.004 260)",
+          "--primary-foreground": "#0a0a0a",
+          "--primary-hover": "color-mix(in oklab, oklch(0.92 0.004 260) 86%, #ffffff)",
+          "--ring": "oklch(0.92 0.004 260)",
+          "--chart-1": "oklch(0.86 0.015 205)",
+          "--chart-2": "oklch(0.74 0.015 205)",
+          "--chart-3": "oklch(0.62 0.02 205)",
+          "--chart-4": "oklch(0.5 0.02 205)",
+          "--chart-5": "oklch(0.38 0.02 205)"
+        }
+      }
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "brand-swiparr",
+      "type": "registry:theme",
+      "title": "Messer UI — Swiparr",
+      "description": "Accent and chart ramp for Swiparr. Nothing else: radii, type and geometry come from messer-style.",
+      "cssVars": {
+        "light": {
+          "--primary": "oklch(0.52 0.13 300)",
+          "--primary-foreground": "#ffffff",
+          "--primary-hover": "color-mix(in oklab, oklch(0.52 0.13 300) 86%, #000000)",
+          "--ring": "oklch(0.52 0.13 300)",
+          "--chart-1": "oklch(0.82 0.0975 300)",
+          "--chart-2": "oklch(0.7 0.13 300)",
+          "--chart-3": "oklch(0.58 0.13 300)",
+          "--chart-4": "oklch(0.46 0.13 300)",
+          "--chart-5": "oklch(0.34 0.13 300)"
+        },
+        "dark": {
+          "--primary": "oklch(0.70 0.13 300)",
+          "--primary-foreground": "#0a0a0a",
+          "--primary-hover": "color-mix(in oklab, oklch(0.70 0.13 300) 86%, #ffffff)",
+          "--ring": "oklch(0.70 0.13 300)",
+          "--chart-1": "oklch(0.86 0.0975 300)",
+          "--chart-2": "oklch(0.74 0.0975 300)",
+          "--chart-3": "oklch(0.62 0.13 300)",
+          "--chart-4": "oklch(0.5 0.13 300)",
+          "--chart-5": "oklch(0.38 0.13 300)"
+        }
+      }
+    }
+  ]
+}
