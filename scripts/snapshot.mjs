@@ -36,7 +36,7 @@ const browser = await chromium.launch();
 const reference = { capturedAt: new Date().toISOString(), source: url, themes: {} };
 
 for (const theme of ["light", "dark"]) {
-  const context = await browser.newContext({ viewport: { width: 1280, height: 900 }, deviceScaleFactor: 2, colorScheme: "light" });
+  const context = await browser.newContext({ viewport: { width: 1280, height: 900 }, deviceScaleFactor: 2, colorScheme: "light", reducedMotion: "reduce" });
   const page = await context.newPage();
   const errors = [];
   page.on("console", (m) => {
@@ -46,9 +46,9 @@ for (const theme of ["light", "dark"]) {
   page.on("pageerror", (e) => errors.push(String(e)));
   await page.goto(url, { waitUntil: "networkidle" });
   await page.evaluate((dark) => document.documentElement.classList.toggle("dark", dark), theme === "dark");
+  await page.waitForTimeout(400); // dev CSS chunks and next-themes settle
   await page.evaluate(() => document.fonts.ready);
-  await page.emulateMedia({ reducedMotion: "reduce" });
-
+  
   const at1280 = await measure(page);
   reference.themes[theme] = at1280;
   await page.screenshot({ path: path.join(out, `reference-${theme}-1280.png`), fullPage: true });

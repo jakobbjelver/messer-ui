@@ -41,7 +41,7 @@ const { chromium } = loadPlaywright();
 const browser = await chromium.launch();
 
 for (const theme of ["light", "dark"]) {
-  const context = await browser.newContext({ viewport: { width: 1280, height: 900 }, deviceScaleFactor: 1, colorScheme: "light" });
+  const context = await browser.newContext({ viewport: { width: 1280, height: 900 }, deviceScaleFactor: 1, colorScheme: "light", reducedMotion: "reduce" });
   const page = await context.newPage();
   const errors = [];
   page.on("console", (m) => {
@@ -51,9 +51,9 @@ for (const theme of ["light", "dark"]) {
   page.on("pageerror", (e) => errors.push(String(e)));
   await page.goto(url, { waitUntil: "networkidle" });
   await page.evaluate((dark) => document.documentElement.classList.toggle("dark", dark), theme === "dark");
+  await page.waitForTimeout(400); // dev CSS chunks and next-themes settle
   await page.evaluate(() => document.fonts.ready);
-  await page.emulateMedia({ reducedMotion: "reduce" });
-  const got = await measure(page);
+    const got = await measure(page);
   await context.close();
 
   const tag = `${theme}`;
