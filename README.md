@@ -44,15 +44,27 @@ npm run validate         # npx shadcn registry validate jakobbjelver/messer-ui
 ## Adopting it in a project
 
 ```bash
-npx shadcn@latest add jakobbjelver/messer-ui/messer-style \
-                     jakobbjelver/messer-ui/messer-fonts \
-                     jakobbjelver/messer-ui/messer-fingerprint \
-                     jakobbjelver/messer-ui/brand-<project>
+# 1. tokens as files (the CLI's cssVars merge mangles non-shadcn keys)
+node scripts/install.mjs --app ~/Repos/<project> --brand <project> --dir src/styles/messer
+
+# 2. import them in the global stylesheet, after the Tailwind import
+#    @import "../styles/messer/theme.css";
+#    @import "../styles/messer/type.css";
+#    @import "../styles/messer/brand.css";
+
+# 3. components (optional — existing shadcn components pick up the tokens automatically)
+npx shadcn@latest add jakobbjelver/messer-ui/messer-style jakobbjelver/messer-ui/messer-fingerprint
 ```
 
-Then render `fixtures/kitchen-sink.html` at `/_ui` in that app and run `messer check` (port 1) or
-load `packages/css/messer.css` (port 2). A project's local decisions and its dated deviations live in
-its own `MESSER.md` — never in this repo.
+Then render the sink at `/ui` and measure it:
+
+```bash
+node scripts/snapshot.mjs --url http://127.0.0.1:3001/ui     # capture a reference (once per port 1)
+node scripts/check.mjs --url http://127.0.0.1:3001/ui --app ~/Repos/<project>
+```
+
+Port 2 (no React) loads `packages/css/messer.css` and its `fonts/` directory and uses `.m-*` classes.
+A project's local decisions and its dated deviations live in its own `MESSER.md` — never here.
 
 ## What lives where
 

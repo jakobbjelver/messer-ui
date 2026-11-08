@@ -13,6 +13,12 @@ Messer UI is a design system, not an app. Read `canon/rules.md` before changing 
   (avatar, status dot, slider thumb).
 - One accent. Nothing else in the palette.
 
+## Installing into an app
+
+`node scripts/install.mjs --app <dir> --brand <project>` — copies `theme.css`, `type.css` and the
+brand file. Do **not** rely on `shadcn add` for tokens: it writes every cssVar key into `@theme` as
+`var(----key)` and drops brand vars when several items are added at once. `add` is for components.
+
 ## Commands
 
 ```bash
