@@ -1,0 +1,24 @@
+/* messer-ui — brand ai-router. Generated; do not edit. */
+:root {
+  --primary: oklch(0.52 0.10 205);
+  --primary-foreground: #ffffff;
+  --primary-hover: color-mix(in oklab, oklch(0.52 0.10 205) 86%, #000000);
+  --ring: oklch(0.52 0.10 205);
+  --chart-1: oklch(0.82 0.075 205);
+  --chart-2: oklch(0.7 0.1 205);
+  --chart-3: oklch(0.58 0.1 205);
+  --chart-4: oklch(0.46 0.1 205);
+  --chart-5: oklch(0.34 0.1 205);
+}
+
+.dark {
+  --primary: oklch(0.72 0.10 205);
+  --primary-foreground: #0a0a0a;
+  --primary-hover: color-mix(in oklab, oklch(0.72 0.10 205) 86%, #ffffff);
+  --ring: oklch(0.72 0.10 205);
+  --chart-1: oklch(0.86 0.075 205);
+  --chart-2: oklch(0.74 0.075 205);
+  --chart-3: oklch(0.62 0.1 205);
+  --chart-4: oklch(0.5 0.1 205);
+  --chart-5: oklch(0.38 0.1 205);
+}

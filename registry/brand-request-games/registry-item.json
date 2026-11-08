@@ -8,7 +8,6 @@
     "light": {
       "--primary": "oklch(0.53 0.135 155)",
       "--primary-foreground": "#ffffff",
-      "--primary-hover": "color-mix(in oklab, oklch(0.53 0.135 155) 86%, #000000)",
       "--ring": "oklch(0.53 0.135 155)",
       "--chart-1": "oklch(0.82 0.1013 155)",
       "--chart-2": "oklch(0.7 0.135 155)",
@@ -19,7 +18,6 @@
     "dark": {
       "--primary": "oklch(0.74 0.13 155)",
       "--primary-foreground": "#0a0a0a",
-      "--primary-hover": "color-mix(in oklab, oklch(0.74 0.13 155) 86%, #ffffff)",
       "--ring": "oklch(0.74 0.13 155)",
       "--chart-1": "oklch(0.86 0.0975 155)",
       "--chart-2": "oklch(0.74 0.0975 155)",

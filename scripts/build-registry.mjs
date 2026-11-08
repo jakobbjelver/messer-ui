@@ -190,8 +190,28 @@ ${decl(colorTheme, "  ")}
 `,
 );
 
+// ── brand css (file-based install; the CLI's cssVars merge mangles extra keys) ─
+const brandCss = (b) => `/* messer-ui — brand ${b.project}. Generated; do not edit. */
+:root {
+${decl(brandVars(b, "light"), "  ")}
+}
+
+.dark {
+${decl(brandVars(b, "dark"), "  ")}
+}
+`;
+for (const b of brands) write(`packages/css/brand/${b.project}.css`, brandCss(b));
+
 // ── registry ────────────────────────────────────────────────────────────────
 const SCHEMA = "https://ui.shadcn.com/schema/registry-item.json";
+const SHADCN_KEYS = new Set([
+  "--background", "--foreground", "--card", "--card-foreground", "--popover", "--popover-foreground",
+  "--primary", "--primary-foreground", "--secondary", "--secondary-foreground", "--muted",
+  "--muted-foreground", "--accent", "--accent-foreground", "--destructive", "--destructive-foreground",
+  "--border", "--input", "--ring", "--radius",
+  "--chart-1", "--chart-2", "--chart-3", "--chart-4", "--chart-5",
+]);
+const shadcnOnly = (vars) => Object.fromEntries(Object.entries(vars).filter(([k]) => SHADCN_KEYS.has(k)));
 const base = { $schema: SCHEMA };
 
 const styleItem = {
@@ -203,8 +223,8 @@ const styleItem = {
     "The fixed frame: Lyra geometry, neutral surfaces, zero radius, Golos Text + JetBrains Mono, Phosphor icons. Install first, then a brand.",
   cssVars: {
     theme: { ...colorTheme, "--font-sans": ink["--font-sans"], "--font-mono": ink["--font-mono"] },
-    light: { "--radius": "0px", ...baseVars("light", def) },
-    dark: { "--radius": "0px", ...baseVars("dark", def) },
+    light: shadcnOnly({ "--radius": "0px", ...baseVars("light", def) }),
+    dark: shadcnOnly({ "--radius": "0px", ...baseVars("dark", def) }),
   },
 };
 
@@ -258,7 +278,7 @@ const brandItems = brands.map((b) => ({
   type: "registry:theme",
   title: `Messer UI — ${b.title}`,
   description: `Accent and chart ramp for ${b.title}. Nothing else: radii, type and geometry come from messer-style.`,
-  cssVars: { light: brandVars(b, "light"), dark: brandVars(b, "dark") },
+  cssVars: { light: shadcnOnly(brandVars(b, "light")), dark: shadcnOnly(brandVars(b, "dark")) },
 }));
 
 const items = [styleItem, fontsItem, fingerprintItem, agentItem, ...brandItems];
