@@ -201,7 +201,6 @@ const styleItem = {
   title: "Messer UI — style",
   description:
     "The fixed frame: Lyra geometry, neutral surfaces, zero radius, Golos Text + JetBrains Mono, Phosphor icons. Install first, then a brand.",
-  registryDependencies: ["utils"],
   cssVars: {
     theme: { ...colorTheme, "--font-sans": ink["--font-sans"], "--font-mono": ink["--font-mono"] },
     light: baseVars("light", def),

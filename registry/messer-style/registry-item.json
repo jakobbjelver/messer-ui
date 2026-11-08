@@ -4,9 +4,6 @@
   "type": "registry:style",
   "title": "Messer UI — style",
   "description": "The fixed frame: Lyra geometry, neutral surfaces, zero radius, Golos Text + JetBrains Mono, Phosphor icons. Install first, then a brand.",
-  "registryDependencies": [
-    "utils"
-  ],
   "cssVars": {
     "theme": {
       "--color-background": "var(--background)",
