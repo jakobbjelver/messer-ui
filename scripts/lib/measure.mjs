@@ -39,14 +39,17 @@ export function measure(page) {
       rec.overflow = el.scrollWidth - el.clientWidth;
       rec.tag = el.tagName.toLowerCase();
       // keep the first family only: next/font appends generated fallbacks
-      rec.fontFamily = cs.fontFamily.split(",")[0].replace(/["']/g, "").trim();
+      // Fontsource ships families as "<Name> Variable"; next/font emits the same typeface under the
+      // plain name. Normalise so packaging never reads as a design difference.
+      rec.fontFamily = cs.fontFamily.split(",")[0].replace(/["']/g, "").trim().replace(/\s+Variable$/, "");
       rec.color = toRgb(cs.color);
       rec.backgroundColor = toRgb(cs.backgroundColor);
       out[el.dataset.fixture] = rec;
     }
     return {
       fixtures: out,
-      bodyFont: getComputedStyle(document.body).fontFamily.split(",")[0].replace(/["']/g, "").trim(),
+      bodyFont: getComputedStyle(document.body).fontFamily
+        .split(",")[0].replace(/["']/g, "").trim().replace(/\s+Variable$/, ""),
       fontsLoaded: {
         golos: document.fonts.check('14px "Golos Text"') || document.fonts.check("14px Golos"),
         mono: document.fonts.check('12px "JetBrains Mono"') || document.fonts.check("12px JetBrains Mono"),

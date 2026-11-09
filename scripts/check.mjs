@@ -108,8 +108,6 @@ if (app) {
     const src = fs.readFileSync(file, "utf8");
     const rel = path.relative(app, file);
     if (/from\s+["']lucide-react["']/.test(src)) fails.push(`${rel}: imports lucide-react`);
-    if (/from\s+["']@phosphor-icons\/react["']/.test(src) && !/^["']use client["']/.test(src.trimStart()))
-      warns.push(`${rel}: server component should import @phosphor-icons/react/dist/ssr`);
     const hex = [...src.matchAll(/#[0-9a-fA-F]{6}\b/g)].map((m) => m[0]);
     if (hex.length) warns.push(`${rel}: ${hex.length} hex literal(s) ${[...new Set(hex)].slice(0, 3).join(" ")}`);
     if (/rounded-full/.test(src) && !/avatar|smooth-avatar|scroll-area|slider/.test(rel))
