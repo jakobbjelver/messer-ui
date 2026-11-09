@@ -11,7 +11,8 @@ permissions:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    # arm64 native: emulating the Mac's platform on an x86 runner took >15 min in npm ci
+    runs-on: ubuntu-24.04-arm
     steps:
       - uses: actions/checkout@v4
 
@@ -30,7 +31,6 @@ jobs:
         with:
           context: .
           file: Dockerfile.showcase
-          platforms: linux/arm64
           push: true
           tags: |
             ghcr.io/jakobbjelver/messer-ui-showcase:latest
