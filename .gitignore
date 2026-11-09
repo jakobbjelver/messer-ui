@@ -6,3 +6,4 @@ dist/
 screenshots/*.png
 !screenshots/.gitkeep
 report.json
+showcase/dist/

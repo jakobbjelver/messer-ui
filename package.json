@@ -1,6 +1,6 @@
 {
   "name": "messer-ui",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
   "description": "Messer UI \u2014 the shared design system for Messer and Jakob Bjelv\u00e9r projects.",
@@ -17,7 +17,8 @@
     "assert:config": "node scripts/assert-config.mjs",
     "sink": "node scripts/sink-check.mjs",
     "validate": "npx shadcn@latest registry validate jakobbjelver/messer-ui",
-    "check": "npm run brand:check && npm run build && npm run sink"
+    "check": "npm run brand:check && npm run build && npm run sink",
+    "showcase": "node showcase/build.mjs"
   },
   "devDependencies": {
     "@fontsource-variable/golos-text": "^5.3.0",
