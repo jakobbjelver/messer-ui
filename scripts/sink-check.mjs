@@ -2,10 +2,10 @@
 // the fingerprint: fonts, square corners, no overflow, no console errors. Screenshots + report.json.
 
 import fs from "node:fs";
-import http from "node:http";
 import path from "node:path";
 import { createRequire } from "node:module";
 import { fileURLToPath } from "node:url";
+import { serve } from "./lib/serve.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const require = createRequire(import.meta.url);
@@ -21,29 +21,14 @@ function loadPlaywright() {
   throw new Error("playwright not found — npm install, or set PLAYWRIGHT_PATH");
 }
 
-const MIME = {
-  ".html": "text/html; charset=utf-8", ".css": "text/css; charset=utf-8", ".js": "text/javascript",
-  ".woff2": "font/woff2", ".svg": "image/svg+xml", ".json": "application/json", ".png": "image/png",
-};
-
-const server = http.createServer((req, res) => {
-  const rel = decodeURIComponent(new URL(req.url, "http://x").pathname).replace(/^\/+/, "") || "fixtures/kitchen-sink.html";
-  const file = path.join(ROOT, rel);
-  if (!file.startsWith(ROOT) || !fs.existsSync(file) || fs.statSync(file).isDirectory()) {
-    res.writeHead(404).end("not found");
-    return;
-  }
-  res.writeHead(200, { "content-type": MIME[path.extname(file)] ?? "application/octet-stream" });
-  fs.createReadStream(file).pipe(res);
-});
+const server = await serve(ROOT, { fallback: "fixtures/kitchen-sink.html" });
 
 const MUST_MONO = ["h3", "h4", "label", "data", "table-th", "table-num", "code", "kbd", "panel-title"];
 const MUST_SANS = ["h1", "h2", "body", "btn-primary", "btn-secondary", "input", "textarea", "select", "tab-active"];
 const CIRCLE = /^(avatar|dot)/;
 
 const { chromium } = loadPlaywright();
-const port = await new Promise((resolve) => server.listen(0, "127.0.0.1", () => resolve(server.address().port)));
-const url = `http://127.0.0.1:${port}/fixtures/kitchen-sink.html`;
+const url = `${server.url}/fixtures/kitchen-sink.html`;
 
 const browser = await chromium.launch();
 const failures = [];

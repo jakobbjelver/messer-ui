@@ -2,8 +2,10 @@
 
 import fs from "node:fs";
 import path from "node:path";
+import crypto from "node:crypto";
 import { fileURLToPath } from "node:url";
 import { parseColor, contrast, accentFg, hueDistance, chartRamp, categoricalRamp, STATUS_HUES } from "./lib/color.mjs";
+import { glyphFile } from "./lib/mark.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const tokens = JSON.parse(fs.readFileSync(path.join(ROOT, "canon/tokens.json"), "utf8"));
@@ -71,6 +73,38 @@ for (const brand of brands) {
   }
 }
 
+/* ── marks ───────────────────────────────────────────────────────────────── */
+const ICONS = path.join(ROOT, "node_modules/@phosphor-icons/core/assets");
+const MARKS = path.join(ROOT, "marks");
+const manifestPath = path.join(MARKS, "manifest.json");
+const manifest = fs.existsSync(manifestPath)
+  ? JSON.parse(fs.readFileSync(manifestPath, "utf8"))
+  : {};
+const sha = (buf) => "sha256:" + crypto.createHash("sha256").update(buf).digest("hex");
+
+for (const brand of brands) {
+  const glyph = brand.mark?.glyph;
+  if (!glyph) {
+    fails.push(`${brand.project}: no mark.glyph in brand/${brand.project}.json`);
+    continue;
+  }
+  if (!fs.existsSync(glyphFile(ICONS, glyph))) {
+    fails.push(`${brand.project}: mark glyph "${glyph}" is not a Phosphor regular icon`);
+  }
+  const files = manifest[brand.project];
+  if (!files) {
+    fails.push(`${brand.project}: no marks/${brand.project} — run npm run marks`);
+    continue;
+  }
+  for (const [name, hash] of Object.entries(files)) {
+    const file = path.join(MARKS, brand.project, name);
+    if (!fs.existsSync(file)) fails.push(`${brand.project}: missing marks/${brand.project}/${name}`);
+    else if (sha(fs.readFileSync(file)) !== hash) {
+      fails.push(`${brand.project}: marks/${brand.project}/${name} is stale — run npm run marks`);
+    }
+  }
+}
+
 const pad = (s, n) => String(s).padEnd(n);
 console.log(pad("brand", 14) + pad("mode", 7) + pad("accent", 26) + pad("fg", 9) + pad("ctr", 6) + pad("text", 6) + pad("muted", 7) + pad("L", 7) + "nearest status");
 for (const r of rows) {
@@ -89,3 +123,4 @@ if (fails.length) {
   process.exit(1);
 }
 console.log(`\nbrand  ${brands.length} brands × 2 modes ✓  AA + lightness band + categorical passed`);
+console.log(`marks  ${brands.length} projects ✓  glyph + assets + hashes current`);

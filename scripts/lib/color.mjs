@@ -62,6 +62,13 @@ export function parseColor(value) {
 export const formatOklch = ({ l, c, h }) =>
   `oklch(${+l.toFixed(4)} ${+c.toFixed(4)} ${+h.toFixed(1)})`;
 
+/** oklch() or hex → #rrggbb, for assets that cannot carry a CSS colour (favicons, OG images). */
+export function oklchToHex(value) {
+  const { l, c, h } = typeof value === "string" ? parseColor(value) : value;
+  const rgb = oklchToLinearRgb({ l, c, h }).map((v) => clamp(toGamma(v)));
+  return "#" + rgb.map((v) => Math.round(v * 255).toString(16).padStart(2, "0")).join("");
+}
+
 export function relativeLuminance(value) {
   const { l, c, h } = typeof value === "string" ? parseColor(value) : value;
   const [r, g, b] = oklchToLinearRgb({ l, c, h });

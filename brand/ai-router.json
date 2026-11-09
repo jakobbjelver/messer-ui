@@ -1,6 +1,7 @@
 {
   "project": "ai-router",
   "title": "AI Router",
+  "mark": { "glyph": "ArrowsSplit" },
   "accent": {
     "light": "oklch(0.52 0.10 205)",
     "dark": "oklch(0.72 0.10 205)"

@@ -149,7 +149,8 @@ Every project has one mark, generated from its brand file — never drawn by han
 
 - Square, monochrome: an ink box with a paper glyph. The box is `--foreground`, the glyph is
   `--background`; inverted for dark surfaces.
-- Glyph = 62.5 % of the box (20 px in 32, 40 px in 64), Phosphor `regular`, centred.
+- Glyph = 75 % of the box (24 px in 32, 48 px in 64), Phosphor **`fill`**, centred. The mark is a
+  silhouette; rule 9's `regular` weight is the UI voice, not the mark's.
 - Never the accent (rule 7: the accent is a signal, not decoration), never a gradient, never rounded.
 - One glyph per project, chosen in `brand/<project>.json`. `npm run marks` emits favicon, dark
   favicon, apple-touch icon, OG image and a hash manifest; `brand:check` fails when they are stale.

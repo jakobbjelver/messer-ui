@@ -1,6 +1,7 @@
 {
   "project": "swiparr",
   "title": "Swiparr",
+  "mark": { "glyph": "Stack" },
   "accent": {
     "light": "oklch(0.52 0.13 300)",
     "dark": "oklch(0.70 0.13 300)"

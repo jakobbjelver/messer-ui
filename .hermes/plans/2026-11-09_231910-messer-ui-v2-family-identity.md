@@ -235,11 +235,14 @@ Recommended glyphs (change any before execution; one line each):
 
 | Project | Glyph | Why |
 |---|---|---|
-| swiparr | `Cards` | the swipe deck |
-| portal | `HardDrives` | the server |
+| swiparr | `Stack` | the swipe deck — layers |
+| portal | `SquaresFour` | the dashboard |
 | ai-router | `ArrowsSplit` | routing |
 | studio | `PenNib` | authoring |
 | request-games | `GameController` | games |
+
+`Cards` and `HardDrives` were the first picks and failed the 32 px read: the first looks like a copy
+icon, the second like a letter B. Glyphs are checked by eye at 32 px before they are accepted.
 
 #### Task 2.2 — Shared static server
 
@@ -263,13 +266,15 @@ to hex, and writes per project:
 | `marks/<project>/og.png` | 1200×630 | ink box, mark 96px, wordmark in JetBrains Mono, tagline in Golos |
 | `marks/manifest.json` | — | `{ project: { file: sha256 } }` |
 
-Geometry: box 32, glyph 20 centred (6 px padding) = 62.5 %. Phosphor source is
-`node_modules/@phosphor-icons/core/assets/regular/<kebab>.svg`, viewBox `0 0 256 256`, so
-`translate(6 6) scale(0.078125)`.
+Geometry: box 32, glyph 24 centred (4 px padding) = 75 %. Phosphor source is
+`node_modules/@phosphor-icons/core/assets/fill/<kebab>-fill.svg`, viewBox `0 0 256 256`, so
+`translate(4 4) scale(0.09375)`.
 
-Colour: resolve `--foreground` / `--background` through the browser page — set them on a probe
-element and read `getComputedStyle(...).color` / `.backgroundColor`, which normalises oklch to
-`rgb()`. No second colour library, and the mark cannot drift from the palette.
+Weight: **fill**, not regular. The first cut used `regular` at 62.5 % and every glyph lost its interior
+detail at 32 px — `Cards` read as a copy icon, `HardDrives` as a letter B. A mark is a silhouette.
+
+Colour: `oklchToHex()` in `scripts/lib/color.mjs` — the lib already had the oklch→linear→sRGB maths, so
+the browser probe the plan first suggested is unnecessary. The mark cannot drift from the palette.
 
 Rasterise with Playwright (already installed): serve `marks/` through `lib/serve.mjs`, load the SVG in
 an HTML page sized to the target, `page.screenshot({ clip })`. Load Golos + JetBrains from
@@ -735,4 +740,37 @@ sink  4 runs · 51 fixtures · sink clean ✓
 css   26.3 KB raw · 5.8 KB gzip
 showcase  brands 5 · css 31.0 KB · html 23.8 KB
 sections  15
+```
+
+### rev 3 — 2026-11-09 (Phase 2 executed, gate C passed)
+
+**Marks.** `scripts/mark.mjs` + `scripts/lib/mark.mjs` generate five files per project —
+`favicon.svg`, `favicon-dark.svg`, `favicon-32.png`, `apple-touch-icon.png`, `og.png` — plus
+`marks/manifest.json` (sha256 per file). Colours come from `oklchToHex()` on the canon's
+`--foreground`/`--background`, so the box is `#141414` in light and the glyph is the page colour.
+
+**The first cut failed the 32 px read, and the fix was two spec changes.** At Phosphor `regular` and
+62.5 %, `Cards` (swiparr) read as a *copy* icon and `HardDrives` (portal) as a letter *B* — vision
+checks on the rendered PNGs, not guesses. The mark is now **`fill` weight at 75 %** (24 px glyph in a
+32 px box), and the glyphs are `Stack` (swiparr) and `SquaresFour` (portal). All five now read at 32 px:
+stack/layers, 2×2 grid, split/fork, pen nib, gamepad. §13 of `rules.md` records both changes.
+
+**Enforcement.** `brand:check` fails on a missing `mark.glyph`, a glyph that is not in Phosphor, a
+missing asset, or a hash mismatch. Proven: appending one comment line to `marks/swiparr/favicon.svg`
+made it exit **1** with `✗ swiparr: marks/swiparr/favicon.svg is stale — run npm run marks`; restored,
+exit 0. CI runs `npm run marks && git diff --exit-code -- marks/` after Playwright installs.
+
+**Shared server.** `scripts/lib/serve.mjs` now holds the static server `sink-check` used to inline;
+`sink` is still `4 runs · 51 fixtures · clean ✓`.
+
+**Showcase.** A "Marks" section renders every project's light, dark and 64 px mark; `marks/` is copied
+into `showcase/dist/` so the page is self-contained. `showcase` → `brands 5 · css 31.0 KB · html 27.2 KB`.
+
+**Gate C, measured:**
+
+```
+marks  5 projects → marks/ · manifest.json
+brand  5 brands × 2 modes ✓  AA + lightness band + categorical passed
+marks  5 projects ✓  glyph + assets + hashes current
+sink   4 runs · 51 fixtures · clean ✓
 ```
