@@ -95,6 +95,24 @@ export function chartRamp(accent, mode) {
   return RAMP[mode].map((l) => formatOklch({ l, c: chroma * (l > 0.7 ? 0.75 : 1), h: hue }));
 }
 
+/**
+ * Six categorical steps. A categorical series is not a magnitude ramp: series are told apart by
+ * chroma and hue first, lightness second. Chromatic brands lead with the accent and continue with
+ * neutrals; achromatic brands get six neutrals, because a near-black accent cannot anchor a set.
+ */
+const CAT_LADDER = {
+  light: [0.88, 0.76, 0.64, 0.52, 0.4, 0.28],
+  dark: [0.9, 0.78, 0.66, 0.54, 0.42, 0.3],
+};
+
+export function categoricalRamp(accent, mode) {
+  const { c } = parseColor(accent);
+  const achromatic = c < 0.03;
+  const neutrals = CAT_LADDER[mode].map((l) => formatOklch({ l, c: 0.006, h: SIGNAL_HUE }));
+  if (achromatic) return neutrals;
+  return [accent, ...neutrals.slice(1)];
+}
+
 /** Smallest angular distance between two hues, in degrees. */
 export function hueDistance(a, b) {
   const d = Math.abs(((a - b) % 360 + 360) % 360);

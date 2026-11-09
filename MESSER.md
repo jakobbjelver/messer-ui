@@ -1,6 +1,6 @@
 # MESSER.md — <project>
 
-Port: **1 (React)** · Brand: **`brand-<project>`** · Sink: **`/_ui`**
+Port: **1 (React)** · Brand: **`brand-<project>`** · Sink: **`/_ui`** · Canon: **`2.0.0`**
 
 ## Adoption
 
@@ -14,7 +14,7 @@ npx shadcn@latest add jakobbjelver/messer-ui/messer-style \
 ## Local decisions
 
 Things this project owns: layout, navigation shape, logo, copy. Nothing visual outside
-[`canon/rules.md`](../messer-ui/canon/rules.md) §11.
+[`canon/rules.md`](../messer-ui/canon/rules.md) §14.
 
 ## Deviations
 

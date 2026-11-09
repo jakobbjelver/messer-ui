@@ -3,7 +3,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { parseColor, contrast, accentFg, hueDistance, chartRamp, STATUS_HUES } from "./lib/color.mjs";
+import { parseColor, contrast, accentFg, hueDistance, chartRamp, categoricalRamp, STATUS_HUES } from "./lib/color.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const tokens = JSON.parse(fs.readFileSync(path.join(ROOT, "canon/tokens.json"), "utf8"));
@@ -33,6 +33,7 @@ for (const brand of brands) {
     const status = Object.entries(STATUS_HUES).map(([k, hue]) => [k, hueDistance(h, hue)]);
     const [nearestName, nearest] = status.sort((a, b) => a[1] - b[1])[0];
     const ramp = chartRamp(accent, mode);
+    const cats = categoricalRamp(accent, mode);
 
     const band = mode === "light" ? l <= 0.55 : l >= 0.62;
     Object.entries({ fgContrast, textContrast, mutedContrast }).forEach(([k, v]) => {
@@ -42,6 +43,23 @@ for (const brand of brands) {
     if (!band) fails.push(`${brand.project}/${mode}: L ${l.toFixed(3)} outside band`);
     if (c > 0.03 && nearest < 12) {
       warns.push(`${brand.project}/${mode}: accent is ${nearest.toFixed(1)}° from status ${nearestName} — allowed, status is never colour-only (rule 8)`);
+    }
+
+    // Categorical steps are told apart by lightness, chroma or hue — in that order of reliability.
+    for (let i = 0; i < cats.length; i++) {
+      for (let j = i + 1; j < cats.length; j++) {
+        const A = parseColor(cats[i]), B = parseColor(cats[j]);
+        const dL = Math.abs(A.l - B.l);
+        const dC = Math.abs(A.c - B.c);
+        let dH = Math.abs(A.h - B.h);
+        if (dH > 180) dH = 360 - dH;
+        if (dL < 0.1 && dC < 0.02 && dH < 12) {
+          fails.push(
+            `${brand.project}/${mode}: cat-${i + 1} ≈ cat-${j + 1} ` +
+            `(ΔL ${dL.toFixed(2)}, ΔC ${dC.toFixed(3)}, ΔH ${dH.toFixed(0)}°)`,
+          );
+        }
+      }
     }
 
     rows.push({
@@ -70,4 +88,4 @@ if (fails.length) {
   for (const f of fails) console.error("  ✗ " + f);
   process.exit(1);
 }
-console.log(`\nbrand  ${brands.length} brands × 2 modes ✓  AA + lightness band passed`);
+console.log(`\nbrand  ${brands.length} brands × 2 modes ✓  AA + lightness band + categorical passed`);

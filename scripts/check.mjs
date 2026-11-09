@@ -114,7 +114,8 @@ if (app) {
     return out;
   };
   // styles/messer/* is the generated canon itself — its literals are the tokens.
-  for (const file of walk(app).filter((f) => !f.includes("/styles/messer/"))) {
+  const sourceFiles = walk(app);
+  for (const file of sourceFiles.filter((f) => !f.includes("/styles/messer/"))) {
     const src = fs.readFileSync(file, "utf8");
     const rel = path.relative(app, file);
     if (/from\s+["']lucide-react["']/.test(src)) fails.push(`${rel}: imports lucide-react`);
@@ -122,6 +123,19 @@ if (app) {
     if (hex.length) warns.push(`${rel}: ${hex.length} hex literal(s) ${[...new Set(hex)].slice(0, 3).join(" ")}`);
     if (/rounded-full/.test(src) && !/avatar|smooth-avatar|scroll-area|slider/.test(rel))
       warns.push(`${rel}: rounded-full outside the whitelist`);
+  }
+
+  // canon version: the installed theme.css is a copy of ours; a stale copy is how a rule change
+  // goes unnoticed for months.
+  const themeFile = sourceFiles.find((f) => /\/styles\/messer\/theme\.css$/.test(f));
+  const canonVersion = JSON.parse(fs.readFileSync(path.join(ROOT, "package.json"), "utf8")).version;
+  if (themeFile) {
+    const m = fs.readFileSync(themeFile, "utf8").match(/messer-ui canon ([\d.]+)/);
+    const rel = path.relative(app, themeFile);
+    if (!m) warns.push(`${rel}: no canon version header — re-run scripts/install.mjs`);
+    else if (m[1] !== canonVersion) warns.push(`${rel}: canon ${m[1]} ≠ ${canonVersion} — re-run scripts/install.mjs`);
+  } else {
+    warns.push(`no styles/messer/theme.css — canon version unknown (registry install?)`);
   }
 }
 

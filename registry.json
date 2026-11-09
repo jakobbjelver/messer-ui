@@ -37,6 +37,12 @@
           "--color-chart-3": "var(--chart-3)",
           "--color-chart-4": "var(--chart-4)",
           "--color-chart-5": "var(--chart-5)",
+          "--color-chart-cat-1": "var(--chart-cat-1)",
+          "--color-chart-cat-2": "var(--chart-cat-2)",
+          "--color-chart-cat-3": "var(--chart-cat-3)",
+          "--color-chart-cat-4": "var(--chart-cat-4)",
+          "--color-chart-cat-5": "var(--chart-cat-5)",
+          "--color-chart-cat-6": "var(--chart-cat-6)",
           "--radius-sm": "0px",
           "--radius-md": "0px",
           "--radius-lg": "0px",
@@ -72,7 +78,13 @@
           "--chart-2": "oklch(0.7 0.02 205)",
           "--chart-3": "oklch(0.58 0.02 205)",
           "--chart-4": "oklch(0.46 0.02 205)",
-          "--chart-5": "oklch(0.34 0.02 205)"
+          "--chart-5": "oklch(0.34 0.02 205)",
+          "--chart-cat-1": "oklch(0.88 0.006 205)",
+          "--chart-cat-2": "oklch(0.76 0.006 205)",
+          "--chart-cat-3": "oklch(0.64 0.006 205)",
+          "--chart-cat-4": "oklch(0.52 0.006 205)",
+          "--chart-cat-5": "oklch(0.4 0.006 205)",
+          "--chart-cat-6": "oklch(0.28 0.006 205)"
         },
         "dark": {
           "--radius": "0px",
@@ -99,7 +111,13 @@
           "--chart-2": "oklch(0.74 0.015 205)",
           "--chart-3": "oklch(0.62 0.02 205)",
           "--chart-4": "oklch(0.5 0.02 205)",
-          "--chart-5": "oklch(0.38 0.02 205)"
+          "--chart-5": "oklch(0.38 0.02 205)",
+          "--chart-cat-1": "oklch(0.9 0.006 205)",
+          "--chart-cat-2": "oklch(0.78 0.006 205)",
+          "--chart-cat-3": "oklch(0.66 0.006 205)",
+          "--chart-cat-4": "oklch(0.54 0.006 205)",
+          "--chart-cat-5": "oklch(0.42 0.006 205)",
+          "--chart-cat-6": "oklch(0.3 0.006 205)"
         }
       }
     },
@@ -284,7 +302,13 @@
           "--chart-2": "oklch(0.7 0.1 205)",
           "--chart-3": "oklch(0.58 0.1 205)",
           "--chart-4": "oklch(0.46 0.1 205)",
-          "--chart-5": "oklch(0.34 0.1 205)"
+          "--chart-5": "oklch(0.34 0.1 205)",
+          "--chart-cat-1": "oklch(0.52 0.10 205)",
+          "--chart-cat-2": "oklch(0.76 0.006 205)",
+          "--chart-cat-3": "oklch(0.64 0.006 205)",
+          "--chart-cat-4": "oklch(0.52 0.006 205)",
+          "--chart-cat-5": "oklch(0.4 0.006 205)",
+          "--chart-cat-6": "oklch(0.28 0.006 205)"
         },
         "dark": {
           "--primary": "oklch(0.72 0.10 205)",
@@ -294,7 +318,13 @@
           "--chart-2": "oklch(0.74 0.075 205)",
           "--chart-3": "oklch(0.62 0.1 205)",
           "--chart-4": "oklch(0.5 0.1 205)",
-          "--chart-5": "oklch(0.38 0.1 205)"
+          "--chart-5": "oklch(0.38 0.1 205)",
+          "--chart-cat-1": "oklch(0.72 0.10 205)",
+          "--chart-cat-2": "oklch(0.78 0.006 205)",
+          "--chart-cat-3": "oklch(0.66 0.006 205)",
+          "--chart-cat-4": "oklch(0.54 0.006 205)",
+          "--chart-cat-5": "oklch(0.42 0.006 205)",
+          "--chart-cat-6": "oklch(0.3 0.006 205)"
         }
       }
     },
@@ -313,7 +343,13 @@
           "--chart-2": "oklch(0.7 0.02 205)",
           "--chart-3": "oklch(0.58 0.02 205)",
           "--chart-4": "oklch(0.46 0.02 205)",
-          "--chart-5": "oklch(0.34 0.02 205)"
+          "--chart-5": "oklch(0.34 0.02 205)",
+          "--chart-cat-1": "oklch(0.88 0.006 205)",
+          "--chart-cat-2": "oklch(0.76 0.006 205)",
+          "--chart-cat-3": "oklch(0.64 0.006 205)",
+          "--chart-cat-4": "oklch(0.52 0.006 205)",
+          "--chart-cat-5": "oklch(0.4 0.006 205)",
+          "--chart-cat-6": "oklch(0.28 0.006 205)"
         },
         "dark": {
           "--primary": "oklch(0.92 0.004 260)",
@@ -323,7 +359,13 @@
           "--chart-2": "oklch(0.74 0.015 205)",
           "--chart-3": "oklch(0.62 0.02 205)",
           "--chart-4": "oklch(0.5 0.02 205)",
-          "--chart-5": "oklch(0.38 0.02 205)"
+          "--chart-5": "oklch(0.38 0.02 205)",
+          "--chart-cat-1": "oklch(0.9 0.006 205)",
+          "--chart-cat-2": "oklch(0.78 0.006 205)",
+          "--chart-cat-3": "oklch(0.66 0.006 205)",
+          "--chart-cat-4": "oklch(0.54 0.006 205)",
+          "--chart-cat-5": "oklch(0.42 0.006 205)",
+          "--chart-cat-6": "oklch(0.3 0.006 205)"
         }
       }
     },
@@ -342,7 +384,13 @@
           "--chart-2": "oklch(0.7 0.135 155)",
           "--chart-3": "oklch(0.58 0.135 155)",
           "--chart-4": "oklch(0.46 0.135 155)",
-          "--chart-5": "oklch(0.34 0.135 155)"
+          "--chart-5": "oklch(0.34 0.135 155)",
+          "--chart-cat-1": "oklch(0.53 0.135 155)",
+          "--chart-cat-2": "oklch(0.76 0.006 205)",
+          "--chart-cat-3": "oklch(0.64 0.006 205)",
+          "--chart-cat-4": "oklch(0.52 0.006 205)",
+          "--chart-cat-5": "oklch(0.4 0.006 205)",
+          "--chart-cat-6": "oklch(0.28 0.006 205)"
         },
         "dark": {
           "--primary": "oklch(0.74 0.13 155)",
@@ -352,7 +400,13 @@
           "--chart-2": "oklch(0.74 0.0975 155)",
           "--chart-3": "oklch(0.62 0.13 155)",
           "--chart-4": "oklch(0.5 0.13 155)",
-          "--chart-5": "oklch(0.38 0.13 155)"
+          "--chart-5": "oklch(0.38 0.13 155)",
+          "--chart-cat-1": "oklch(0.74 0.13 155)",
+          "--chart-cat-2": "oklch(0.78 0.006 205)",
+          "--chart-cat-3": "oklch(0.66 0.006 205)",
+          "--chart-cat-4": "oklch(0.54 0.006 205)",
+          "--chart-cat-5": "oklch(0.42 0.006 205)",
+          "--chart-cat-6": "oklch(0.3 0.006 205)"
         }
       }
     },
@@ -371,7 +425,13 @@
           "--chart-2": "oklch(0.7 0.02 205)",
           "--chart-3": "oklch(0.58 0.02 205)",
           "--chart-4": "oklch(0.46 0.02 205)",
-          "--chart-5": "oklch(0.34 0.02 205)"
+          "--chart-5": "oklch(0.34 0.02 205)",
+          "--chart-cat-1": "oklch(0.88 0.006 205)",
+          "--chart-cat-2": "oklch(0.76 0.006 205)",
+          "--chart-cat-3": "oklch(0.64 0.006 205)",
+          "--chart-cat-4": "oklch(0.52 0.006 205)",
+          "--chart-cat-5": "oklch(0.4 0.006 205)",
+          "--chart-cat-6": "oklch(0.28 0.006 205)"
         },
         "dark": {
           "--primary": "oklch(0.92 0.004 260)",
@@ -381,7 +441,13 @@
           "--chart-2": "oklch(0.74 0.015 205)",
           "--chart-3": "oklch(0.62 0.02 205)",
           "--chart-4": "oklch(0.5 0.02 205)",
-          "--chart-5": "oklch(0.38 0.02 205)"
+          "--chart-5": "oklch(0.38 0.02 205)",
+          "--chart-cat-1": "oklch(0.9 0.006 205)",
+          "--chart-cat-2": "oklch(0.78 0.006 205)",
+          "--chart-cat-3": "oklch(0.66 0.006 205)",
+          "--chart-cat-4": "oklch(0.54 0.006 205)",
+          "--chart-cat-5": "oklch(0.42 0.006 205)",
+          "--chart-cat-6": "oklch(0.3 0.006 205)"
         }
       }
     },
@@ -400,7 +466,13 @@
           "--chart-2": "oklch(0.7 0.13 300)",
           "--chart-3": "oklch(0.58 0.13 300)",
           "--chart-4": "oklch(0.46 0.13 300)",
-          "--chart-5": "oklch(0.34 0.13 300)"
+          "--chart-5": "oklch(0.34 0.13 300)",
+          "--chart-cat-1": "oklch(0.52 0.13 300)",
+          "--chart-cat-2": "oklch(0.76 0.006 205)",
+          "--chart-cat-3": "oklch(0.64 0.006 205)",
+          "--chart-cat-4": "oklch(0.52 0.006 205)",
+          "--chart-cat-5": "oklch(0.4 0.006 205)",
+          "--chart-cat-6": "oklch(0.28 0.006 205)"
         },
         "dark": {
           "--primary": "oklch(0.70 0.13 300)",
@@ -410,7 +482,13 @@
           "--chart-2": "oklch(0.74 0.0975 300)",
           "--chart-3": "oklch(0.62 0.13 300)",
           "--chart-4": "oklch(0.5 0.13 300)",
-          "--chart-5": "oklch(0.38 0.13 300)"
+          "--chart-5": "oklch(0.38 0.13 300)",
+          "--chart-cat-1": "oklch(0.70 0.13 300)",
+          "--chart-cat-2": "oklch(0.78 0.006 205)",
+          "--chart-cat-3": "oklch(0.66 0.006 205)",
+          "--chart-cat-4": "oklch(0.54 0.006 205)",
+          "--chart-cat-5": "oklch(0.42 0.006 205)",
+          "--chart-cat-6": "oklch(0.3 0.006 205)"
         }
       }
     }

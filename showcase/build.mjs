@@ -9,6 +9,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { accentFg, chartRamp, categoricalRamp } from "../scripts/lib/color.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const OUT = path.join(ROOT, "showcase", "dist");
@@ -34,38 +35,9 @@ function tokenMap(theme) {
   return map;
 }
 
-/** oklch(30% .008 260) | #141414 → { l, c, h } so we can derive a ramp and pick ink. */
-function parseColor(value) {
-  const oklch = /oklch\(\s*([\d.]+)(%?)\s+([\d.]+)\s+([\d.]+)/.exec(value);
-  if (oklch) {
-    const l = oklch[2] === "%" ? Number(oklch[1]) / 100 : Number(oklch[1]);
-    return { l, c: Number(oklch[3]), h: Number(oklch[4]) };
-  }
-  const hex = /^#([0-9a-f]{6})$/i.exec(value);
-  if (hex) {
-    const n = parseInt(hex[1], 16);
-    const [r, g, b] = [(n >> 16) & 255, (n >> 8) & 255, n & 255].map((v) => {
-      const s = v / 255;
-      return s <= 0.04045 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4;
-    });
-    const lin = 0.2126 * r + 0.7152 * g + 0.0722 * b;
-    // crude but monotone: enough to rank light against dark for the ink choice
-    return { l: Math.cbrt(lin), c: 0, h: 0 };
-  }
-  return { l: 0.5, c: 0, h: 0 };
-}
-
-/** Text ink for a filled accent: light fills take dark ink, dark fills take white. */
-const inkFor = (accent) => (parseColor(accent).l >= 0.62 ? "#0a0a0a" : "#ffffff");
-
-/** Five-step chart ramp from the accent's hue, per rule 7. */
-function ramp(accent, dark) {
-  const { c, h } = parseColor(accent);
-  const hue = h || 260;
-  const chroma = Math.max(0.008, Math.min(c, 0.16)) * (dark ? 0.6 : 1);
-  const steps = dark ? [0.86, 0.74, 0.62, 0.5, 0.38] : [0.82, 0.7, 0.58, 0.46, 0.34];
-  return steps.map((l) => `oklch(${l} ${chroma.toFixed(3)} ${hue})`);
-}
+/** Colour derivation lives in scripts/lib/color.mjs — the showcase imports it so the page cannot
+ *  describe a ramp the canon does not ship. (It used to re-implement the ramp with different chroma
+ *  rules; that is exactly the drift this showcase exists to prevent.) */
 
 const icon = (name) => {
   const file = path.join(ICONS, `${name}.svg`);
@@ -83,14 +55,16 @@ const brandCss = brands
   .map((b) => {
     const light = b.accent.light;
     const dark = b.accent.dark;
-    const lr = ramp(light, false);
-    const dr = ramp(dark, true);
-    return `.brand-${b.project}{--primary:${light};--primary-foreground:${inkFor(light)};--ring:${light};${lr
-      .map((v, i) => `--chart-${i + 1}:${v};`)
-      .join("")}}
-.brand-${b.project}.dark{--primary:${dark};--primary-foreground:${inkFor(dark)};--ring:${dark};${dr
-      .map((v, i) => `--chart-${i + 1}:${v};`)
-      .join("")}}`;
+    const lr = chartRamp(light, "light");
+    const dr = chartRamp(dark, "dark");
+    const lc = categoricalRamp(light, "light");
+    const dc = categoricalRamp(dark, "dark");
+    const vars = (seq, cat) =>
+      `${seq.map((v, i) => `--chart-${i + 1}:${v};`).join("")}${cat
+        .map((v, i) => `--chart-cat-${i + 1}:${v};`)
+        .join("")}`;
+    return `.brand-${b.project}{--primary:${light};--primary-foreground:${accentFg(light)};--ring:${light};${vars(lr, lc)}}
+.brand-${b.project}.dark{--primary:${dark};--primary-foreground:${accentFg(dark)};--ring:${dark};${vars(dr, dc)}}`;
   })
   .join("\n");
 
@@ -278,6 +252,14 @@ const html = `<!doctype html>
           <div class="ramp" aria-hidden="true">${[1, 2, 3, 4, 5].map((i) => `<span style="background:var(--chart-${i})"></span>`).join("")}</div>
           <div class="row" style="justify-content:space-between">${[1, 2, 3, 4, 5].map((i) => `<span class="m-data">chart-${i}</span>`).join("")}</div>
           <p class="m-hint" style="margin:0">Five steps at the accent's hue and chroma, lightness walking 0.82 → 0.34 (rule 7). Switch brands to see it move; the values are computed at build time, so they cannot drift from the accent.</p>
+        </div>
+      </div>
+      <div class="m-panel">
+        <div class="m-panel__head"><h3 class="m-panel__title">Categorical</h3><span class="m-data">six series</span></div>
+        <div class="m-panel__body stack">
+          <div class="ramp" aria-hidden="true">${[1, 2, 3, 4, 5, 6].map((i) => `<span style="background:var(--chart-cat-${i})"></span>`).join("")}</div>
+          <div class="row" style="justify-content:space-between">${[1, 2, 3, 4, 5, 6].map((i) => `<span class="m-data">cat-${i}</span>`).join("")}</div>
+          <p class="m-hint" style="margin:0">A categorical set is not a magnitude ramp: the accent leads and neutrals follow, so a chart never becomes a rainbow. Achromatic brands get six neutrals.</p>
         </div>
       </div>
     </div>

@@ -211,7 +211,7 @@ that steps 1–2 share the accent hue.
 npm run brand:check          # 5 brands × 2 modes, cat ramp ΔL reported
 npm run build                # registry + css + sprite
 npm run showcase             # builds with the new section
-grep -c "^## " canon/rules.md   # 15 sections, no dangling § references
+grep -cE "^#{1,2} [0-9]+\." canon/rules.md   # 15 numbered sections, no dangling § references
 ```
 
 Paste the brand-check table and the section list into the rev note.
@@ -683,3 +683,56 @@ swiparr and portal; registry `page-header`/`status-badge` confirmed identical to
 differing in swiparr only by its `paused` patch.
 
 No files changed outside this plan. Nothing executed.
+
+### rev 1 — 2026-11-09 (Phase 0 executed, gate A passed)
+
+**Scanner.** `scripts/dupes.mjs` + `scripts/apps.json` + `scripts/atoms.json` (43 vendored names,
+exempt from the gate). Scan: **287 `.tsx` across 5 apps · 15 exact pairs · 18 near pairs ≥ 0.80**.
+The exact pairs split 12 vendored / 3 ours — `hybrid-tooltip` (swiparr ⇄ portal), `status-badge`
+(portal ⇄ ai-router), `page-header` (portal ⇄ ai-router). `canon/duplicates.baseline.json` committed.
+
+Gate proven, not assumed: deleting the `hybrid-tooltip` key from the baseline made
+`--fail-on new` exit **1** with `✗ 1 new custom duplicate(s): hybrid-tooltip.tsx: swiparr:… ⇄ portal:…`;
+restored, it prints `dupes  no new custom duplicates ✓` and exits 0.
+
+**Baseline (static pass).** swiparr `0 fails · 12 warns` · portal `0 · 8` · ai-router `0 · 3` ·
+site `0 · 196` (exempt) · request-games `0 · 5`. messer-ui's own sink: `sink clean ✓ · 51 fixtures`,
+css 25.7 KB raw / 5.7 KB gzip.
+
+**Freeze.** Port 2 is frozen in `canon/rules.md` (capability matrix), `README.md`, `MESSER.md` and the
+`recipes.css` header: atoms only, no new recipes, exit = request-games becomes port 1.
+
+### rev 2 — 2026-11-09 (Phase 1 executed, gate B passed)
+
+**Rules.** `canon/rules.md` now has **15 numbered sections**: §11 States, §12 Copy, §13 The mark;
+"What a project may choose" moved to §14, "Deviations" to §15. The intro cross-reference was updated;
+`grep -rn "§11\|§12"` finds no dangling reference. `canon/states.json` is the machine copy of §11.
+
+**Version.** `package.json` → **2.0.0**; `build-registry.mjs` stamps
+`/* messer-ui canon 2.0.0 — generated… */` into `theme.css`, `type.css` and every
+`brand/<project>.css`. `check --app` reads the installed `styles/messer/theme.css` and warns when the
+header is missing or behind. Swiparr currently reports
+`src/styles/messer/theme.css: no canon version header — re-run scripts/install.mjs` — the expected
+state until Phase 6 reinstalls tokens.
+
+**Categorical ramp.** `categoricalRamp()` in `scripts/lib/color.mjs`: six steps, the accent followed by
+five neutrals, or six neutrals for achromatic brands. Emitted as `--chart-cat-1..6` in theme, brand CSS
+and registry `cssVars`; `brand:check` asserts every pair differs by ΔL ≥ 0.10, ΔC ≥ 0.02 or ΔH ≥ 12°;
+the showcase has a Categorical panel.
+
+**A real drift found and fixed.** `showcase/build.mjs` re-implemented the chart ramp instead of
+importing it: `max(0.008, …)` chroma against the canon's `max(0.04, …)`, and dark-mode chroma × 0.6.
+The page claimed "values are computed at build time, so they cannot drift" while drifting. It now
+imports `accentFg`, `chartRamp` and `categoricalRamp` from `scripts/lib/color.mjs`, and the local
+`parseColor`/`inkFor`/`ramp` copies are deleted.
+
+**Gate B, measured:**
+
+```
+brand  5 brands × 2 modes ✓  AA + lightness band + categorical passed
+registry validate  ✔ Registry is valid.  ✔ Checked 1 registry file and 11 items.
+sink  4 runs · 51 fixtures · sink clean ✓
+css   26.3 KB raw · 5.8 KB gzip
+showcase  brands 5 · css 31.0 KB · html 23.8 KB
+sections  15
+```

@@ -1,7 +1,7 @@
 # The ten rules
 
 The fingerprint. A project may look like itself; it may not look like a different family. Anything a
-project is allowed to choose is listed under §11. Everything here is fixed.
+project is allowed to choose is listed under §14. Everything here is fixed.
 
 ## 1. Square corners
 
@@ -113,7 +113,51 @@ surface from these three values — not by inventing a fourth height or by scali
 
 ---
 
-# 11. What a project may choose
+# 11. States
+
+Rules 1–10 fix how a surface *looks at rest*. These fix what it does when touched. Every port measures
+them; `canon/states.json` is the machine copy of this table.
+
+| State | Spec |
+|---|---|
+| hover | exactly one surface step (`surface` → `surface-2`), `--dur-fast` (120 ms), no shadow, no scale, no movement. **Only on an element that is clickable — hover is a promise.** |
+| focus-visible | 2 px `--ring`, 2 px offset, square. Never removed, never replaced by a border. |
+| active | the hover step. No press animation, no transform, no colour change. |
+| selected | 8–10 % accent tint + a 2 px accent rule (left in a sidebar, bottom in a topbar). Never a filled accent row. |
+| disabled | text at 40–50 % opacity, no hover state, `aria-disabled` — not `pointer-events: none`, so it stays focusable and announced. |
+| loading | skeleton for content, spinner for an action. Never both in one region. |
+
+Transitions use `--dur-fast` and `--ease`; only `background-color`, `border-color`, `color`, `opacity`
+and `transform` may animate. `prefers-reduced-motion: reduce` removes all of it. A hover that changes
+layout is a bug, not a flourish.
+
+# 12. Copy
+
+The system does not own a voice, but it owns the small words that appear in every app.
+
+- **Verbs.** `Save`, `Cancel`, `Delete`, `Create`, `Retry`. Not `Update` for a save, not `Apply`, not
+  `Submit`, not `OK` in a destructive dialog.
+- **Empty state.** What this is, why it is empty, one action. No illustration required.
+- **Error.** What happened, then what to do. No blame, no "Oops", no exclamation marks.
+- **Confirmation.** Name the object and the count — "Delete 3 requests?", never "Are you sure?".
+- **Dates and numbers.** Absolute date in `title`, relative in the label; numbers are tabular (rule 6).
+- **Case.** Sentence case everywhere except the meta label (rule 5).
+
+# 13. The mark
+
+Every project has one mark, generated from its brand file — never drawn by hand.
+
+- Square, monochrome: an ink box with a paper glyph. The box is `--foreground`, the glyph is
+  `--background`; inverted for dark surfaces.
+- Glyph = 62.5 % of the box (20 px in 32, 40 px in 64), Phosphor `regular`, centred.
+- Never the accent (rule 7: the accent is a signal, not decoration), never a gradient, never rounded.
+- One glyph per project, chosen in `brand/<project>.json`. `npm run marks` emits favicon, dark
+  favicon, apple-touch icon, OG image and a hash manifest; `brand:check` fails when they are stale.
+
+The mark is the only place a project's identity may be a picture. Everything else is type, space and
+one accent.
+
+# 14. What a project may choose
 
 | Variable | Fixed | Chosen |
 |---|---|---|
@@ -134,6 +178,8 @@ surface from these three values — not by inventing a fourth height or by scali
 - `accentFg` is **computed** (white vs `#0a0a0a`, whichever contrasts more) — never hand-picked.
 - Chart ramp: five steps of the accent's hue at L .82/.70/.58/.46/.34 (light) and .86/.74/.62/.50/.38
   (dark). Achromatic brands borrow hue 205 (the family signal hue) at low chroma.
+- Categorical ramp: six steps — the accent followed by five neutrals, or six neutrals when the accent
+  is achromatic. Series are told apart by chroma and hue first, lightness second; never a rainbow.
 - `npm run brand:check` asserts all of it and exits 1 on failure.
 
 ## Capability matrix
@@ -163,7 +209,7 @@ Port 3 (SwiftUI/Flutter) is a lookalike: it consumes `canon/tokens.json` and mus
 
 ---
 
-# 12. Deviations
+# 15. Deviations
 
 A project may deviate. It must say so, in its own `MESSER.md`, dated, with the rule number and the
 exit condition:

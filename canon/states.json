@@ -1,0 +1,25 @@
+{
+  "$description": "Interaction contract. Prose is canon/rules.md §11; scripts/check.mjs measures these deltas against a rendered sink. Values are the family defaults, not per-app settings.",
+  "hover": {
+    "surfaceStep": 1,
+    "durationMaxMs": 200,
+    "forbid": ["box-shadow", "transform"]
+  },
+  "focusVisible": {
+    "outlineWidth": 2,
+    "outlineOffset": 2,
+    "outlineToken": "--ring"
+  },
+  "disabled": {
+    "textOpacityMax": 0.55,
+    "forbidCursor": "pointer"
+  },
+  "selected": {
+    "accentMixMax": 0.14,
+    "ruleWidth": 2
+  },
+  "loading": {
+    "skeletonFor": "content",
+    "spinnerFor": "action"
+  }
+}
