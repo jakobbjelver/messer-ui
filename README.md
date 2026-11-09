@@ -22,7 +22,7 @@ port 3  lookalike SwiftUI / Flutter, tokens only        later
 | 2 | Hairline borders; no shadows except overlays; no gradients, glass or blur | Depth is not decoration, it means "this floats above" |
 | 3 | Mono is the machine voice: h3–h6, labels, numbers, IDs, timestamps, table heads, code | Data should look like data at a glance |
 | 4 | Golos is the human voice: h1–h2, body, buttons, form values, descriptions | Reading is not data entry |
-| 5 | Labels are 10.5px uppercase, `.1em` tracking, tertiary colour | One label style, everywhere, forever |
+| 5 | Meta labels: 10.5px mono uppercase, `.1em` tracking. Field labels: sentence-case 14/500 | Meta is machine voice, fields are human voice |
 | 6 | Numbers are tabular and right-aligned in tables | Columns must line up |
 | 7 | Exactly one accent per project; everything else neutral | Identity is a signal, not a palette |
 | 8 | Status is always icon + label; colour reinforces, never carries meaning alone | Colour-blind safe by construction |

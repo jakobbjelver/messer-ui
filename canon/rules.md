@@ -38,10 +38,18 @@ h1, h2 { font-family: var(--font-sans); letter-spacing: -.02em }
 h3, h4, h5, h6 { font-family: var(--font-mono) }
 ```
 
-## 5. One label style
+## 5. One label style — for meta, not for fields
 
-10.5px, uppercase, `letter-spacing: .1em`, weight 500, `--text-3`. Used for field labels, section
-eyebrows, table headers, stat captions. There is no second label style and no sentence-case label.
+**Meta label:** 10.5px mono, uppercase, `letter-spacing: .1em`, weight 500, `--text-3`. Used for
+section eyebrows, table headers, stat captions, column heads, breadcrumbs. There is exactly one of
+these — no second size, no sentence-case variant.
+
+**Field label:** sentence-case sans, 14px/500, `--text`. A field label is read immediately before
+typing, so it stays in the human voice and keeps its case; all-caps there measurably slows scanning
+and shouts in a form with a dozen rows.
+
+The distinction is the rule: *meta* text is mono-caps, *form* text is prose. Both are fixed — a
+project may not invent a third label style.
 
 ## 6. Tabular numbers
 
