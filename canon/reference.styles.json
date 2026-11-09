@@ -1,5 +1,5 @@
 {
-  "capturedAt": "2026-11-09T07:18:19.172Z",
+  "capturedAt": "2026-11-09T13:57:58.366Z",
   "source": "http://127.0.0.1:3001/ui",
   "themes": {
     "light": {
@@ -394,7 +394,7 @@
           "fontWeight": "500",
           "lineHeight": "16px",
           "letterSpacing": "normal",
-          "color": "rgb(20, 20, 20)",
+          "color": "rgb(33, 128, 65)",
           "backgroundColor": "rgba(0, 0, 0, 0)",
           "borderRadius": "0px",
           "borderTopWidth": "1px",
@@ -985,7 +985,7 @@
           "fontWeight": "500",
           "lineHeight": "16px",
           "letterSpacing": "normal",
-          "color": "rgb(242, 242, 242)",
+          "color": "rgb(99, 179, 118)",
           "backgroundColor": "rgba(0, 0, 0, 0)",
           "borderRadius": "0px",
           "borderTopWidth": "1px",
