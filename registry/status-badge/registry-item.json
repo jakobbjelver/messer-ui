@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "type": "registry:ui",
+  "name": "status-badge",
+  "title": "Messer UI — status badge",
+  "description": "Rule 8 as a component: icon + label, colour reinforcing only. Four statuses, one shape.",
+  "files": [
+    {
+      "path": "registry/status-badge/status-badge.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/status-badge.tsx"
+    }
+  ],
+  "registryDependencies": [
+    "badge"
+  ]
+}

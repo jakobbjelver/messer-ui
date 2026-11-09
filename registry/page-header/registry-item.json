@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "type": "registry:ui",
+  "name": "page-header",
+  "title": "Messer UI — page header",
+  "description": "Eyebrow (mono), title (h1, human voice), optional description and right-aligned actions.",
+  "files": [
+    {
+      "path": "registry/page-header/page-header.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/page-header.tsx"
+    }
+  ]
+}

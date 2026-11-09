@@ -15,6 +15,7 @@ const arg = (n, d) => {
   return i > -1 ? process.argv[i + 1] : d;
 };
 const JSON_OUT = process.argv.includes("--json");
+const STATIC_ONLY = process.argv.includes("--static");
 const profile = arg("--profile", "full");
 
 function loadPlaywright() {
@@ -29,18 +30,21 @@ function loadPlaywright() {
 
 const url = arg("--url");
 const app = arg("--app");
-const reference = JSON.parse(fs.readFileSync(path.join(ROOT, "canon/reference.styles.json"), "utf8"));
-if (!url) {
-  console.error("usage: node scripts/check.mjs --url <sink-url> [--app <dir>] [--profile full|atoms] [--json]");
+if (!url && !(STATIC_ONLY && app)) {
+  console.error("usage: node scripts/check.mjs --url <sink-url> [--app <dir>] [--profile full|atoms] [--static] [--json]");
   process.exit(1);
 }
+const reference = STATIC_ONLY
+  ? null
+  : JSON.parse(fs.readFileSync(path.join(ROOT, "canon/reference.styles.json"), "utf8"));
 
 const fails = [];
 const warns = [];
-const { chromium } = loadPlaywright();
-const browser = await chromium.launch();
 
-for (const theme of ["light", "dark"]) {
+const runs = STATIC_ONLY ? [] : ["light", "dark"];
+const browser = STATIC_ONLY ? null : (await loadPlaywright()).chromium.launch();
+
+for (const theme of runs) {
   const context = await browser.newContext({ viewport: { width: 1280, height: 900 }, deviceScaleFactor: 1, colorScheme: "light", reducedMotion: "reduce" });
   const page = await context.newPage();
   const errors = [];
@@ -90,7 +94,7 @@ for (const theme of ["light", "dark"]) {
   }
 }
 
-await browser.close();
+if (browser) await browser.close();
 
 // static pass
 if (app) {

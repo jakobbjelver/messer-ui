@@ -259,6 +259,24 @@ const fingerprintItem = {
   },
 };
 
+const componentItems = [
+  {
+    name: "status-badge",
+    title: "Messer UI — status badge",
+    description:
+      "Rule 8 as a component: icon + label, colour reinforcing only. Four statuses, one shape.",
+    files: [{ path: "registry/status-badge/status-badge.tsx", type: "registry:ui", target: "components/ui/status-badge.tsx" }],
+    registryDependencies: ["badge"],
+  },
+  {
+    name: "page-header",
+    title: "Messer UI — page header",
+    description:
+      "Eyebrow (mono), title (h1, human voice), optional description and right-aligned actions.",
+    files: [{ path: "registry/page-header/page-header.tsx", type: "registry:ui", target: "components/ui/page-header.tsx" }],
+  },
+].map((c) => ({ ...base, type: "registry:ui", ...c }));
+
 const agentItem = {
   ...base,
   name: "messer-agent",
@@ -281,7 +299,7 @@ const brandItems = brands.map((b) => ({
   cssVars: { light: shadcnOnly(brandVars(b, "light")), dark: shadcnOnly(brandVars(b, "dark")) },
 }));
 
-const items = [styleItem, fontsItem, fingerprintItem, agentItem, ...brandItems];
+const items = [styleItem, fontsItem, fingerprintItem, ...componentItems, agentItem, ...brandItems];
 
 write(
   "registry.json",
