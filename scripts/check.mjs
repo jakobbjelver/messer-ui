@@ -98,17 +98,23 @@ if (browser) await browser.close();
 
 // static pass
 if (app) {
+  // Walk the whole app: repos in this family keep source under src/, app/, web/ or packages/, and a
+  // scanner pointed at a fixed directory goes quietly green on everything else.
+  const SKIP_DIRS = new Set(["node_modules", ".next", ".git", ".messer-ui", "dist", "build", "out",
+    "coverage", "vendor", "__pycache__", ".turbo", ".astro", "playwright-report"]);
+  const SKIP_FILES = new Set(["app.css", "styles.css"]); // build output, not source
   const walk = (dir, out = []) => {
     if (!fs.existsSync(dir)) return out;
     for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
-      if (["node_modules", ".next", ".git"].includes(e.name)) continue;
+      if (e.isDirectory() ? SKIP_DIRS.has(e.name) : SKIP_FILES.has(e.name)) continue;
       const p = path.join(dir, e.name);
       if (e.isDirectory()) walk(p, out);
-      else if (/\.(tsx?|css)$/.test(e.name)) out.push(p);
+      else if (/\.(tsx?|jsx?|css|html|gohtml|tmpl)$/.test(e.name)) out.push(p);
     }
     return out;
   };
-  for (const file of walk(path.join(app, "src"))) {
+  // styles/messer/* is the generated canon itself — its literals are the tokens.
+  for (const file of walk(app).filter((f) => !f.includes("/styles/messer/"))) {
     const src = fs.readFileSync(file, "utf8");
     const rel = path.relative(app, file);
     if (/from\s+["']lucide-react["']/.test(src)) fails.push(`${rel}: imports lucide-react`);
