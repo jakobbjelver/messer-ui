@@ -17,6 +17,9 @@ jobs:
       - run: npm ci
       - run: npm run brand:check
       - run: npm run build
+      # the showcase is generated from the canon; a canon change that breaks it must fail here,
+      # not in the image build that deploys ui.messer.wtf
+      - run: npm run showcase
       - run: npx playwright install --with-deps chromium
       - run: npm run sink
       - uses: actions/upload-artifact@v4
