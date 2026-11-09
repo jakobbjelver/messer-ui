@@ -266,7 +266,9 @@ const componentItems = [
     description:
       "Rule 8 as a component: icon + label, colour reinforcing only. Four statuses, one shape.",
     files: [{ path: "registry/status-badge/status-badge.tsx", type: "registry:ui", target: "components/ui/status-badge.tsx" }],
-    registryDependencies: ["badge"],
+    // declared, never inferred: inference reads `cn` out of `import { cn } from "@/lib/utils"`
+    // and installs a package called cn. The badge is the app's own component, not ours to rewrite.
+    dependencies: ["@phosphor-icons/react"],
   },
   {
     name: "page-header",
@@ -274,6 +276,7 @@ const componentItems = [
     description:
       "Eyebrow (mono), title (h1, human voice), optional description and right-aligned actions.",
     files: [{ path: "registry/page-header/page-header.tsx", type: "registry:ui", target: "components/ui/page-header.tsx" }],
+    dependencies: [],
   },
 ].map((c) => ({ ...base, type: "registry:ui", ...c }));
 

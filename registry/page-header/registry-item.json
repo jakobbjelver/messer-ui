@@ -10,5 +10,6 @@
       "type": "registry:ui",
       "target": "components/ui/page-header.tsx"
     }
-  ]
+  ],
+  "dependencies": []
 }

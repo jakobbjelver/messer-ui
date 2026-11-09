@@ -231,8 +231,8 @@
           "target": "components/ui/status-badge.tsx"
         }
       ],
-      "registryDependencies": [
-        "badge"
+      "dependencies": [
+        "@phosphor-icons/react"
       ]
     },
     {
@@ -247,7 +247,8 @@
           "type": "registry:ui",
           "target": "components/ui/page-header.tsx"
         }
-      ]
+      ],
+      "dependencies": []
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",

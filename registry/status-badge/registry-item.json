@@ -11,7 +11,7 @@
       "target": "components/ui/status-badge.tsx"
     }
   ],
-  "registryDependencies": [
-    "badge"
+  "dependencies": [
+    "@phosphor-icons/react"
   ]
 }
