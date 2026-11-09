@@ -167,6 +167,14 @@ const decl = (obj, indent) =>
 const rulesToCss = (rules, indent = "  ") =>
   Object.entries(rules).map(([sel, d]) => `${indent}${sel} {\n${decl(d, indent + "  ")}\n${indent}}`).join("\n\n");
 
+// Base rules that every consumer needs from the file-based install too, not only from the
+// messer-fingerprint registry item. One definition, two outputs, so they cannot drift.
+const baseShellRules = {
+  "*": { "border-color": "var(--border)" },
+  "::selection": { "background-color": "var(--primary)", "color": "var(--primary-foreground)" },
+  ":focus-visible": { outline: "2px solid var(--ring)", "outline-offset": "2px", "border-radius": "0" },
+};
+
 write(
   "packages/css/type.css",
   `${HEADER}\n\n@layer base {\n${rulesToCss(typeRules)}\n}\n`,
@@ -191,6 +199,10 @@ ${decl(baseVars("dark", def), "  ")}
 
 @theme inline {
 ${decl(colorTheme, "  ")}
+}
+
+@layer base {
+${rulesToCss(baseShellRules)}
 }
 `,
 );
@@ -258,11 +270,9 @@ const fingerprintItem = {
   description:
     "The ten rules as CSS: heading voices, one label style, tabular numbers, hairline borders, square focus, reduced motion. No colours.",
   css: {
-    "*": { "border-color": "var(--border)" },
+    ...baseShellRules,
     html: { "-webkit-font-smoothing": "antialiased", "-moz-osx-font-smoothing": "grayscale" },
     ...typeRules,
-    "::selection": { "background-color": "var(--primary)", "color": "var(--primary-foreground)" },
-    ":focus-visible": { outline: "2px solid var(--ring)", "outline-offset": "2px", "border-radius": "0" },
   },
 };
 

@@ -49,7 +49,7 @@
 }
 .m-input::placeholder, .m-textarea::placeholder { color: var(--text-3); }
 .m-input:focus-visible, .m-textarea:focus-visible, .m-select:focus-visible {
-  outline: 2px solid var(--ring); outline-offset: 1px; border-color: var(--ring);
+  outline: 2px solid var(--ring); outline-offset: 2px; border-color: var(--ring);
 }
 .m-input[aria-invalid="true"], .m-textarea[aria-invalid="true"] { border-color: var(--destructive); }
 .m-textarea { height: auto; min-height: 78px; padding: 8px 10px; line-height: 1.5; resize: vertical; }

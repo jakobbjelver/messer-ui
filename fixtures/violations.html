@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>messer-ui — violations</title>
+<link rel="stylesheet" href="../packages/css/messer.css">
+<style>
+  /* Each rule is broken exactly once, so check-selftest can assert one message per rule. */
+  [data-fixture="hover-shadow"]:hover { background: var(--primary); box-shadow: 0 2px 6px rgb(0 0 0 / 0.25); }
+  [data-fixture="focus-none"]:focus-visible { outline: none; }
+  .hue { display: inline-block; width: 16px; height: 16px; vertical-align: middle; }
+</style>
+</head>
+<body>
+  <h1 data-fixture="h1">Violations</h1>
+
+  <!-- R7: two primary actions in one page composition -->
+  <div data-page="bad-page" style="padding:8px 0">
+    <button class="m-btn m-btn--primary">One</button>
+    <button class="m-btn m-btn--primary">Two</button>
+  </div>
+
+  <!-- R2: a static surface with a shadow -->
+  <div class="m-panel" data-fixture="shadowed" style="box-shadow: 0 2px 4px rgb(0 0 0 / 0.2); padding: 8px">
+    Shadowed panel
+  </div>
+
+  <!-- R6: proportional numbers -->
+  <p style="margin:8px 0">
+    <span class="m-data" data-fixture="data" style="font-variant-numeric: normal">1234567890</span>
+    <table class="m-table" style="width:auto">
+      <thead><tr><th class="num" data-fixture="table-num" style="font-variant-numeric: normal">42</th></tr></thead>
+    </table>
+  </p>
+
+  <!-- R7: five chromatic hues -->
+  <p style="margin:8px 0">
+    <span class="hue" data-fixture="hue-1" style="background: hsl(0 80% 40%)"></span>
+    <span class="hue" data-fixture="hue-2" style="background: hsl(60 80% 40%)"></span>
+    <span class="hue" data-fixture="hue-3" style="background: hsl(120 80% 40%)"></span>
+    <span class="hue" data-fixture="hue-4" style="background: hsl(200 80% 40%)"></span>
+    <span class="hue" data-fixture="hue-5" style="background: hsl(280 80% 40%)"></span>
+  </p>
+
+  <!-- R8: status without an icon -->
+  <span class="m-badge" data-status="no-icon" data-fixture="status-no-icon">Running</span>
+
+  <!-- R10: a control that is not 28/32/36 -->
+  <button class="m-btn" data-fixture="btn-30" style="height: 30px">Thirty</button>
+
+  <!-- interaction states -->
+  <p style="margin:8px 0">
+    <button class="m-btn" data-state-hover data-fixture="hover-shadow">Hover shadow</button>
+    <input class="m-input" data-state-focus data-fixture="focus-none" aria-label="No focus ring" style="width:auto">
+    <button class="m-btn" disabled data-state-disabled data-fixture="disabled-bad"
+            style="opacity: 1; cursor: pointer">Looks clickable</button>
+  </p>
+  <div data-state-selected data-fixture="selected-bad"
+       style="background: var(--primary); color: var(--primary-foreground); height: 32px; padding: 6px 8px">
+    Selected but opaque
+  </div>
+</body>
+</html>

@@ -24,6 +24,8 @@ jobs:
       # marks are generated: regenerate them and fail if the committed assets are stale
       - run: npm run marks && git diff --exit-code -- marks/
       - run: npm run sink
+      # every new rule check must be able to fail: the violations fixture proves it
+      - run: npm run selftest
       - uses: actions/upload-artifact@v4
         if: always()
         with:

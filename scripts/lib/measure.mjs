@@ -7,6 +7,8 @@ export const CIRCLE = /^(avatar|dot)/;
 export const PROPS = [
   "fontFamily", "fontSize", "fontWeight", "lineHeight", "letterSpacing", "color",
   "backgroundColor", "borderRadius", "borderTopWidth", "height", "paddingLeft", "paddingTop",
+  "boxShadow", "fontVariantNumeric", "opacity", "cursor", "transitionDuration", "transform",
+  "outlineWidth", "outlineOffset", "outlineStyle", "outlineColor",
 ];
 
 export function measure(page) {
@@ -46,6 +48,51 @@ export function measure(page) {
       rec.backgroundColor = toRgb(cs.backgroundColor);
       out[el.dataset.fixture] = rec;
     }
+    // Controls are measured by height (rule 10). Checkboxes, radios and multi-line textareas are
+    // not controls in that sense and are excluded.
+    const controls = [...document.querySelectorAll("button, [role=button], select, input")]
+      .filter((el) => {
+        if (el.closest("[data-overlay]")) return false;
+        if (el.matches("input") && ["checkbox", "radio", "range", "color", "file", "hidden"].includes(el.type)) return false;
+        const r = el.getBoundingClientRect();
+        return r.width > 0 && r.height > 0;
+      })
+      .map((el) => ({
+        h: Math.round(el.getBoundingClientRect().height * 10) / 10,
+        label: (el.getAttribute("aria-label") || el.textContent || el.tagName).trim().replace(/\s+/g, " ").slice(0, 24),
+      }));
+
+    // The accent budget is measured per [data-page] composition, not per sink: a kitchen sink shows
+    // every variant on purpose, a page must show one primary action.
+    const primary = (() => {
+      const probe = document.createElement("span");
+      probe.style.background = "var(--primary)";
+      document.body.append(probe);
+      const c = getComputedStyle(probe).backgroundColor;
+      probe.remove();
+      return c;
+    })();
+    const pages = [...document.querySelectorAll("[data-page]")].map((el) => {
+      const r = el.getBoundingClientRect();
+      const area = r.width * r.height;
+      let fills = 0, fillArea = 0;
+      for (const n of el.querySelectorAll("*")) {
+        const cs = getComputedStyle(n);
+        const nr = n.getBoundingClientRect();
+        if (cs.backgroundColor === primary && nr.width > 0) {
+          fills++;
+          fillArea += nr.width * nr.height;
+        }
+      }
+      return { id: el.dataset.page, fills, accentArea: area ? fillArea / area : 0 };
+    });
+
+    const statuses = [...document.querySelectorAll("[data-status]")].map((el) => ({
+      name: el.getAttribute("data-status") || el.dataset.fixture || "status",
+      hasIcon: !!el.querySelector("svg, img"),
+      hasLabel: (el.textContent || "").trim().length > 0,
+    }));
+
     return {
       fixtures: out,
       bodyFont: getComputedStyle(document.body).fontFamily
@@ -56,6 +103,9 @@ export function measure(page) {
       },
       docWidth: document.documentElement.scrollWidth,
       viewport: innerWidth,
+      controls,
+      pages,
+      statuses,
     };
   }, PROPS);
 }

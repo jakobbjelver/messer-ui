@@ -169,3 +169,20 @@
   --radius-3xl: 0px;
   --radius-4xl: 0px;
 }
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+
+  ::selection {
+    background-color: var(--primary);
+    color: var(--primary-foreground);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+    border-radius: 0;
+  }
+}

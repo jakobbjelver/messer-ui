@@ -151,7 +151,7 @@
     <div class="m-panel" data-fixture="panel">
       <div class="m-panel__head">
         <h3 class="m-panel__title" data-fixture="panel-title">Library sync</h3>
-        <span class="m-badge m-badge--success" data-fixture="badge-success">
+        <span class="m-badge m-badge--success" data-status="badge-success" data-fixture="badge-success">
           <svg width="12" height="12" fill="currentColor" aria-hidden="true"><use href="#m-check"></use></svg>
           Healthy
         </span>
@@ -192,10 +192,10 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
+        <tr data-state-hover>
           <td><code>caddy</code></td>
           <td>
-            <span class="m-badge m-badge--success" data-fixture="badge-table">
+            <span class="m-badge m-badge--success" data-status="badge-table" data-fixture="badge-table">
               <svg width="12" height="12" fill="currentColor" aria-hidden="true"><use href="#m-check"></use></svg>
               Running
             </span>
@@ -205,7 +205,7 @@
         <tr>
           <td><code>immich-ml</code></td>
           <td>
-            <span class="m-badge m-badge--warning" data-fixture="badge-warning">
+            <span class="m-badge m-badge--warning" data-status="badge-warning" data-fixture="badge-warning">
               <svg width="12" height="12" fill="currentColor" aria-hidden="true"><use href="#m-warning"></use></svg>
               Degraded
             </span>
@@ -215,7 +215,7 @@
         <tr>
           <td><code>romm</code></td>
           <td>
-            <span class="m-badge m-badge--danger" data-fixture="badge-danger">
+            <span class="m-badge m-badge--danger" data-status="badge-danger" data-fixture="badge-danger">
               <svg width="12" height="12" fill="currentColor" aria-hidden="true"><use href="#m-x"></use></svg>
               Stopped
             </span>
@@ -262,6 +262,39 @@
       <span class="m-hint">Add a folder to start indexing.</span>
       <button class="m-btn m-btn--sm">Add library</button>
     </div>
+  </section>
+
+  <!-- states -->
+  <section class="demo-group stack">
+    <span class="m-label">States</span>
+    <div class="row">
+      <button class="m-btn" data-state-hover data-fixture="state-btn-hover">Hover</button>
+      <button class="m-btn m-btn--primary" data-state-hover data-fixture="state-btn-primary">Primary</button>
+      <button class="m-btn" disabled data-state-disabled data-fixture="state-btn-disabled">Disabled</button>
+      <button class="m-btn" data-state-focus data-fixture="state-btn-focus">Focus</button>
+    </div>
+    <input class="m-input" data-state-focus data-fixture="state-input-focus" placeholder="Focus me" aria-label="Focus fixture">
+    <p class="m-hint" style="margin:0">Hover is one surface step, 120 ms, no shadow and no movement. Focus is a 2 px ring at 2 px offset. Disabled is 50% and not clickable. Measured, not asserted.</p>
+  </section>
+
+  <!-- page composition: the accent budget is measured here, not on the whole sink -->
+  <section class="demo-group stack" data-page="list-page" style="grid-column: 1 / -1">
+    <span class="m-label">Page composition</span>
+    <div class="row" style="justify-content:space-between; align-items:flex-end">
+      <div class="col">
+        <span class="m-label">Library</span>
+        <h1 style="margin:0">Requests</h1>
+      </div>
+      <button class="m-btn m-btn--primary">New request</button>
+    </div>
+    <table class="m-table">
+      <thead><tr><th>Title</th><th class="num">Added</th></tr></thead>
+      <tbody>
+        <tr><td>Stalker</td><td class="num">2026-11-08</td></tr>
+        <tr><td>Solaris</td><td class="num">2026-11-02</td></tr>
+      </tbody>
+    </table>
+    <p class="m-hint" style="margin:0">One primary action per page. A second accent-filled control is a bug, not a preference.</p>
   </section>
 
   <!-- boundary -->

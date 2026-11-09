@@ -774,3 +774,62 @@ brand  5 brands × 2 modes ✓  AA + lightness band + categorical passed
 marks  5 projects ✓  glyph + assets + hashes current
 sink   4 runs · 51 fixtures · clean ✓
 ```
+
+### rev 4 — 2026-11-09 (Phase 3 executed, gate D passed)
+
+**Measurement.** `measure()` now returns `controls` (height + label), `pages` (primary fills and accent
+area per `[data-page]`) and `statuses` (icon + label per `[data-status]`), alongside the existing
+fixture props plus `boxShadow`, `fontVariantNumeric`, `opacity`, `cursor`, `transitionDuration`,
+`transform` and the outline props. `scripts/lib/states.mjs` probes hover, focus (Tab, so
+`:focus-visible` is real), disabled and selected.
+
+**Three mechanisms found by measuring, not by reading:**
+
+1. **Reading a probe element's computed background goes stale.** Setting `backgroundColor` to
+   `var(--surface)` then `var(--surface-2)` and reading `getComputedStyle` in the same evaluate returns
+   the *previous* value for every read after the first (Chromium does not flush style between var()
+   writes; `offsetWidth` does not help). Every var read as `--background`. Fixed by reading the custom
+   properties off `document.documentElement` and resolving them through the canvas.
+2. **A just-focused element's computed style lags the pseudo-class change** by one style pass: the
+   input reported Chrome's UA ring (`outline: auto`, colour `rgb(0, 95, 204)`) instead of the canon's.
+   Fixed with two `requestAnimationFrame`s, paid only when a fixture is focused.
+3. **The file-based install had no focus ring at all.** `:focus-visible` lived only in the
+   `messer-fingerprint` registry item; `messer.css` (the sink and every `install.mjs` consumer) never
+   had it, so the portal/kitchen-sink focus was the browser default. `build-registry.mjs` now emits
+   `baseShellRules` (`*`, `::selection`, `:focus-visible`) into `theme.css` **and** spreads the same
+   object into the fingerprint item — one definition, two outputs.
+
+**One recipe bug the gate caught:** `.m-input/.m-textarea/.m-select:focus-visible` used
+`outline-offset: 1px`; rule §11 says 2px. Fixed in `recipes.css`.
+
+**Checks.** `assertConstraints` (both profiles): R2 shadow, R6 tabular, R7 hue count ≤ 4 and ≤ 1
+primary fill / ≤ 5 % accent area per `[data-page]`, R8 icon+label, R10 heights ∈ {28,32,36}.
+`assertStates` (full profile): hover must move exactly one surface step (or `primary → primary-hover`,
+or transparent → surface-2) in ≤ 200 ms with no shadow and no transform; focus needs 2px ring at 2px
+offset in `--ring`; disabled ≤ 0.55 opacity and not `cursor:pointer`; selected needs a tint ≤ 0.14 and
+a 2px rule. Missing fixtures warn, so app sinks that have not adopted the hooks yet still run.
+
+**Fixtures.** The kitchen sink gained a States block (hover/primary-hover/disabled/focus), a full-width
+page composition with exactly one primary action, `data-status` on all four status badges, and a
+hoverable table row. `sink` now reports `56 fixtures` (was 51).
+
+**Selftest.** `fixtures/violations.html` breaks each rule once; `scripts/check-selftest.mjs` runs the
+checker against it and asserts nine expected failures by message prefix. It caught a harness bug in
+itself — `hover/` was the wrong prefix (`light/hover#0`) — which is the kind of thing the gate exists
+to expose. Also: `spawnSync` deadlocks here (the child fetches from the parent's own HTTP server), so
+the runner uses async `spawn`.
+
+**Deliberate sequencing change:** the five app sinks did **not** get `data-state-*` hooks in this phase.
+They need a running dev server to validate, and their CI is static-only; each app gets the hooks in its
+own Phase 6 adoption commit, next to the shell change. `assertStates` warns (not fails) until then.
+
+**Gate D, measured:**
+
+```
+conformance  check  green ✓ · 0 failures · 2 warnings · profile full   (selected fixture lands with AppShell)
+selftest     9/9 checks fired as expected ✓
+sink         4 runs · 56 fixtures · clean ✓
+```
+
+The two warnings are `no [data-state-selected] fixture` in each theme — by design until Phase 4 ships
+`AppShell` with a selected nav row.

@@ -144,6 +144,15 @@
         "*": {
           "border-color": "var(--border)"
         },
+        "::selection": {
+          "background-color": "var(--primary)",
+          "color": "var(--primary-foreground)"
+        },
+        ":focus-visible": {
+          "outline": "2px solid var(--ring)",
+          "outline-offset": "2px",
+          "border-radius": "0"
+        },
         "html": {
           "font-family": "var(--font-sans)"
         },
@@ -224,15 +233,6 @@
         },
         "table": {
           "font-variant-numeric": "tabular-nums"
-        },
-        "::selection": {
-          "background-color": "var(--primary)",
-          "color": "var(--primary-foreground)"
-        },
-        ":focus-visible": {
-          "outline": "2px solid var(--ring)",
-          "outline-offset": "2px",
-          "border-radius": "0"
         }
       }
     },
