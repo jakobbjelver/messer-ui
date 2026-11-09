@@ -42,7 +42,7 @@ const fails = [];
 const warns = [];
 
 const runs = STATIC_ONLY ? [] : ["light", "dark"];
-const browser = STATIC_ONLY ? null : (await loadPlaywright()).chromium.launch();
+const browser = STATIC_ONLY ? null : await (await loadPlaywright()).chromium.launch();
 
 for (const theme of runs) {
   const context = await browser.newContext({ viewport: { width: 1280, height: 900 }, deviceScaleFactor: 1, colorScheme: "light", reducedMotion: "reduce" });

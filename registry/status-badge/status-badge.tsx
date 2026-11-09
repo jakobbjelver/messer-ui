@@ -1,4 +1,5 @@
-import { Check, Circle, Warning, X, type Icon as PhosphorIcon } from "@phosphor-icons/react/dist/ssr";
+import { Check, Circle, Warning, X } from "@phosphor-icons/react/dist/ssr";
+import type { Icon as PhosphorIcon } from "@phosphor-icons/react";
 
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
@@ -7,7 +8,7 @@ const STATUS = {
   success: { Icon: Check, tone: "text-success" },
   warning: { Icon: Warning, tone: "text-warning" },
   danger: { Icon: X, tone: "text-destructive" },
-  neutral: { Icon: Circle, tone: "text-muted-foreground" },
+  neutral: { Icon: Circle, tone: "text-foreground" },
 } as const satisfies Record<string, { Icon: PhosphorIcon; tone: string }>;
 
 export type Status = keyof typeof STATUS;
