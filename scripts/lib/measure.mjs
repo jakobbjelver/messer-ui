@@ -11,6 +11,24 @@ export const PROPS = [
 
 export function measure(page) {
   return page.evaluate((props) => {
+    // Computed colours come back as rgb(), lab() or oklab() depending on the source syntax.
+    // Normalise through a canvas so two spellings of the same colour compare equal.
+    const canvas = document.createElement("canvas");
+    canvas.width = canvas.height = 1;
+    const ctx = canvas.getContext("2d", { willReadFrequently: true });
+    const toRgb = (value) => {
+      if (!value || value === "transparent" || value.startsWith("rgb")) return value;
+      try {
+        ctx.clearRect(0, 0, 1, 1);
+        ctx.fillStyle = "#000";
+        ctx.fillStyle = value;
+        ctx.fillRect(0, 0, 1, 1);
+        const [r, g, b, a] = ctx.getImageData(0, 0, 1, 1).data;
+        return a === 255 ? `rgb(${r}, ${g}, ${b})` : `rgba(${r}, ${g}, ${b}, ${(a / 255).toFixed(3)})`;
+      } catch {
+        return value;
+      }
+    };
     const out = {};
     for (const el of document.querySelectorAll("[data-fixture]")) {
       const cs = getComputedStyle(el);
@@ -22,6 +40,8 @@ export function measure(page) {
       rec.tag = el.tagName.toLowerCase();
       // keep the first family only: next/font appends generated fallbacks
       rec.fontFamily = cs.fontFamily.split(",")[0].replace(/["']/g, "").trim();
+      rec.color = toRgb(cs.color);
+      rec.backgroundColor = toRgb(cs.backgroundColor);
       out[el.dataset.fixture] = rec;
     }
     return {
