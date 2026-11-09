@@ -1,0 +1,10 @@
+{
+  "$description": "The family, for scripts that need to look across repos (dupes, contact sheet). Paths expand ~; sinks are filled when a dev server is up.",
+  "apps": [
+    { "id": "swiparr", "path": "~/Repos/swiparr", "brand": "swiparr", "shell": "none", "sink": null },
+    { "id": "portal", "path": "~/Repos/server-portal", "brand": "portal", "shell": "topbar", "sink": null },
+    { "id": "ai-router", "path": "~/Repos/ai-router", "brand": "ai-router", "shell": "topbar", "sink": null },
+    { "id": "studio", "path": "~/Repos/site", "brand": "studio", "shell": "topbar", "sink": null },
+    { "id": "request-games", "path": "~/Repos/messer-request-games", "brand": "request-games", "shell": "sidebar", "sink": null }
+  ]
+}

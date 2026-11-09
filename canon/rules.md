@@ -153,6 +153,11 @@ surface from these three values — not by inventing a fourth height or by scali
 | Popover, Dropdown, Tooltip, HoverCard | ✓ | ✗ | native `popover` attribute allowed for simple cases |
 | Command palette, Combobox, DatePicker, DataTable | ✓ | ✗ | |
 
+**Port 2 is frozen.** It ships atoms only — no new `.m-*` recipes, no new templates, no shell work and
+no new fixtures. Security and correctness fixes only. The exit condition is the one line that ends the
+port: request-games becomes a port-1 app, and port 2's build pipeline is deleted. Until then the port
+is kept alive, not developed.
+
 Port 3 (SwiftUI/Flutter) is a lookalike: it consumes `canon/tokens.json` and must match
 `fixtures/kitchen-sink.html` visually. No component code is shared and none is expected to be.
 

@@ -1,0 +1,323 @@
+{
+  "generatedAt": "2026-11-09T23:14:38.278Z",
+  "scanned": 287,
+  "exact": [
+    {
+      "key": "ai-router:packages/dashboard/src/components/ui/badge.tsx|studio:src/studio/client/ui/badge.tsx",
+      "name": "badge.tsx",
+      "vendored": true,
+      "files": [
+        "ai-router:packages/dashboard/src/components/ui/badge.tsx",
+        "studio:src/studio/client/ui/badge.tsx"
+      ]
+    },
+    {
+      "key": "ai-router:packages/dashboard/src/components/ui/card.tsx|studio:src/studio/client/ui/card.tsx",
+      "name": "card.tsx",
+      "vendored": true,
+      "files": [
+        "ai-router:packages/dashboard/src/components/ui/card.tsx",
+        "studio:src/studio/client/ui/card.tsx"
+      ]
+    },
+    {
+      "key": "ai-router:packages/dashboard/src/components/ui/collapsible.tsx|studio:src/studio/client/ui/collapsible.tsx",
+      "name": "collapsible.tsx",
+      "vendored": true,
+      "files": [
+        "ai-router:packages/dashboard/src/components/ui/collapsible.tsx",
+        "studio:src/studio/client/ui/collapsible.tsx"
+      ]
+    },
+    {
+      "key": "ai-router:packages/dashboard/src/components/ui/page-header.tsx|portal:web/components/ui/page-header.tsx",
+      "name": "page-header.tsx",
+      "vendored": false,
+      "files": [
+        "portal:web/components/ui/page-header.tsx",
+        "ai-router:packages/dashboard/src/components/ui/page-header.tsx"
+      ]
+    },
+    {
+      "key": "ai-router:packages/dashboard/src/components/ui/status-badge.tsx|portal:web/components/ui/status-badge.tsx",
+      "name": "status-badge.tsx",
+      "vendored": false,
+      "files": [
+        "portal:web/components/ui/status-badge.tsx",
+        "ai-router:packages/dashboard/src/components/ui/status-badge.tsx"
+      ]
+    },
+    {
+      "key": "ai-router:packages/dashboard/src/components/ui/textarea.tsx|studio:src/studio/client/ui/textarea.tsx",
+      "name": "textarea.tsx",
+      "vendored": true,
+      "files": [
+        "ai-router:packages/dashboard/src/components/ui/textarea.tsx",
+        "studio:src/studio/client/ui/textarea.tsx"
+      ]
+    },
+    {
+      "key": "portal:web/components/ui/badge.tsx|swiparr:src/components/ui/badge.tsx",
+      "name": "badge.tsx",
+      "vendored": true,
+      "files": [
+        "swiparr:src/components/ui/badge.tsx",
+        "portal:web/components/ui/badge.tsx"
+      ]
+    },
+    {
+      "key": "portal:web/components/ui/card.tsx|swiparr:src/components/ui/card.tsx",
+      "name": "card.tsx",
+      "vendored": true,
+      "files": [
+        "swiparr:src/components/ui/card.tsx",
+        "portal:web/components/ui/card.tsx"
+      ]
+    },
+    {
+      "key": "portal:web/components/ui/hybrid-tooltip.tsx|swiparr:src/components/ui/hybrid-tooltip.tsx",
+      "name": "hybrid-tooltip.tsx",
+      "vendored": false,
+      "files": [
+        "swiparr:src/components/ui/hybrid-tooltip.tsx",
+        "portal:web/components/ui/hybrid-tooltip.tsx"
+      ]
+    },
+    {
+      "key": "portal:web/components/ui/input.tsx|swiparr:src/components/ui/input.tsx",
+      "name": "input.tsx",
+      "vendored": true,
+      "files": [
+        "swiparr:src/components/ui/input.tsx",
+        "portal:web/components/ui/input.tsx"
+      ]
+    },
+    {
+      "key": "portal:web/components/ui/popover.tsx|swiparr:src/components/ui/popover.tsx",
+      "name": "popover.tsx",
+      "vendored": true,
+      "files": [
+        "swiparr:src/components/ui/popover.tsx",
+        "portal:web/components/ui/popover.tsx"
+      ]
+    },
+    {
+      "key": "portal:web/components/ui/select.tsx|swiparr:src/components/ui/select.tsx",
+      "name": "select.tsx",
+      "vendored": true,
+      "files": [
+        "swiparr:src/components/ui/select.tsx",
+        "portal:web/components/ui/select.tsx"
+      ]
+    },
+    {
+      "key": "portal:web/components/ui/tabs.tsx|swiparr:src/components/ui/tabs.tsx",
+      "name": "tabs.tsx",
+      "vendored": true,
+      "files": [
+        "swiparr:src/components/ui/tabs.tsx",
+        "portal:web/components/ui/tabs.tsx"
+      ]
+    },
+    {
+      "key": "portal:web/components/ui/textarea.tsx|swiparr:src/components/ui/textarea.tsx",
+      "name": "textarea.tsx",
+      "vendored": true,
+      "files": [
+        "swiparr:src/components/ui/textarea.tsx",
+        "portal:web/components/ui/textarea.tsx"
+      ]
+    },
+    {
+      "key": "portal:web/lib/get-strict-context.tsx|swiparr:src/lib/get-strict-context.tsx",
+      "name": "get-strict-context.tsx",
+      "vendored": true,
+      "files": [
+        "swiparr:src/lib/get-strict-context.tsx",
+        "portal:web/lib/get-strict-context.tsx"
+      ]
+    }
+  ],
+  "near": [
+    {
+      "key": "portal:web/components/animate-ui/primitives/effects/highlight.tsx|swiparr:src/components/animate-ui/primitives/effects/highlight.tsx",
+      "name": "highlight.tsx",
+      "score": 0.99,
+      "vendored": false,
+      "files": [
+        "swiparr:src/components/animate-ui/primitives/effects/highlight.tsx",
+        "portal:web/components/animate-ui/primitives/effects/highlight.tsx"
+      ]
+    },
+    {
+      "key": "ai-router:packages/dashboard/src/components/ui/tabs.tsx|studio:src/studio/client/ui/tabs.tsx",
+      "name": "tabs.tsx",
+      "score": 0.98,
+      "vendored": true,
+      "files": [
+        "ai-router:packages/dashboard/src/components/ui/tabs.tsx",
+        "studio:src/studio/client/ui/tabs.tsx"
+      ]
+    },
+    {
+      "key": "portal:web/components/ui/dropdown-menu.tsx|swiparr:src/components/ui/dropdown-menu.tsx",
+      "name": "dropdown-menu.tsx",
+      "score": 0.98,
+      "vendored": true,
+      "files": [
+        "swiparr:src/components/ui/dropdown-menu.tsx",
+        "portal:web/components/ui/dropdown-menu.tsx"
+      ]
+    },
+    {
+      "key": "portal:web/components/ui/button.tsx|swiparr:src/components/ui/button.tsx",
+      "name": "button.tsx",
+      "score": 0.96,
+      "vendored": true,
+      "files": [
+        "swiparr:src/components/ui/button.tsx",
+        "portal:web/components/ui/button.tsx"
+      ]
+    },
+    {
+      "key": "ai-router:packages/dashboard/src/components/ui/button.tsx|studio:src/studio/client/ui/button.tsx",
+      "name": "button.tsx",
+      "score": 0.96,
+      "vendored": true,
+      "files": [
+        "ai-router:packages/dashboard/src/components/ui/button.tsx",
+        "studio:src/studio/client/ui/button.tsx"
+      ]
+    },
+    {
+      "key": "ai-router:packages/dashboard/src/components/ui/label.tsx|studio:src/studio/client/ui/label.tsx",
+      "name": "label.tsx",
+      "score": 0.94,
+      "vendored": true,
+      "files": [
+        "ai-router:packages/dashboard/src/components/ui/label.tsx",
+        "studio:src/studio/client/ui/label.tsx"
+      ]
+    },
+    {
+      "key": "ai-router:packages/dashboard/src/components/ui/popover.tsx|studio:src/studio/client/ui/popover.tsx",
+      "name": "popover.tsx",
+      "score": 0.94,
+      "vendored": true,
+      "files": [
+        "ai-router:packages/dashboard/src/components/ui/popover.tsx",
+        "studio:src/studio/client/ui/popover.tsx"
+      ]
+    },
+    {
+      "key": "portal:web/components/ui/separator.tsx|swiparr:src/components/ui/separator.tsx",
+      "name": "separator.tsx",
+      "score": 0.92,
+      "vendored": true,
+      "files": [
+        "swiparr:src/components/ui/separator.tsx",
+        "portal:web/components/ui/separator.tsx"
+      ]
+    },
+    {
+      "key": "ai-router:packages/dashboard/src/components/ui/tooltip.tsx|studio:src/studio/client/ui/tooltip.tsx",
+      "name": "tooltip.tsx",
+      "score": 0.92,
+      "vendored": true,
+      "files": [
+        "ai-router:packages/dashboard/src/components/ui/tooltip.tsx",
+        "studio:src/studio/client/ui/tooltip.tsx"
+      ]
+    },
+    {
+      "key": "portal:web/components/ui/label.tsx|swiparr:src/components/ui/label.tsx",
+      "name": "label.tsx",
+      "score": 0.9,
+      "vendored": true,
+      "files": [
+        "swiparr:src/components/ui/label.tsx",
+        "portal:web/components/ui/label.tsx"
+      ]
+    },
+    {
+      "key": "ai-router:packages/dashboard/src/components/ui/input.tsx|studio:src/studio/client/ui/input.tsx",
+      "name": "input.tsx",
+      "score": 0.89,
+      "vendored": true,
+      "files": [
+        "ai-router:packages/dashboard/src/components/ui/input.tsx",
+        "studio:src/studio/client/ui/input.tsx"
+      ]
+    },
+    {
+      "key": "portal:web/components/ui/alert.tsx|swiparr:src/components/ui/alert.tsx",
+      "name": "alert.tsx",
+      "score": 0.88,
+      "vendored": true,
+      "files": [
+        "swiparr:src/components/ui/alert.tsx",
+        "portal:web/components/ui/alert.tsx"
+      ]
+    },
+    {
+      "key": "portal:web/components/ui/switch.tsx|swiparr:src/components/ui/switch.tsx",
+      "name": "switch.tsx",
+      "score": 0.85,
+      "vendored": true,
+      "files": [
+        "swiparr:src/components/ui/switch.tsx",
+        "portal:web/components/ui/switch.tsx"
+      ]
+    },
+    {
+      "key": "portal:web/components/ui/page-header.tsx|swiparr:src/components/ui/page-header.tsx",
+      "name": "page-header.tsx",
+      "score": 0.84,
+      "vendored": false,
+      "files": [
+        "swiparr:src/components/ui/page-header.tsx",
+        "portal:web/components/ui/page-header.tsx"
+      ]
+    },
+    {
+      "key": "ai-router:packages/dashboard/src/components/ui/page-header.tsx|swiparr:src/components/ui/page-header.tsx",
+      "name": "page-header.tsx",
+      "score": 0.84,
+      "vendored": false,
+      "files": [
+        "swiparr:src/components/ui/page-header.tsx",
+        "ai-router:packages/dashboard/src/components/ui/page-header.tsx"
+      ]
+    },
+    {
+      "key": "portal:web/components/ui/skeleton.tsx|swiparr:src/components/ui/skeleton.tsx",
+      "name": "skeleton.tsx",
+      "score": 0.83,
+      "vendored": true,
+      "files": [
+        "swiparr:src/components/ui/skeleton.tsx",
+        "portal:web/components/ui/skeleton.tsx"
+      ]
+    },
+    {
+      "key": "ai-router:packages/dashboard/src/components/ui/select.tsx|studio:src/studio/client/ui/select.tsx",
+      "name": "select.tsx",
+      "score": 0.8,
+      "vendored": true,
+      "files": [
+        "ai-router:packages/dashboard/src/components/ui/select.tsx",
+        "studio:src/studio/client/ui/select.tsx"
+      ]
+    },
+    {
+      "key": "ai-router:packages/dashboard/src/components/ui/table.tsx|portal:web/components/ui/table.tsx",
+      "name": "table.tsx",
+      "score": 0.8,
+      "vendored": true,
+      "files": [
+        "portal:web/components/ui/table.tsx",
+        "ai-router:packages/dashboard/src/components/ui/table.tsx"
+      ]
+    }
+  ]
+}

@@ -1,6 +1,9 @@
 /* messer-ui — atoms. Hand-written CSS on tokens: no Tailwind needed to consume it,
    no literals, no @apply. Square by default; the only circles are avatar, status dot,
-   slider thumb (see canon/rules.md §1). */
+   slider thumb (see canon/rules.md §1).
+
+   PORT 2 IS FROZEN. Atoms only: no new recipes, no new variants. Exit condition: request-games
+   becomes a port-1 app and this file's build pipeline is deleted. */
 
 .m-shell { max-width: var(--shell); margin-inline: auto; padding: var(--page-pad); }
 

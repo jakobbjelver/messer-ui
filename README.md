@@ -10,7 +10,7 @@ distribution and the measuring stick — not the authority. Identity lives in on
 ```
 canon/            tokens.json · rules.md · pinned reference snapshot     ← never changes shape
 port 1  React     shadcn/Lyra components + behaviour   portal · swiparr · ai-router · studio
-port 2  atoms     compiled .m-* recipes, no JS          request-games
+port 2  atoms     frozen: compiled .m-* recipes, no JS  request-games (until it becomes React)
 port 3  lookalike SwiftUI / Flutter, tokens only        later
 ```
 
