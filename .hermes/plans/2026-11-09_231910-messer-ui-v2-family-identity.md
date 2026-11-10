@@ -1254,3 +1254,30 @@ parameters (`/requests/7` → `/app/requests/7`, `/discover/recent` → `/app/di
 **Remaining:** `/login` still renders its template (the form POST still works for any stale page). Delete
 `web/templates` and `_legacy.css` after a day of the redirects in place, replacing `/login` with a
 redirect to `/app/login` at the same time.
+
+### rev 21 — Phase 8, legacy layer deleted, dark mode added, 2026-11-10
+
+With one user and no migration to protect, the redirects went too: `web/templates`, every page handler,
+the template machinery, the legacy form auth, `recipes.css` (zero `.m-*` left in the SPA), `htmx.min.js`,
+`icons.svg` and the static stylesheet are all deleted. Every POST action route and every `/api/*` route is
+untouched.
+
+Deleting them exposed two live bugs, both fixed: the action handlers redirected to the pages that no
+longer existed (so a *successful* action handed the SPA an HTML 200 at a dead path — the client would
+have read that as failure), and `AuthMiddleware` redirected fetches to `/login`, which would have given
+every API call an HTML body. It now answers 401 to a fetch and 303 only for a document navigation, to
+`/app/login`.
+
+Dark mode is real: canon switches on `.dark`, an inline pre-paint script applies `localStorage.messer-theme`
+(or `prefers-color-scheme`) before first paint, and a Sun/Moon toggle sits in AppShell's `actions` slot.
+AppShell had to change — under the sidebar variant its topbar is `md:hidden`, so `actions` was invisible on
+desktop. That fix went upstream to messer-ui as **2.0.1** instead of surviving as a local patch.
+
+Measured: builds clean, `/app/` 200, `/app/login` 200, `/login` 404, `/search` 404, `/app/reports` 200,
+`POST /requests/1/approve` 401, pre-paint script in the served HTML. Playwright: clicking the toggle sets
+`class="dark"` and `localStorage.messer-theme=dark`, and it survives a reload; the dark screenshot reads
+correctly (readable labels, visible borders, no light patches).
+
+**Still not canon-conformant:** the form controls are a repeated `field` class string rather than one atom,
+`PageToolbar`/`Stat`/`StatusBadge` exist unused while their jobs are hand-rolled inline, and headings use
+Tailwind sizes instead of the canon type scale. That is the honest remaining gap in "implements Messer UI".
