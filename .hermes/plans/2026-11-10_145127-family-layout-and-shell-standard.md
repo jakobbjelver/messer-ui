@@ -1,9 +1,12 @@
 # Family layout standard + shell conformance — implementation plan
 
-> **rev 2 — executed 2026-11-10 (Phase 0–3).** D1 = 1152/896/1440 with the 32px gutter; D4 = portal
-> titles move to Golos h1; D6 = execute Phase 0–3 now. Status: canon §16 + tokens, app-shell 2.1,
-> `page-container`, `theme-toggle`, the two new harness rules and the block-drift gate are in and
-> green; portal, ai-router and messer.wtf adopt them. **Phase 4 (hygiene) not started** — see §12.
+> **rev 3 — Phase 4 executed too (2026-11-10).** rev 2: canon §16 + tokens, app-shell 2.1,
+> `page-container`, `theme-toggle`, the two harness rules and the block-drift gate — portal, ai-router
+> and messer.wtf adopt them (D1 1152/896/1440, D4 Golos h1, D6 execute now). rev 3: conformance
+> workflows in all six repos (site and messer had none) with the per-app block gate, `marksTarget`
+> so `npm run marks` installs the icons and `brand:check` fails when one diverges, canonical §14 note
+> for the shell-less shapes, and portal's theme key migrated to `messer-theme` without a reset.
+> Remaining follow-ups in §12.
 >
 > **A concurrent session was committing in these repos throughout.** Its blanket `git add` swept my
 > in-progress files into commits whose messages describe other work (`69dacc5`, `aaf5320`,
@@ -445,14 +448,22 @@ Commits (each staged by path; a co-session's blanket adds also carried some of t
 | messer | `d7784bc` | local header patch deleted, measure 1152, theme block |
 | messer-swipe | `45a6ec5` | hybrid-tooltip + page-header from the registry |
 
-## 12. Still open
+## 12. Phase 4 — done, and what is left
 
-1. **Phase 4 hygiene** — `messer-ui.yml` is missing in `~/Repos/site` and `~/Repos/messer`; Studio's
-   `apps.json` shell is now corrected to `none` but canon §14 does not yet *say* an overlay carries no
-   shell; `marks/messer/*` are not copied into the front door's `public/` by a script.
-2. **D5 storage key** — portal still stores under next-themes' default `theme`; switching it to
-   `messer-theme` resets every user's choice once.
-3. **PageHeader adoption in portal** — page titles are Golos now but six screens still hand-roll the
+Landed: `messer-ui.yml` in all six repos (site and messer had none) with two steps — the static
+canon pass and `blocks.mjs --app .`; `marksTarget` + copy in `mark.mjs` and verification in
+`brand:check` (portal, ai-router, messer); canon §14 now names the two shell-less shapes; portal's
+theme key is `messer-theme` with a one-time migration script (verified: seeding `theme=dark` paints
+dark and leaves `messer-theme=dark`).
+
+Still open (none blocking):
+
+1. **D5 duplicate** — nothing; portal's key is migrated. `ai-router` keeps reading the legacy
+   `ai-router-theme` key as a fallback, which can be deleted after a release.
+2. **PageHeader adoption in portal** — page titles are Golos now but six screens still hand-roll the
    centred-title-with-floating-actions bar; folding that shape into `PageHeader` is a design change,
    not a typo fix.
-4. **request-games** stays WIP: it is reported by `blocks.mjs` but not gated (`wip: true`).
+3. **request-games** stays WIP: it is reported by `blocks.mjs` but not gated (`wip: true`); its five
+   page widths collapse to two stops when it leaves WIP.
+4. **Deploy** — every repo is committed locally, nothing is pushed; ai-router's running container
+   still serves the pre-fix image (icons 404 there until it is rebuilt).
