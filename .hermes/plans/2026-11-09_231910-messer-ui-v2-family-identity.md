@@ -1343,3 +1343,26 @@ minted session and a seeded DB, plus the deployed login page green from this hos
 italic intent, R5's field-label half, R6 column alignment, R7 accent budget, R8 status semantics, R9 icon
 family (a source scan), R12 copy voice, R13 mark geometry, §11 hover surface *pair* and disabled markers,
 §16 container stop. Each has a reason, not an omission.
+
+### rev 25 — Phase 8, the runner met three real apps, 2026-11-10
+
+First run: portal 97 "failures", ai-router 12, swipe 46. Most of the first dozen were the probe
+mis-reading markup, not the apps: an accordion header and a whole-card button were measured against R10's
+28/32/36 density scale, every uppercase button label was read as a meta label, and Next's dev overlay
+(a shadow-root button) counted as app UI. All three are now excluded — a control that wraps block content
+is a region, an inline role=button is a text link, a label inside a button is a control label.
+
+After calibration: **ai-router green** (12 → 0), **portal `/`, `/lists`, `/actions`, `/llms` green**, and
+what is left is genuine:
+
+- portal `/music`: rounded progress bars — a `div.bg-primary/20` track and `span` fills at `30%`/pill
+  radius (R1), 12px uppercase labels set in Golos instead of the 10.5px mono meta (R5), and four controls
+  at 24/40px (R10).
+- swipe `/login`: the password field is 34px, the reveal button 24px, the footer and "Or" labels are
+  10px Golos, the tab focus ring is 1px with `outline-style: none`, and one transition runs 300ms.
+
+Fixtures still pass after the probe change (`check` green, `selftest` 11/11), so the calibration did not
+weaken what the harness already enforced.
+
+**Next:** fix those two screens (portal `/music` and swipe's login), then re-run and let the gate go green
+on its own terms.
