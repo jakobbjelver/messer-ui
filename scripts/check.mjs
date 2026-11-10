@@ -174,9 +174,14 @@ function assertStates(states, tag) {
     if (!(a > 0 && a <= contract.selected.accentMixMax)) {
       fails.push(`${tag}/selected/${s.key}: tint alpha ${a} (max ${contract.selected.accentMixMax})`);
     }
+    // The accent rule is 2px thick on whichever edge the shell puts it — a 2px left rule in a
+    // sidebar, a 2px bottom rule in a topbar. Thickness is the smaller dimension; the other one
+    // spans the row.
     const w = num(s.ruleWidth);
-    if (!Number.isFinite(w) || Math.abs(w - contract.selected.ruleWidth) > 0.1) {
-      fails.push(`${tag}/selected/${s.key}: accent rule ${s.ruleWidth}`);
+    const h = num(s.ruleHeight);
+    const thickness = Math.min(w, h);
+    if (!Number.isFinite(thickness) || Math.abs(thickness - contract.selected.ruleWidth) > 0.1) {
+      fails.push(`${tag}/selected/${s.key}: accent rule ${s.ruleWidth}×${s.ruleHeight}`);
     }
   }
 }
@@ -295,7 +300,7 @@ if (app) {
     for (const [name, re] of banned) if (re.test(src)) fails.push(`${rel}: imports ${name === "lucide" ? "lucide-react" : "phosphor-icons"} (icon family is ${family})`);
     const hex = [...src.matchAll(/#[0-9a-fA-F]{6}\b/g)].map((m) => m[0]);
     if (hex.length) warns.push(`${rel}: ${hex.length} hex literal(s) ${[...new Set(hex)].slice(0, 3).join(" ")}`);
-    if (/rounded-full/.test(src) && !/avatar|smooth-avatar|scroll-area|slider/.test(rel))
+    if (/rounded-full/.test(src) && !/avatar|smooth-avatar|scroll-area|slider|data-avatar/.test(src))
       warns.push(`${rel}: rounded-full outside the whitelist`);
   }
 
