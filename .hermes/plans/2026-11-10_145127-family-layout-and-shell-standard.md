@@ -465,5 +465,9 @@ Still open (none blocking):
    not a typo fix.
 3. **request-games** stays WIP: it is reported by `blocks.mjs` but not gated (`wip: true`); its five
    page widths collapse to two stops when it leaves WIP.
-4. **Deploy** — every repo is committed locally, nothing is pushed; ai-router's running container
-   still serves the pre-fix image (icons 404 there until it is rebuilt).
+4. **Released (2026-11-10).** All six repos pushed; every `messer-ui conformance` run is green with
+   the block and marks steps. messer.wtf deployed by `wrangler` (row and container both 144/1152/32 at
+   1440). `dev-stack/messer-ai-router`, `management-stack/messer-portal` and `management-stack/messer-ui`
+   pulled and redeployed through Komodo. Verified in production: ai-router's five icon paths return
+   200 and its dashboard renders `Key pool` in Golos with row == container == 144/1152; portal's
+   image carries `data-page-container` and the theme block; ui.messer.wtf reports canon 2.1.0.
