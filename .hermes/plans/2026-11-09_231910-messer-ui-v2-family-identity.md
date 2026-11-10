@@ -1071,3 +1071,18 @@ list, block installation (GitHub shorthand, not raw URLs) and the new files. `pa
 `sheet`.
 
 **Release.** `package.json` is `2.0.0`, tag `v2.0.0` pushed.
+
+### rev 12 — Phase 8 started, request-games scaffold, 2026-11-10
+
+Go stays the API; the UI moves to React one route at a time (strangler at `/app`), so nothing 404s
+mid-cutover. `web/app` is Vite + React 19 + TS with the canon tokens imported from
+`web/styles/messer` and `AppShell`/`AuthCard` from the registry. `/app/login` is RomM username +
+password (not email — the recipe's field label is app-specific), and `/app` reads the session and
+renders the sidebar; its nav still points at the server-rendered pages.
+
+`npm run build` is green (`tsc -b` + `vite build`: 293 KB JS / 92 KB gzip, 15.2 KB CSS). `dist/` is
+ignored; CI will build it before `go build` once the Go side embeds it.
+
+**Next:** JSON endpoints (`/api/me`, `/api/login`, `/api/logout`, `/api/requests`), embed + SPA
+fallback, then convert search → discover → requests → detail → reports, delete templates and
+`_legacy.css`, and drop port 2's pipeline.
