@@ -1366,3 +1366,20 @@ weaken what the harness already enforced.
 
 **Next:** fix those two screens (portal `/music` and swipe's login), then re-run and let the gate go green
 on its own terms.
+
+### rev 26 — Phase 8, portal conforms; the checkbox becomes canon, 2026-11-10
+
+Portal `/music` fixed against the measured list: progress track and indicator squared, the loader dots'
+30% radius zeroed, eight uppercase 12px Golos labels → `.m-label`, three collapsible triggers 40 → 32 and
+one 24 → 28, plus a 12px label on `/llms` the regression sweep surfaced. Verified: `tsc` and `next build`
+clean, and the runner reports **green across 10 page-themes** (five pages × two themes, 0 failures) with
+browser measurements confirming 10.5 mono meta labels and radius 0. Deployed: `build-info.json` = `2d51237`.
+
+The checkbox turned out to be a canon gap, not app laziness: **no checkbox block existed**, so portal and
+Studio each vendored shadcn's atom (4px radius, `shadow-xs`, 3px ring — rules 1, 2 and §11) and
+request-games hand-rolled a native one. `registry/checkbox` now exists — native input, appearance-none,
+16px, square, no shadow, base focus ring, disabled/invalid states, optional label and `indeterminate`
+(2.1.1). request-games re-exports it; portal wraps it behind its existing `checked`/`onCheckedChange` API,
+so no call site changed; Studio's adapter is in progress. Registry: 28 items, valid.
+
+Swipe's login is deliberately left alone — it is a working signup/join/2FA flow and a product decision.
