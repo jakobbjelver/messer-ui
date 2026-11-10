@@ -1024,3 +1024,30 @@ The image path is `/app/packages/dashboard/dist`, not an nginx html root — tha
 check has to look.
 
 **Still to do:** studio, swipe and request-games.
+
+### rev 10 — Phase 6, studio / swipe / request-games, 2026-11-10
+
+**Studio: the shell does not apply, and that is a finding, not a skip.** Studio is not a page app —
+`StudioHost.tsx` mounts a FAB island over the public site and `StudioApp` renders `StudioToolbar` +
+dialogs. There is no chrome surface for a topbar; adding one would cover the site it overlays. Its
+tokens are deliberately scoped inside the seam (`styles/studio.css` + `type-scoped.css` generated from
+`canon/tokens.json`), so the v2 work that does apply — tokens, components, scoped base layer — is
+already the shape Studio needs. Its tab icon belongs to the site (astro-favicons, one per build), so
+the studio mark has no favicon to attach to; the toolbar puck is the identity. No code change made.
+
+**Swipe: mark adopted, auth deliberately not.** `marks/swiparr/*` → `public/`, and `metadata.icons`
+now points at the SVG + 32px PNG + apple-touch instead of `favicon.ico`/`icon1.png`; `og.png` ships
+alongside. `tsc --noEmit` clean. The repo's active branch is **`develop`**, not `main` — the commit is
+there. The auth recipes were **not** installed: swipe's `/login` is signup + join + 2FA, so swapping
+it for the email/password recipe is a product decision, not a design-system one.
+
+**Request-games: marks only, per the freeze.** The hand-written data-URI gamepad in
+`web/templates/base.html` is replaced by `marks/request-games` served from `web/static` (SVG, 32px
+PNG, apple-touch, `og:image`). No other port-2 change.
+
+**Build not verified for request-games:** `go build ./...` fails on a **pre-existing** deleted
+`internal/romm/client.go` (the worktree also carries an unrelated `.gitignore` edit). Neither is mine;
+I committed only the template and the five mark files. That tree needs its `internal/romm` change
+resolved before any build claim can be made.
+
+**Still to do:** the swipe auth decision, and Studio if it ever grows a full-page surface.
