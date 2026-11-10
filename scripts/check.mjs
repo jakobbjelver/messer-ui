@@ -175,8 +175,11 @@ function assertStates(states, tag) {
       fails.push(`${tag}/selected/${s.key}: tint alpha ${a} (max ${contract.selected.accentMixMax})`);
     }
     const w = num(s.ruleWidth);
-    if (!Number.isFinite(w) || Math.abs(w - contract.selected.ruleWidth) > 0.1) {
-      fails.push(`${tag}/selected/${s.key}: accent rule ${s.ruleWidth}`);
+    const h = num(s.ruleHeight ?? NaN);
+    const target = contract.selected.ruleWidth;
+    const thin = Math.min(w, h);
+    if (!Number.isFinite(thin) || Math.abs(thin - target) > 0.1) {
+      fails.push(`${tag}/selected/${s.key}: accent rule ${s.ruleWidth}×${s.ruleHeight ?? "?"} (thin axis ${target}px)`);
     }
   }
 }

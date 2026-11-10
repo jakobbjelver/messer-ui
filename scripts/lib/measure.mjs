@@ -54,10 +54,13 @@ export function measure(page) {
     // has to be by role — filtering on input[type] alone lets every port that uses the shadcn atoms
     // fail on geometry the canon itself ships.
     const TOGGLE = "[role=switch], [role=checkbox], [role=radio], [role=radiogroup], [role=slider]";
-    const controls = [...document.querySelectorAll("button, [role=button], select, input")]
+    const controls = [...document.querySelectorAll("button, [role=button], select, input, [role=tablist]")]
       .filter((el) => {
         if (el.closest("[data-overlay]")) return false;
         if (el.matches(TOGGLE)) return false;
+        // A tab trigger is measured through its track: the segmented control is the 32/36px tablist
+        // and the trigger is a 24-28px cell inside it. Measuring both double-counts one control.
+        if (el.matches("[role=tab]") && el.closest("[role=tablist]")) return false;
         if (el.matches("input") && ["checkbox", "radio", "range", "color", "file", "hidden"].includes(el.type)) return false;
         const r = el.getBoundingClientRect();
         return r.width > 0 && r.height > 0;

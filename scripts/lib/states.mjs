@@ -112,16 +112,19 @@ export async function probeStates(page, contract = {}) {
 
   /* ── selected ──────────────────────────────────────────────────────────── */
   for (let i = 0; i < (await page.locator("[data-state-selected]").count()); i++) {
-    const rec = await page.locator("[data-state-selected]").nth(i).evaluate((n) => {
+    const rec = await page.locator("[data-state-selected]").nth(i).evaluate((n, idx) => {
       const cs = getComputedStyle(n);
       const after = getComputedStyle(n, "::after");
       return {
-        key: n.dataset.fixture || `#${i}`,
+        key: n.dataset.fixture || `#${idx}`,
         bg: window.__messerRgb(cs.backgroundColor),
+        // A rule is 2px thick on its thin axis: a sidebar/left rule is 2 wide, a topbar/bottom rule
+        // is 2 tall and as wide as the row. Report both so the assertion can pick the thin one.
         ruleWidth: after.width,
+        ruleHeight: after.height,
         ruleStyle: after.content === "none" ? "none" : window.__messerRgb(after.backgroundColor),
       };
-    });
+    }, i);
     out.selected.push(rec);
   }
 
