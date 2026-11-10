@@ -1234,3 +1234,23 @@ normal user 403, report create 201 / duplicate 409, accept 303 then state change
 still render templates. The next slice should turn those into redirects to their `/app` equivalents, and
 only then delete `web/templates` and `_legacy.css`. Also open: where "mark completed" belongs — it has no
 UI anywhere today.
+
+### rev 20 — Phase 8, retired pages redirect, Mark Completed surfaced, 2026-11-10
+
+`/`, `/search`, `/requests`, `/requests/{id}`, `/games/{id}`, `/discover/{category}` and `/reports` now
+303 to their `/app` equivalents. They are registered **before** the auth middleware: a redirect needs no
+session, and the SPA sends an unauthenticated visitor to its own login — the first attempt put them
+inside the auth group and every one of them redirected to `/login` instead, which the curl table made
+obvious. POST routes are untouched, so both the legacy forms and the API still work.
+
+`MarkCompleted` had been registered since the beginning with no UI on any screen. It is now an admin
+action on request detail for anything not already completed — which is where the other admin actions
+live.
+
+Measured locally and on the deployment: all seven retired paths 303 to the right target including
+parameters (`/requests/7` → `/app/requests/7`, `/discover/recent` → `/app/discover/recent`), `/app/*`
+200, `go build` + `go vet` + `vite build` clean.
+
+**Remaining:** `/login` still renders its template (the form POST still works for any stale page). Delete
+`web/templates` and `_legacy.css` after a day of the redirects in place, replacing `/login` with a
+redirect to `/app/login` at the same time.
