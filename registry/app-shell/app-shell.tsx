@@ -32,6 +32,7 @@ export type AppShellProps = {
   active?: string;
   variant?: "sidebar" | "topbar" | "none";
   user?: { name: string; role?: string };
+  actions?: ReactNode;
   footer?: ReactNode;
   linkComponent?: LinkLike;
   children: ReactNode;
@@ -64,6 +65,7 @@ export function AppShell({
   active,
   variant = "sidebar",
   user,
+  actions,
   footer,
   linkComponent,
   children,
@@ -176,13 +178,18 @@ export function AppShell({
           );
         })}
       </nav>
-      {user ? (
-        <span className="ml-auto flex shrink-0 items-center gap-2">
-          <span className="grid size-6 place-items-center rounded-full bg-[var(--surface-2)] font-mono text-[10px]">
-            {initials(user.name)}
-          </span>
-          <span className="hidden text-sm sm:block">{user.name}</span>
-        </span>
+      {actions || user ? (
+        <div className="ml-auto flex shrink-0 items-center gap-2">
+          {actions}
+          {user ? (
+            <>
+              <span className="grid size-6 place-items-center rounded-full bg-[var(--surface-2)] font-mono text-[10px]">
+                {initials(user.name)}
+              </span>
+              <span className="hidden text-sm sm:block">{user.name}</span>
+            </>
+          ) : null}
+        </div>
       ) : null}
     </header>
   );
