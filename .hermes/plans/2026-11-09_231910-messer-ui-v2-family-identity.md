@@ -991,4 +991,10 @@ The local static export shows "Error loading configuration" in the content area:
 `/api/...`, which only exists behind the deployed Caddy route. Not a shell defect; the header and
 footer render correctly around it.
 
-**Not done:** portal has not been deployed, and the other four apps are untouched.
+**Deployed and verified by artifact.** Build `42784976355` succeeded, then Komodo `PullStack` +
+`DeployStack {services:["messer-portal"]}` — the stack key is `messer-portal`, not `portal`; the first
+attempt failed with `no such service: portal`. The container came up 6 s later serving
+`build-info.json` commit `47b8841`, and its own HTML carries `favicon.svg` and `Messer Portal`. The
+public URL answers 401 at the edge (Cloudflare Access), so the in-container read is the verification.
+
+**Still to do:** ai-router, studio, swipe and request-games.
