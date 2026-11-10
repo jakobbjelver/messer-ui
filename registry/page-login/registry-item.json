@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "type": "registry:page",
+  "name": "page-login",
+  "title": "Messer UI — login page",
+  "description": "app/login/page.tsx composing auth-card + login-form. Replace the fetch with your auth client. Vite: <Route path=\"/login\">; Astro: mount as an island.",
+  "files": [
+    {
+      "path": "registry/page-login/page-login.tsx",
+      "type": "registry:page",
+      "target": "app/login/page.tsx"
+    }
+  ],
+  "registryDependencies": [
+    "auth-card",
+    "login-form"
+  ],
+  "dependencies": [
+    "@phosphor-icons/react"
+  ]
+}

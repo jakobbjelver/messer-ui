@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "type": "registry:block",
+  "name": "error-state",
+  "title": "Messer UI — error state",
+  "description": "404 / 500 / not allowed: 64px mono code, title, description, one or two actions.",
+  "files": [
+    {
+      "path": "registry/error-state/error-state.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/error-state.tsx"
+    }
+  ],
+  "dependencies": []
+}

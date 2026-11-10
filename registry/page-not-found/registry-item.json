@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "type": "registry:page",
+  "name": "page-not-found",
+  "title": "Messer UI — not found page",
+  "description": "app/not-found.tsx rendering error-state; app/error.tsx wires the same block with a 500 and reset. Vite/Astro render error-state directly.",
+  "files": [
+    {
+      "path": "registry/page-not-found/page-not-found.tsx",
+      "type": "registry:page",
+      "target": "app/not-found.tsx"
+    }
+  ],
+  "registryDependencies": [
+    "error-state"
+  ],
+  "dependencies": []
+}

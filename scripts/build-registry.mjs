@@ -354,6 +354,62 @@ const blockItems = [
   },
 ].map((b) => ({ ...base, type: "registry:block", ...b }));
 
+const recipeItems = [
+  {
+    name: "auth-card",
+    title: "Messer UI — auth card",
+    description:
+      "The auth screen frame: no shell, one 380px column, mark above a bordered card, footer link row, error as a role=alert row. Login and signup share it.",
+    files: [{ path: "registry/auth-card/auth-card.tsx", type: "registry:ui", target: "components/ui/auth-card.tsx" }],
+    dependencies: ["@phosphor-icons/react"],
+  },
+  {
+    name: "login-form",
+    title: "Messer UI — login form",
+    description:
+      "Email + password, visibility toggle, pending spinner, autocomplete wired, no form library. onSubmit returns { error }; show 'Invalid email or password' and nothing more.",
+    files: [{ path: "registry/login-form/login-form.tsx", type: "registry:ui", target: "components/ui/login-form.tsx" }],
+    dependencies: ["@phosphor-icons/react"],
+  },
+  {
+    name: "page-login",
+    title: "Messer UI — login page",
+    description:
+      "app/login/page.tsx composing auth-card + login-form. Replace the fetch with your auth client. Vite: <Route path=\"/login\">; Astro: mount as an island.",
+    type: "registry:page",
+    files: [{ path: "registry/page-login/page-login.tsx", type: "registry:page", target: "app/login/page.tsx" }],
+    registryDependencies: ["auth-card", "login-form"],
+    dependencies: ["@phosphor-icons/react"],
+  },
+  {
+    name: "error-state",
+    title: "Messer UI — error state",
+    description: "404 / 500 / not allowed: 64px mono code, title, description, one or two actions.",
+    files: [{ path: "registry/error-state/error-state.tsx", type: "registry:ui", target: "components/ui/error-state.tsx" }],
+    dependencies: [],
+  },
+  {
+    name: "page-not-found",
+    title: "Messer UI — not found page",
+    description:
+      "app/not-found.tsx rendering error-state; app/error.tsx wires the same block with a 500 and reset. Vite/Astro render error-state directly.",
+    type: "registry:page",
+    files: [{ path: "registry/page-not-found/page-not-found.tsx", type: "registry:page", target: "app/not-found.tsx" }],
+    registryDependencies: ["error-state"],
+    dependencies: [],
+  },
+  {
+    name: "settings-section",
+    title: "Messer UI — settings section",
+    description:
+      "One settings block: title, description, fields, sticky save bar with dirty state. The parent owns dirty; the section owns pending.",
+    files: [
+      { path: "registry/settings-section/settings-section.tsx", type: "registry:ui", target: "components/ui/settings-section.tsx" },
+    ],
+    dependencies: [],
+  },
+].map((b) => ({ ...base, type: "registry:block", ...b }));
+
 const agentItem = {
   ...base,
   name: "messer-agent",
@@ -376,7 +432,16 @@ const brandItems = brands.map((b) => ({
   cssVars: { light: shadcnOnly(brandVars(b, "light")), dark: shadcnOnly(brandVars(b, "dark")) },
 }));
 
-const items = [styleItem, fontsItem, fingerprintItem, ...componentItems, ...blockItems, agentItem, ...brandItems];
+const items = [
+  styleItem,
+  fontsItem,
+  fingerprintItem,
+  ...componentItems,
+  ...blockItems,
+  ...recipeItems,
+  agentItem,
+  ...brandItems,
+];
 
 write(
   "registry.json",

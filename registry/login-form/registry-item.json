@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "type": "registry:block",
+  "name": "login-form",
+  "title": "Messer UI — login form",
+  "description": "Email + password, visibility toggle, pending spinner, autocomplete wired, no form library. onSubmit returns { error }; show 'Invalid email or password' and nothing more.",
+  "files": [
+    {
+      "path": "registry/login-form/login-form.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/login-form.tsx"
+    }
+  ],
+  "dependencies": [
+    "@phosphor-icons/react"
+  ]
+}

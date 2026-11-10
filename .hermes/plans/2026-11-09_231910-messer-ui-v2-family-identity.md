@@ -78,7 +78,7 @@ condition "deleted when request-games is a React app".
 ```json
 {
   "apps": [
-    { "id": "swiparr",     "path": "~/Repos/swiparr",             "brand": "swiparr",     "sink": null, "shell": "none" },
+    { "id": "swiparr",     "path": "~/Repos/messer-swipe",             "brand": "swiparr",     "sink": null, "shell": "none" },
     { "id": "portal",      "path": "~/Repos/messer-portal",       "brand": "portal",      "sink": null, "shell": "topbar" },
     { "id": "ai-router",   "path": "~/Repos/messer-ai-router",           "brand": "ai-router",   "sink": null, "shell": "topbar" },
     { "id": "studio",      "path": "~/Repos/site",                "brand": "studio",      "sink": null, "shell": "topbar" },
@@ -110,7 +110,7 @@ Run and record in §7:
 
 ```bash
 cd ~/Repos/messer-ui && npm run check
-node scripts/check.mjs --app ~/Repos/swiparr --static
+node scripts/check.mjs --app ~/Repos/messer-swipe --static
 node scripts/check.mjs --app ~/Repos/messer-portal --static
 node scripts/check.mjs --app ~/Repos/messer-ai-router --static
 node scripts/check.mjs --app ~/Repos/site --static
@@ -881,3 +881,51 @@ selftest   9/9
 **Not provable here:** `npx shadcn view jakobbjelver/messer-ui/app-shell` and `add --diff` read the
 registry from GitHub, so they need the branch on main. That proof belongs to the release step; the
 per-app install (portal's sink renders all seven) is Phase 6's adoption commit.
+
+### rev 6 — Phase 5 (page recipes), 2026-11-10
+
+**Six items, 24 total.** `auth-card`, `login-form`, `page-login` (`registry:page` →
+`app/login/page.tsx`), `error-state`, `page-not-found` (`app/not-found.tsx`), `settings-section`.
+
+**Rendered, not imagined.** The login page was mounted in messer-swipe (the renamed swiparr) at a
+temporary `/login-preview` route, served by its own `next dev` with its own globals and fonts, and
+screenshotted at 1280×900 and 390×844 in both themes, plus the failed-submit state. The route and the
+middleware entry that made it public were removed afterwards; the worktree is clean.
+
+**Measured contrast** (canvas-resolved tokens, card surface):
+
+| Pair | Light | Dark |
+|---|---|---|
+| label `--text-3` on `--surface` | 5.02 | 5.34 |
+| input text | 18.42 | 16.46 |
+| **input border `--border-strong`** | **1.48** | **1.62** |
+
+Labels pass AA; the field border does not pass the 3:1 non-text rule. It is a canon/token decision,
+not a block defect: `--border-strong` is `#d4d4d4` / `#3a3a3a`. Two options, not chosen here —
+add a `--border-field` token at ~#8f8f8f / ~#666666 used only by controls, or accept the hairline as
+a known deviation. Changing it would visibly darken every input in every app.
+
+**One defect found by looking:** the form's own error was plain red text with no icon (rule §8), and
+`AuthCard` rendered a different alert row for its `error` prop. The form now renders the same row —
+2px destructive rule, warning icon, text — so a failed sign-in looks the same wherever the message
+comes from.
+
+**Touch target:** controls stay 32px at 390px. The canon's control height is 32 and a taller mobile
+variant would break the rhythm; recorded as a deliberate choice, not an oversight.
+
+**Rename, again:** `swiparr` → `messer-swipe`. `apps.json` and this plan now point at the new path;
+the scan is 287 `.tsx` across 5 apps again. The id stays `swiparr` because the dupe baseline and the
+brand are keyed by product name, not repo name.
+
+**Gate F, measured:**
+
+```
+registry   ✔ Checked 1 registry file and 24 items
+tsc        messer-swipe: 0 errors in the new files
+render     1280 / 390 × light / dark, error state — screenshots reviewed
+contrast   labels 5.02 / 5.34; border 1.48 / 1.62 (open)
+check      green · 0 failures · 0 warnings; selftest 9/9
+```
+
+**Not done here:** messer-swipe's real `/login` is signup + join + 2FA, so the recipe was not wired
+into it — replacing that flow is a product decision for Phase 6, not a block decision.

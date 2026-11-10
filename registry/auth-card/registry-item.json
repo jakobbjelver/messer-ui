@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "type": "registry:block",
+  "name": "auth-card",
+  "title": "Messer UI — auth card",
+  "description": "The auth screen frame: no shell, one 380px column, mark above a bordered card, footer link row, error as a role=alert row. Login and signup share it.",
+  "files": [
+    {
+      "path": "registry/auth-card/auth-card.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/auth-card.tsx"
+    }
+  ],
+  "dependencies": [
+    "@phosphor-icons/react"
+  ]
+}

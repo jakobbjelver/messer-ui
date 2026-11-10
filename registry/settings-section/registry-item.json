@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "type": "registry:block",
+  "name": "settings-section",
+  "title": "Messer UI — settings section",
+  "description": "One settings block: title, description, fields, sticky save bar with dirty state. The parent owns dirty; the section owns pending.",
+  "files": [
+    {
+      "path": "registry/settings-section/settings-section.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/settings-section.tsx"
+    }
+  ],
+  "dependencies": []
+}
