@@ -121,6 +121,8 @@ Toggles sit outside the scale: a switch is an 18 px track (32 px wide), a checkb
 port. They are geometry, not density, and `check` excludes `role=switch|checkbox|radio|slider` from
 the control-height sweep.
 
+Width is not density — the page's measure and gutter live in §16.
+
 ---
 
 # 11. States
@@ -268,3 +270,28 @@ lyrics over artwork; drop when the artwork column becomes opaque |
 ```
 
 Maximum five open deviations per project. The sixth is a design conversation, not a commit.
+
+---
+
+# 16. Layout — one width, one gutter
+
+Every screen picks **one** container stop. A page never hand-writes a `max-w-*`, and never carries two
+widths at once (a nested narrower strip under a wider container is a bug, not a hierarchy).
+
+| stop | token | width | use |
+|---|---|---|---|
+| `default` | `--shell` | 1152 px | app screens and dashboards |
+| `narrow` | `--shell-narrow` | 896 px | single-column reading and forms |
+| `wide` | `--shell-wide` | 1440 px | data tables and boards only |
+
+- **Gutter** `--page-pad` (32 px) at `md` and up, 16 px below; vertical rhythm `py-6 md:py-10`.
+- **The header sits in the page's box.** The topbar's inner row is constrained to the same stop as the
+  page container and shares its gutter; the bar's own border still spans the viewport, so the surface
+  is full-bleed and the content is not. A wordmark that does not line up with the content below it is
+  the defect this section exists to prevent.
+- `AppShell` takes `container` (`default` | `narrow` | `wide` | `none`) and a page renders
+  `PageContainer` with the same value. The shell and the page must not disagree — hence both read the
+  same prop/token rather than each carrying a number.
+- **Body copy** inside any stop caps at `72ch`. A table or a board may use the full stop.
+- `check` measures the header row against the page container at 1280 px and fails on a mismatch.
+

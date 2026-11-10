@@ -6,6 +6,10 @@ import type { ComponentType, ReactNode } from "react";
  *
  * variant="sidebar" — 240px aside on desktop, topbar below md. variant="topbar" — 48px header.
  * variant="none" — children only, for immersive screens (a swipe deck, a player).
+ *
+ * `container` is the page's container stop (canon §16): the topbar's inner row is constrained to the
+ * same width and gutter as the page content, so the wordmark lines up with the column below it. The
+ * bar's own border still spans the viewport — full-bleed surface, contained content.
  */
 
 export type NavItem = {
@@ -15,6 +19,8 @@ export type NavItem = {
   badge?: ReactNode;
   external?: boolean;
 };
+
+export type ContainerStop = "default" | "narrow" | "wide" | "none";
 
 type LinkProps = {
   href: string;
@@ -31,6 +37,8 @@ export type AppShellProps = {
   nav?: NavItem[];
   active?: string;
   variant?: "sidebar" | "topbar" | "none";
+  /** Page container stop; must match the page's PageContainer. Canon §16. */
+  container?: ContainerStop;
   user?: { name: string; role?: string };
   actions?: ReactNode;
   footer?: ReactNode;
@@ -38,8 +46,15 @@ export type AppShellProps = {
   children: ReactNode;
 };
 
+const CONTAINER: Record<ContainerStop, string> = {
+  default: "max-w-[var(--shell)]",
+  narrow: "max-w-[var(--shell-narrow)]",
+  wide: "max-w-[var(--shell-wide)]",
+  none: "",
+};
+
 const rowBase =
-  "relative flex h-8 shrink-0 items-center gap-2 px-3 text-sm no-underline transition-colors duration-150";
+  "relative flex h-8 shrink-0 items-center gap-2 px-3 text-sm no-underline transition-[background-color,color] duration-150";
 const rowIdle = "text-[var(--text-2)] hover:bg-[var(--surface-2)] hover:text-[var(--foreground)]";
 const rowActive =
   "bg-primary/10 text-[var(--foreground)] after:absolute after:inset-y-0 after:left-0 after:w-0.5 after:bg-primary";
@@ -64,6 +79,7 @@ export function AppShell({
   nav = [],
   active,
   variant = "sidebar",
+  container = "default",
   user,
   actions,
   footer,
@@ -108,7 +124,10 @@ export function AppShell({
 
   const userBlock = user ? (
     <div className="flex items-center gap-2 border-t border-border px-3 py-3">
-      <span className="grid size-6 shrink-0 place-items-center rounded-full bg-[var(--surface-2)] font-mono text-[10px] text-[var(--foreground)]">
+      <span
+        data-avatar=""
+        className="grid size-6 shrink-0 place-items-center rounded-full bg-[var(--surface-2)] font-mono text-[10px] text-[var(--foreground)]"
+      >
         {initials(user.name)}
       </span>
       <span className="min-w-0">
@@ -143,57 +162,70 @@ export function AppShell({
   const topbar = (
     <header
       className={[
-        "flex h-12 shrink-0 items-center gap-3 border-b border-border bg-[var(--surface)] px-3 sm:gap-6 sm:px-4",
+        "h-12 shrink-0 border-b border-border bg-[var(--surface)]",
         variant === "sidebar" ? "md:hidden" : "",
       ].join(" ")}
     >
-      <Link href={brand.href ?? "/"} className="flex shrink-0 items-center gap-2 no-underline">
-        {brand.mark ? <span className="shrink-0 [&_svg]:size-5">{brand.mark}</span> : null}
-        <span className="hidden font-mono text-sm font-medium uppercase tracking-[0.1em] text-[var(--foreground)] sm:block">
-          {brand.name}
-        </span>
-      </Link>
-      <nav aria-label="Main" className="flex min-w-0 flex-1 items-center gap-1 overflow-x-auto">
-        {nav.map((item) => {
-          const current = isActiveHref(item.href, active);
-          return (
-            <Link
-              key={item.href}
-              href={item.href}
-              aria-current={current ? "page" : undefined}
-              data-state-selected={current ? "" : undefined}
-              target={item.external ? "_blank" : undefined}
-              rel={item.external ? "noreferrer" : undefined}
-              className={[
-                "relative flex h-8 shrink-0 items-center gap-1.5 px-2 text-sm no-underline transition-colors duration-150",
-                current
-                  ? "bg-primary/10 text-[var(--foreground)] after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 after:bg-primary"
-                  : rowIdle,
-              ].join(" ")}
-            >
-              {item.icon ? (
-                <span className="shrink-0 [&_svg]:size-4" aria-hidden="true">
-                  {item.icon}
+      <div
+        data-shell-row=""
+        className={[
+          "mx-auto flex h-full w-full items-center gap-3 px-4 sm:gap-6 md:px-8",
+          CONTAINER[container],
+        ]
+          .join(" ")
+          .trim()}
+      >
+        <Link href={brand.href ?? "/"} className="flex shrink-0 items-center gap-2 no-underline">
+          {brand.mark ? <span className="shrink-0 [&_svg]:size-5">{brand.mark}</span> : null}
+          <span className="hidden font-mono text-sm font-medium uppercase tracking-[0.1em] text-[var(--foreground)] sm:block">
+            {brand.name}
+          </span>
+        </Link>
+        <nav aria-label="Main" className="flex min-w-0 flex-1 items-center gap-1 overflow-x-auto">
+          {nav.map((item) => {
+            const current = isActiveHref(item.href, active);
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                aria-current={current ? "page" : undefined}
+                data-state-selected={current ? "" : undefined}
+                target={item.external ? "_blank" : undefined}
+                rel={item.external ? "noreferrer" : undefined}
+                className={[
+                  "relative flex h-8 shrink-0 items-center gap-1.5 px-2 text-sm no-underline transition-[background-color,color] duration-150",
+                  current
+                    ? "bg-primary/10 text-[var(--foreground)] after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 after:bg-primary"
+                    : rowIdle,
+                ].join(" ")}
+              >
+                {item.icon ? (
+                  <span className="shrink-0 [&_svg]:size-4" aria-hidden="true">
+                    {item.icon}
+                  </span>
+                ) : null}
+                <span>{item.label}</span>
+              </Link>
+            );
+          })}
+        </nav>
+        {actions || user ? (
+          <div className="ml-auto flex shrink-0 items-center gap-2">
+            {actions}
+            {user ? (
+              <>
+                <span
+                  data-avatar=""
+                  className="grid size-6 place-items-center rounded-full bg-[var(--surface-2)] font-mono text-[10px]"
+                >
+                  {initials(user.name)}
                 </span>
-              ) : null}
-              <span>{item.label}</span>
-            </Link>
-          );
-        })}
-      </nav>
-      {actions || user ? (
-        <div className="ml-auto flex shrink-0 items-center gap-2">
-          {actions}
-          {user ? (
-            <>
-              <span className="grid size-6 place-items-center rounded-full bg-[var(--surface-2)] font-mono text-[10px]">
-                {initials(user.name)}
-              </span>
-              <span className="hidden text-sm sm:block">{user.name}</span>
-            </>
-          ) : null}
-        </div>
-      ) : null}
+                <span className="hidden text-sm sm:block">{user.name}</span>
+              </>
+            ) : null}
+          </div>
+        ) : null}
+      </div>
     </header>
   );
 

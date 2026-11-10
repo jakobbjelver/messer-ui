@@ -197,12 +197,37 @@ for (const theme of runs) {
   await page.evaluate((dark) => document.documentElement.classList.toggle("dark", dark), theme === "dark");
   await page.waitForTimeout(400); // dev CSS chunks and next-themes settle
   await page.evaluate(() => document.fonts.ready);
-    const got = await measure(page);
+  const got = await measure(page);
+  const tag = `${theme}`;
+  // canon §16: the topbar's inner row must share the page container's box, and an h1 is Golos.
+  const layout = await page.evaluate(() => {
+    const rect = (sel) => {
+      const el = document.querySelector(sel);
+      if (!el) return null;
+      const b = el.getBoundingClientRect();
+      return { left: Math.round(b.left), width: Math.round(b.width) };
+    };
+    const h1 = [...document.querySelectorAll("h1")];
+    return {
+      row: rect("[data-shell-row]"),
+      container: rect("[data-page-container]"),
+      h1Families: h1.map((el) => getComputedStyle(el).fontFamily),
+    };
+  });
+  if (layout.row && layout.container) {
+    const dl = Math.abs(layout.row.left - layout.container.left);
+    const dw = Math.abs(layout.row.width - layout.container.width);
+    if (dl > 1 || dw > 1)
+      fails.push(
+        `${tag}: §16 header row ${layout.row.left}/${layout.row.width} ≠ container ${layout.container.left}/${layout.container.width}`,
+      );
+  }
+  if (layout.h1Families.some((f) => !/Golos/.test(f)))
+    fails.push(`${tag}: R3 h1 is "${layout.h1Families.find((f) => !/Golos/.test(f))}" — headings h1–h2 are Golos`);
   const states = profile === "full" ? await probeStates(page, contract) : null;
   if (DEBUG && states) console.error(`  · vars ${JSON.stringify(states.vars)}`);
   await context.close();
 
-  const tag = `${theme}`;
   if (errors.length) fails.push(`${tag}: ${errors.length} console error(s) — ${errors[0]}`);
   if (!got.fontsLoaded.golos || !got.fontsLoaded.mono) fails.push(`${tag}: family fonts not loaded`);
   if (got.bodyFont !== "Golos Text") fails.push(`${tag}: body font is "${got.bodyFont}"`);
@@ -246,12 +271,14 @@ if (app) {
   // Walk the whole app: repos in this family keep source under src/, app/, web/ or packages/, and a
   // scanner pointed at a fixed directory goes quietly green on everything else.
   const SKIP_DIRS = new Set(["node_modules", ".next", ".git", ".messer-ui", "dist", "build", "out",
-    "coverage", "vendor", "__pycache__", ".turbo", ".astro", "playwright-report"]);
+    "coverage", "vendor", "__pycache__", ".turbo", ".astro", "playwright-report", ".studio",
+    ".vercel", ".cache", "storybook-static"]);
   const SKIP_FILES = new Set(["app.css", "styles.css"]); // build output, not source
   const walk = (dir, out = []) => {
     if (!fs.existsSync(dir)) return out;
     for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
-      if (e.isDirectory() ? SKIP_DIRS.has(e.name) : SKIP_FILES.has(e.name)) continue;
+      // `dist-*` is a timestampped build dir (Studio names its output that way).
+      if (e.isDirectory() ? SKIP_DIRS.has(e.name) || /^dist-/.test(e.name) : SKIP_FILES.has(e.name)) continue;
       const p = path.join(dir, e.name);
       if (e.isDirectory()) walk(p, out);
       else if (/\.(tsx?|jsx?|css|html|gohtml|tmpl)$/.test(e.name)) out.push(p);
@@ -295,7 +322,8 @@ if (app) {
     for (const [name, re] of banned) if (re.test(src)) fails.push(`${rel}: imports ${name === "lucide" ? "lucide-react" : "phosphor-icons"} (icon family is ${family})`);
     const hex = [...src.matchAll(/#[0-9a-fA-F]{6}\b/g)].map((m) => m[0]);
     if (hex.length) warns.push(`${rel}: ${hex.length} hex literal(s) ${[...new Set(hex)].slice(0, 3).join(" ")}`);
-    if (/rounded-full/.test(src) && !/avatar|smooth-avatar|scroll-area|slider/.test(rel))
+    // R1's one legal circle carries `data-avatar`; matching on the filename missed the block itself.
+    if (/rounded-full/.test(src) && !/avatar|smooth-avatar|scroll-area|slider/.test(rel) && !/data-avatar/.test(src))
       warns.push(`${rel}: rounded-full outside the whitelist`);
   }
 

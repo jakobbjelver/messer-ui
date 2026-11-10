@@ -286,6 +286,38 @@
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "type": "registry:block",
+      "name": "page-container",
+      "title": "Messer UI — page container",
+      "description": "The page's measure (canon §16): one of three container stops from the canon tokens (default 1152, narrow 896, wide 1440) with the shared gutter. Pass the same `container` to AppShell so the topbar's row lines up with the content.",
+      "files": [
+        {
+          "path": "registry/page-container/page-container.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/page-container.tsx"
+        }
+      ],
+      "dependencies": []
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "type": "registry:block",
+      "name": "theme-toggle",
+      "title": "Messer UI — theme toggle",
+      "description": "The 32 px outlined light/dark control for AppShell's `actions` slot. Presentational: pass `dark` and `onToggle` and keep the storage hook in the app (next-themes or a local useTheme).",
+      "files": [
+        {
+          "path": "registry/theme-toggle/theme-toggle.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/theme-toggle.tsx"
+        }
+      ],
+      "dependencies": [
+        "@phosphor-icons/react"
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "type": "registry:block",
       "name": "hybrid-tooltip",
       "title": "Messer UI — hybrid tooltip",
       "description": "One tooltip for pointer and touch: hover shows a tooltip, a coarse pointer opens a popover on tap. Requires the app's own `tooltip` and `popover` components.",
@@ -544,6 +576,47 @@
       "type": "registry:theme",
       "title": "Messer UI — Messer Swipe",
       "description": "Accent and chart ramp for Messer Swipe. Nothing else: radii, type and geometry come from messer-style.",
+      "cssVars": {
+        "light": {
+          "--primary": "oklch(0.30 0.008 260)",
+          "--primary-foreground": "#ffffff",
+          "--ring": "oklch(0.30 0.008 260)",
+          "--chart-1": "oklch(0.82 0.015 205)",
+          "--chart-2": "oklch(0.7 0.02 205)",
+          "--chart-3": "oklch(0.58 0.02 205)",
+          "--chart-4": "oklch(0.46 0.02 205)",
+          "--chart-5": "oklch(0.34 0.02 205)",
+          "--chart-cat-1": "oklch(0.88 0.006 205)",
+          "--chart-cat-2": "oklch(0.76 0.006 205)",
+          "--chart-cat-3": "oklch(0.64 0.006 205)",
+          "--chart-cat-4": "oklch(0.52 0.006 205)",
+          "--chart-cat-5": "oklch(0.4 0.006 205)",
+          "--chart-cat-6": "oklch(0.28 0.006 205)"
+        },
+        "dark": {
+          "--primary": "oklch(0.92 0.004 260)",
+          "--primary-foreground": "#0a0a0a",
+          "--ring": "oklch(0.92 0.004 260)",
+          "--chart-1": "oklch(0.86 0.015 205)",
+          "--chart-2": "oklch(0.74 0.015 205)",
+          "--chart-3": "oklch(0.62 0.02 205)",
+          "--chart-4": "oklch(0.5 0.02 205)",
+          "--chart-5": "oklch(0.38 0.02 205)",
+          "--chart-cat-1": "oklch(0.9 0.006 205)",
+          "--chart-cat-2": "oklch(0.78 0.006 205)",
+          "--chart-cat-3": "oklch(0.66 0.006 205)",
+          "--chart-cat-4": "oklch(0.54 0.006 205)",
+          "--chart-cat-5": "oklch(0.42 0.006 205)",
+          "--chart-cat-6": "oklch(0.3 0.006 205)"
+        }
+      }
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "brand-messer",
+      "type": "registry:theme",
+      "title": "Messer UI — messer",
+      "description": "Accent and chart ramp for messer. Nothing else: radii, type and geometry come from messer-style.",
       "cssVars": {
         "light": {
           "--primary": "oklch(0.30 0.008 260)",

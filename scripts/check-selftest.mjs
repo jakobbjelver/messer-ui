@@ -22,6 +22,8 @@ const EXPECT = [
   ["focus/", "an input with no focus ring"],
   ["disabled/", "a disabled control that still looks clickable"],
   ["selected/", "an opaque selected row with no accent rule"],
+  ["§16 header row", "a topbar row wider than the page container"],
+  ["R3 h1", "an h1 set in mono"],
 ];
 
 const server = await serve(ROOT);

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "type": "registry:block",
+  "name": "page-container",
+  "title": "Messer UI — page container",
+  "description": "The page's measure (canon §16): one of three container stops from the canon tokens (default 1152, narrow 896, wide 1440) with the shared gutter. Pass the same `container` to AppShell so the topbar's row lines up with the content.",
+  "files": [
+    {
+      "path": "registry/page-container/page-container.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/page-container.tsx"
+    }
+  ],
+  "dependencies": []
+}

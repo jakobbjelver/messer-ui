@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "type": "registry:block",
+  "name": "theme-toggle",
+  "title": "Messer UI — theme toggle",
+  "description": "The 32 px outlined light/dark control for AppShell's `actions` slot. Presentational: pass `dark` and `onToggle` and keep the storage hook in the app (next-themes or a local useTheme).",
+  "files": [
+    {
+      "path": "registry/theme-toggle/theme-toggle.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/theme-toggle.tsx"
+    }
+  ],
+  "dependencies": [
+    "@phosphor-icons/react"
+  ]
+}

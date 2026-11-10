@@ -1,0 +1,9 @@
+{
+  "project": "messer",
+  "title": "messer",
+  "mark": { "glyph": "Knife" },
+  "accent": {
+    "light": "oklch(0.30 0.008 260)",
+    "dark": "oklch(0.92 0.004 260)"
+  }
+}

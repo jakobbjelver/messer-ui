@@ -11,7 +11,7 @@ export type LoginFormProps = {
   defaultEmail?: string;
 };
 
-const fieldLabel = "font-mono text-[10.5px] uppercase tracking-[0.1em] text-[var(--text-3)]";
+const fieldLabel = "text-sm font-medium text-[var(--foreground)]";
 const field =
   "h-8 w-full border border-[var(--border-strong)] bg-[var(--surface)] px-2.5 text-sm text-[var(--foreground)] placeholder:text-[var(--text-3)]";
 

@@ -83,6 +83,8 @@ const ink = {
   "--row": tokens.size.row.$value,
   "--page-pad": tokens.size.page.$value,
   "--shell": tokens.size.shell.$value,
+  "--shell-narrow": tokens.size["shell-narrow"].$value,
+  "--shell-wide": tokens.size["shell-wide"].$value,
   "--dur-fast": tokens.motion.duration.fast.$value,
   "--dur-mid": tokens.motion.duration.mid.$value,
   "--dur-slow": tokens.motion.duration.slow.$value,
@@ -305,6 +307,22 @@ const blockItems = [
       "Sidebar or topbar frame: brand mark, nav with aria-current and an accent rule, user block and version footer. Presentational: pass `active` and `linkComponent` — no framework imports.",
     files: [{ path: "registry/app-shell/app-shell.tsx", type: "registry:ui", target: "components/ui/app-shell.tsx" }],
     dependencies: [],
+  },
+  {
+    name: "page-container",
+    title: "Messer UI — page container",
+    description:
+      "The page's measure (canon §16): one of three container stops from the canon tokens (default 1152, narrow 896, wide 1440) with the shared gutter. Pass the same `container` to AppShell so the topbar's row lines up with the content.",
+    files: [{ path: "registry/page-container/page-container.tsx", type: "registry:ui", target: "components/ui/page-container.tsx" }],
+    dependencies: [],
+  },
+  {
+    name: "theme-toggle",
+    title: "Messer UI — theme toggle",
+    description:
+      "The 32 px outlined light/dark control for AppShell's `actions` slot. Presentational: pass `dark` and `onToggle` and keep the storage hook in the app (next-themes or a local useTheme).",
+    files: [{ path: "registry/theme-toggle/theme-toggle.tsx", type: "registry:ui", target: "components/ui/theme-toggle.tsx" }],
+    dependencies: ["@phosphor-icons/react"],
   },
   {
     name: "hybrid-tooltip",

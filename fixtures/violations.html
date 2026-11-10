@@ -60,5 +60,14 @@
        style="background: var(--primary); color: var(--primary-foreground); height: 32px; padding: 6px 8px">
     Selected but opaque
   </div>
+
+  <!-- §16: a topbar row that is not constrained to the page container -->
+  <header data-fixture="header-misaligned" style="border-bottom:1px solid var(--border)">
+    <div data-shell-row style="display:flex; height:48px; align-items:center; padding:0 16px">Brand</div>
+  </header>
+  <div data-page-container="default" style="max-width:1152px; margin-inline:auto; padding-inline:32px">Content</div>
+
+  <!-- R3: an h1 in the machine voice -->
+  <h1 data-fixture="h1-mono" style="font-family: var(--font-mono); font-size: 24px; text-transform: uppercase">Mono heading</h1>
 </body>
 </html>

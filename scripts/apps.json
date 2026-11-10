@@ -1,5 +1,5 @@
 {
-  "$description": "The family, for scripts that need to look across repos (dupes, contact sheet). Paths expand ~; sinks are filled when a dev server is up. iconFamily overrides rule 9 per brand (canon §14).",
+  "$description": "The family, for scripts that need to look across repos (dupes, contact sheet, block drift). Paths expand ~; sinks are filled when a dev server is up. iconFamily overrides rule 9 per brand (canon §14). blockDeviations declares a deliberate per-app divergence with its reason; wip apps are reported but not gated.",
   "apps": [
     {
       "id": "messer-swipe",
@@ -7,7 +7,10 @@
       "brand": "messer-swipe",
       "shell": "none",
       "sink": null,
-      "iconFamily": "lucide"
+      "iconFamily": "lucide",
+      "blockDeviations": {
+        "status-badge": "Lucide family (§9 exception) plus a paused state — the block is Phosphor-only"
+      }
     },
     {
       "id": "portal",
@@ -27,6 +30,13 @@
       "id": "studio",
       "path": "~/Repos/site",
       "brand": "studio",
+      "shell": "none",
+      "sink": null
+    },
+    {
+      "id": "messer",
+      "path": "~/Repos/messer",
+      "brand": "messer",
       "shell": "topbar",
       "sink": null
     },
@@ -35,7 +45,8 @@
       "path": "~/Repos/messer-request-games",
       "brand": "request-games",
       "shell": "sidebar",
-      "sink": null
+      "sink": null,
+      "wip": true
     }
   ]
 }
