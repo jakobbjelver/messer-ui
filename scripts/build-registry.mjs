@@ -301,6 +301,14 @@ const componentItems = [
 
 const blockItems = [
   {
+    name: "checkbox",
+    title: "Messer UI — checkbox",
+    description:
+      "Native checkbox styled with appearance-none: square, 16px, no shadow, focus from the base ring. Works in Radix, Base UI and Astro without a primitive. Optional label; indeterminate is the input's own property.",
+    files: [{ path: "registry/checkbox/checkbox.tsx", type: "registry:ui", target: "components/ui/checkbox.tsx" }],
+    dependencies: ["@phosphor-icons/react"],
+  },
+  {
     name: "app-shell",
     title: "Messer UI — app shell",
     description:
