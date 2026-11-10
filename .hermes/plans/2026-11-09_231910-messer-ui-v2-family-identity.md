@@ -1170,3 +1170,21 @@ locally and on the deployment, container recreated.
 
 **Next:** the request detail page + the request action (the only interactive write path left), then
 Reports; then the templates and `_legacy.css` can go.
+
+### rev 17 — Phase 8, request action + game detail, 2026-11-10
+
+`POST /api/requests` mirrors the form handler: instant row, `pending` for users, `searching` plus a
+background Prowlarr search for admins, same panic recovery — but a duplicate answers **409 with the
+existing id** instead of redirecting, so the SPA can navigate straight to it.
+
+`GET /api/games/{id}` copies `GameDetail` line for line (platform list with the same fallback to
+`RomMPlatformMap`, ownable platforms, existing requests, the two-tier name match for library
+detection, graceful degradation when RomM is down). `/app/games/:id` keeps the legacy precedence per
+platform — In library (cross-linked to RomM) → status label → Request button — and posts
+`platform_slug = romm_slug`, exactly as the form's hidden input did.
+
+The page was built by a subagent against the established pattern; its self-report was re-verified here:
+`go build` ✓, `go vet` ✓, `vite build` ✓ (324 KB / 98.3 KB gzip), 4 files changed, then `/api/games/1`
+401 and `/app/games/1` 200 locally and on the deployment after Komodo recreated the container.
+
+**Next:** the request detail page (status timeline, cancel/retry/delete for admins), then Reports.
