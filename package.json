@@ -18,6 +18,7 @@
     "assert:config": "node scripts/assert-config.mjs",
     "sink": "node scripts/sink-check.mjs",
     "conformance": "node scripts/check.mjs --url \"file://$(pwd)/fixtures/kitchen-sink.html\" --no-reference",
+    "conformance:url": "node scripts/app-conformance.mjs",
     "selftest": "node scripts/check-selftest.mjs",
     "validate": "npx shadcn@latest registry validate jakobbjelver/messer-ui",
     "check": "npm run brand:check && npm run build && npm run sink && npm run conformance && npm run selftest",

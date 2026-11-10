@@ -67,7 +67,8 @@ export function measure(page) {
       })
       .map((el) => ({
         h: Math.round(el.getBoundingClientRect().height * 10) / 10,
-        label: (el.getAttribute("aria-label") || el.textContent || el.getAttribute("role") || el.tagName)
+        label: (el.getAttribute("aria-label") || el.getAttribute("placeholder") ||
+          el.closest("label")?.textContent || el.textContent || el.getAttribute("role") || el.tagName)
           .trim().replace(/\s+/g, " ").slice(0, 24),
       }));
 
