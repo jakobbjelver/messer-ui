@@ -1151,3 +1151,22 @@ Measured locally: `go build` + `go vet` ✓, `vite build` ✓ (303 KB / 94.5 KB 
 
 **Next:** Requests list + detail, then the request action and Reports. Discover's signed-in render is
 the one thing to eyeball on the deployment.
+
+### rev 16 — Phase 8, Requests list converted, 2026-11-10
+
+The list needed no Go work: `GET /api/requests` already returned the model with JSON tags. `/app/requests`
+renders cover, name, platform · requester · relative time, a status label and the error line when there
+is one.
+
+The counts are derived from the list rather than from a second endpoint, so the header cannot disagree
+with the rows. Status stays grayscale except `failed`/`rejected`, matching the standing rule that colour
+is for problems. The canon `Time` block was pulled in instead of writing a third formatter.
+
+A stale `/discover/new` href survived in Search's nav from the earlier port — fixed in the same commit;
+the nav now points at `/app/*` on all four converted screens.
+
+Measured: `vite build` ✓ (313 KB / 96.4 KB gzip), `/app/requests` 200 and `/api/requests` 401 both
+locally and on the deployment, container recreated.
+
+**Next:** the request detail page + the request action (the only interactive write path left), then
+Reports; then the templates and `_legacy.css` can go.
