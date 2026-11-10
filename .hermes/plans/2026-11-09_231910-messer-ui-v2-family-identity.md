@@ -1322,3 +1322,24 @@ Family update to the newest canon: app-shell **2.0.1** (the actions row) was cop
 messer-ai-router, both rebuilt and deployed — portal's `build-info.json` reports `e48d98c`, ai-router's
 bundle contains the new actions row. login-form **2.0.2** (sentence-case field labels) affects no shipped
 app today; it matters to the next one that installs it.
+
+### rev 24 — Phase 8, conformance is a check now, not a review, 2026-11-10
+
+`scripts/app-conformance.mjs` (+ `npm run conformance:url`) measures a **running** app: each URL in light
+and dark, theme applied before paint, using the same probes as `check`. It asserts what the DOM can prove —
+32px controls, radius 0, a real 2px/2px focus ring via Tab, 10.5px mono meta labels, tabular numerics, 14px
+body, Golos/JetBrains actually resolving, no hover shadow, transitions ≤200ms — prints a table per
+page-theme, exits 1 on any violation, and lists the rules it deliberately cannot measure rather than
+inventing an assertion for them.
+
+Proved the way this repo proves gates, twice: appending `.h-8{height:40px}` to a scratch copy of `dist`
+failed with three R10 lines; removing the base `:focus-visible` rule failed with outline 1px, offset 0 and
+the UA blue instead of `--ring`. Both restored to green.
+
+Real run: six page-themes of messer-request-games green (login, requests, game detail × both themes) with a
+minted session and a seeded DB, plus the deployed login page green from this host.
+
+**Unmeasured by design** (and printed by the runner): R2 hairline widths and overlay-only shadows, R4
+italic intent, R5's field-label half, R6 column alignment, R7 accent budget, R8 status semantics, R9 icon
+family (a source scan), R12 copy voice, R13 mark geometry, §11 hover surface *pair* and disabled markers,
+§16 container stop. Each has a reason, not an omission.
