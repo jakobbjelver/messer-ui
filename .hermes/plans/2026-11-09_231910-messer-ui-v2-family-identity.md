@@ -929,3 +929,29 @@ check      green · 0 failures · 0 warnings; selftest 9/9
 
 **Not done here:** messer-swipe's real `/login` is signup + join + 2FA, so the recipe was not wired
 into it — replacing that flow is a product decision for Phase 6, not a block decision.
+
+### rev 7 — registry published, CI made honest, 2026-11-10
+
+**Published.** `feat/v2-family-identity` was pushed and fast-forwarded to `main` (24 items). main was
+a clean fast-forward, and the phase gates had already run.
+
+**CI failed on main, correctly.** The mark step regenerates assets and diffs them. Every SVG and 32 px
+icon matched; all five `og.png` cards differed, because the runner rasterises the 1200×630 card with
+different font hinting. A gate that fails depending on the machine running it is a false gate, so
+`og.png` is now generated but not hashed: `MARK_HASHED` excludes it, `brand:check` still requires all
+five files to exist, and CI diffs `marks/` with `:(exclude)marks/*/og.png`. CI is green (ci and
+Showcase image).
+
+**Registry proof, from main:**
+
+```
+shadcn view jakobbjelver/messer-ui/app-shell   → item JSON with the file content embedded
+shadcn add  jakobbjelver/messer-ui/app-shell   → Created 1 file: components/ui/app-shell.tsx (6792 bytes)
+add ... --diff components/ui/app-shell.tsx     → only the two locally added lines, nothing else
+```
+
+The raw item URL alone did **not** work: without a registry base the CLI cannot resolve
+`files[].path`, and it reports "No files updated" instead of an error. The GitHub shorthand resolves
+file content through the index — that is the install path the docs must use.
+
+**Still open:** the input-border contrast (1.48 / 1.62) awaits a decision; Phase 6 does not depend on it.
