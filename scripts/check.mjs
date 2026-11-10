@@ -262,12 +262,25 @@ if (app) {
   const sourceFiles = walk(app);
   // Rule 9's icon family is Phosphor; canon §14 lets a brand declare the other family. An
   // exception is per app, never per file: the check must still catch the opposite import.
+  // Resolve the app by its package name first: CI checks this repo out at an arbitrary path
+  // (and at an arbitrary HOME), so matching on `apps.json.path` there silently falls back to the
+  // family default. The package name is the app's id and travels with the checkout.
   const family = (() => {
     try {
       const apps = JSON.parse(fs.readFileSync(path.join(ROOT, "scripts/apps.json"), "utf8")).apps ?? [];
+      let pkgName = null;
+      try {
+        pkgName = JSON.parse(fs.readFileSync(path.join(app, "package.json"), "utf8")).name ?? null;
+      } catch {}
+      if (pkgName) {
+        const byName = apps.find((a) => a.id === pkgName || a.brand === pkgName);
+        if (byName?.iconFamily) return byName.iconFamily;
+      }
       const real = fs.realpathSync(app);
-      const hit = apps.find((a) => fs.existsSync(a.path.replace("~", process.env.HOME ?? "~")) &&
-        fs.realpathSync(a.path.replace("~", process.env.HOME ?? "~")) === real);
+      const hit = apps.find((a) => {
+        const p = a.path.replace("~", process.env.HOME ?? "~");
+        return fs.existsSync(p) && fs.realpathSync(p) === real;
+      });
       return hit?.iconFamily ?? "phosphor";
     } catch { return "phosphor"; }
   })();
