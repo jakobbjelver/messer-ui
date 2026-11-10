@@ -39,7 +39,7 @@ export type AppShellProps = {
 };
 
 const rowBase =
-  "relative flex h-8 shrink-0 items-center gap-2 px-3 text-sm no-underline transition-colors duration-150";
+  "relative flex h-8 shrink-0 items-center gap-2 px-3 text-sm no-underline transition-[background-color,color] duration-150";
 const rowIdle = "text-[var(--text-2)] hover:bg-[var(--surface-2)] hover:text-[var(--foreground)]";
 const rowActive =
   "bg-primary/10 text-[var(--foreground)] after:absolute after:inset-y-0 after:left-0 after:w-0.5 after:bg-primary";
@@ -162,7 +162,7 @@ export function AppShell({
               target={item.external ? "_blank" : undefined}
               rel={item.external ? "noreferrer" : undefined}
               className={[
-                "relative flex h-8 shrink-0 items-center gap-1.5 px-2 text-sm no-underline transition-colors duration-150",
+                "relative flex h-8 shrink-0 items-center gap-1.5 px-2 text-sm no-underline transition-[background-color,color] duration-150",
                 current
                   ? "bg-primary/10 text-[var(--foreground)] after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 after:bg-primary"
                   : rowIdle,
