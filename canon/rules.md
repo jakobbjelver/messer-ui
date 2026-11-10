@@ -226,6 +226,16 @@ app's page (Studio — no shell, no topbar, its own scoped sheet) and an **immer
 no chrome of its own (swipe's deck, `variant: none`), which carries the theme control in its settings
 instead of in an `actions` slot. Every other surface takes a shell, and its header row follows §16.
 
+## 15. Never a native dropdown
+
+A `<select>` opens an OS menu: it ignores the theme, the type scale and the control height, and it
+looks like a different application. Use the `Select` block (Radix `@radix-ui/react-select`) for every
+chooser, including sort and filter controls. The trigger keeps the §10 control chrome; the menu is a
+flat `--surface` panel with `--surface-2` highlight and a check on the current item.
+
+`scripts/check.mjs` fails the static pass on a `<select` in app source. A styled native control is
+still a native control — restyling the closed box does not fix the menu.
+
 ## The accent contract
 
 - Light mode accent: `L ≤ 0.55` (white or near-black foreground must clear 4.5:1).
@@ -242,7 +252,7 @@ instead of in an `actions` slot. Every other surface takes a shell, and its head
 | Component | Port 1 (React) | Port 2 (atoms) | Notes |
 |---|---|---|---|
 | Button, Input, Textarea, Checkbox, Radio, Switch | ✓ | ✓ | |
-| Select | ✓ | ✓ native only | port 2 uses a styled `<select>` |
+| Select | ✓ | ✗ | Radix `@radix-ui/react-select` (the shadcn primitive), never a native `<select>` — see §15 |
 | Field / label / hint / error | ✓ | ✓ | |
 | Badge, StatusBadge | ✓ | ✓ | icon + label, always |
 | Card / panel, PageHeader, EmptyState | ✓ | ✓ | |

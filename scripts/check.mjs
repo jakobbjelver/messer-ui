@@ -328,6 +328,9 @@ if (app) {
     // R1's one legal circle carries `data-avatar`; matching on the filename missed the block itself.
     if (/rounded-full/.test(src) && !/avatar|smooth-avatar|scroll-area|slider/.test(rel) && !/data-avatar/.test(src))
       warns.push(`${rel}: rounded-full outside the whitelist`);
+    // R15: a native <select> opens an OS menu that ignores the theme (skip comments; prose may name it).
+    const code = src.replace(/\/\*[\s\S]*?\*\//g, "").replace(/^\s*\/\/.*$/gm, "");
+    if (/<select[\s>]/.test(code)) fails.push(`${rel}: native <select> — use the Select block (§15)`);
   }
 
   // canon version: the installed theme.css is a copy of ours; a stale copy is how a rule change
