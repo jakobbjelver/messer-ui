@@ -1,10 +1,41 @@
 {
-  "$description": "The family, for scripts that need to look across repos (dupes, contact sheet). Paths expand ~; sinks are filled when a dev server is up.",
+  "$description": "The family, for scripts that need to look across repos (dupes, contact sheet). Paths expand ~; sinks are filled when a dev server is up. iconFamily overrides rule 9 per brand (canon §14).",
   "apps": [
-    { "id": "swiparr", "path": "~/Repos/messer-swipe", "brand": "swiparr", "shell": "none", "sink": null },
-    { "id": "portal", "path": "~/Repos/messer-portal", "brand": "portal", "shell": "topbar", "sink": null },
-    { "id": "ai-router", "path": "~/Repos/messer-ai-router", "brand": "ai-router", "shell": "topbar", "sink": null },
-    { "id": "studio", "path": "~/Repos/site", "brand": "studio", "shell": "topbar", "sink": null },
-    { "id": "request-games", "path": "~/Repos/messer-request-games", "brand": "request-games", "shell": "sidebar", "sink": null }
+    {
+      "id": "messer-swipe",
+      "path": "~/Repos/messer-swipe",
+      "brand": "messer-swipe",
+      "shell": "none",
+      "sink": null,
+      "iconFamily": "lucide"
+    },
+    {
+      "id": "portal",
+      "path": "~/Repos/messer-portal",
+      "brand": "portal",
+      "shell": "topbar",
+      "sink": null
+    },
+    {
+      "id": "ai-router",
+      "path": "~/Repos/messer-ai-router",
+      "brand": "ai-router",
+      "shell": "topbar",
+      "sink": null
+    },
+    {
+      "id": "studio",
+      "path": "~/Repos/site",
+      "brand": "studio",
+      "shell": "topbar",
+      "sink": null
+    },
+    {
+      "id": "request-games",
+      "path": "~/Repos/messer-request-games",
+      "brand": "request-games",
+      "shell": "sidebar",
+      "sink": null
+    }
   ]
 }

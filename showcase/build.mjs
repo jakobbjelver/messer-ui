@@ -112,7 +112,7 @@ const brandButtons = brands
   .join("");
 
 const ports = [
-  ["React + shadcn", "swiparr · server-portal · ai-router · Site Studio", "every component, overlays included"],
+  ["React + shadcn", "messer-swipe · server-portal · ai-router · Site Studio", "every component, overlays included"],
   ["Compiled CSS", "messer-request-games", "atoms only — no dialog, drawer, popover, tooltip"],
   ["Native lookalike", "future (SwiftUI, Flutter)", "tokens exported, no code shared"],
 ];
@@ -435,7 +435,7 @@ const html = `<!doctype html>
     <div class="grid-2">
       <div class="m-panel">
         <div class="m-panel__head"><h3 class="m-panel__title">React</h3><span class="m-data">port 1</span></div>
-        <div class="m-panel__body"><pre>node scripts/install.mjs --app . --brand swiparr --dir src/styles/messer
+        <div class="m-panel__body"><pre>node scripts/install.mjs --app . --brand messer-swipe --dir src/styles/messer
 npx shadcn@latest add jakobbjelver/messer-ui/status-badge -y
 npm run messer   # the gate</pre></div>
       </div>

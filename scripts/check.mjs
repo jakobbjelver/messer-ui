@@ -1,6 +1,6 @@
 // Conformance check: measured against canon/reference.styles.json.
 //   node scripts/check.mjs --url http://127.0.0.1:3001/ui [--profile full|atoms] [--json]
-//   node scripts/check.mjs --app ~/Repos/swiparr --url ...     (also runs the static pass)
+//   node scripts/check.mjs --app ~/Repos/messer-swipe --url ...     (also runs the static pass)
 
 import fs from "node:fs";
 import path from "node:path";
@@ -260,10 +260,26 @@ if (app) {
   };
   // styles/messer/* is the generated canon itself — its literals are the tokens.
   const sourceFiles = walk(app);
+  // Rule 9's icon family is Phosphor; canon §14 lets a brand declare the other family. An
+  // exception is per app, never per file: the check must still catch the opposite import.
+  const family = (() => {
+    try {
+      const apps = JSON.parse(fs.readFileSync(path.join(ROOT, "scripts/apps.json"), "utf8")).apps ?? [];
+      const real = fs.realpathSync(app);
+      const hit = apps.find((a) => fs.existsSync(a.path.replace("~", process.env.HOME ?? "~")) &&
+        fs.realpathSync(a.path.replace("~", process.env.HOME ?? "~")) === real);
+      return hit?.iconFamily ?? "phosphor";
+    } catch { return "phosphor"; }
+  })();
+  const ICON_IMPORT = {
+    phosphor: /from\s+["']@phosphor-icons\/react[^"']*["']/,
+    lucide: /from\s+["']lucide-react["']/,
+  };
+  const banned = Object.entries(ICON_IMPORT).filter(([k]) => k !== family);
   for (const file of sourceFiles.filter((f) => !f.includes("/styles/messer/"))) {
     const src = fs.readFileSync(file, "utf8");
     const rel = path.relative(app, file);
-    if (/from\s+["']lucide-react["']/.test(src)) fails.push(`${rel}: imports lucide-react`);
+    for (const [name, re] of banned) if (re.test(src)) fails.push(`${rel}: imports ${name === "lucide" ? "lucide-react" : "phosphor-icons"} (icon family is ${family})`);
     const hex = [...src.matchAll(/#[0-9a-fA-F]{6}\b/g)].map((m) => m[0]);
     if (hex.length) warns.push(`${rel}: ${hex.length} hex literal(s) ${[...new Set(hex)].slice(0, 3).join(" ")}`);
     if (/rounded-full/.test(src) && !/avatar|smooth-avatar|scroll-area|slider/.test(rel))

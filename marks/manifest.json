@@ -5,6 +5,12 @@
     "favicon-32.png": "sha256:050059e4c5b0304ef01123fcd36e3bf4578cae76f63a6c4631c4eafd4f77b432",
     "apple-touch-icon.png": "sha256:04e3bd3127dddcf807f61d0fabec68f8642706ac4af48b508ad50297a9004dcd"
   },
+  "messer-swipe": {
+    "favicon.svg": "sha256:f0fd6283af505bc131364809ab8cc7ce920564228cf2d8f23c63092f4034e46d",
+    "favicon-dark.svg": "sha256:8a5e9aad81e5cacf2a747caca38f07bdc1b49bcf8122daaaab61ec07026ef776",
+    "favicon-32.png": "sha256:042d1dd29d58c472131bf4695a31fa24ece56e8deceaef256548c60357bbee72",
+    "apple-touch-icon.png": "sha256:6bf90571232430b3ce64dedc01acfc2468d8e028c79de018407e07dccac2e920"
+  },
   "portal": {
     "favicon.svg": "sha256:3cc65fb5bb989679b2096e28f6f5b842c4046fdcde58f1db0aaa88ab04ebe1cb",
     "favicon-dark.svg": "sha256:26dac93632e9d15d3811996418374a5b74423562984e909e05169990dfc3715d",
@@ -22,11 +28,5 @@
     "favicon-dark.svg": "sha256:d0ab7b9f7fdd7f80d4eefe42e2a349da7de8bf3d57565748b1a63491ded35eae",
     "favicon-32.png": "sha256:85aa3106b33cd550fa6b8282214f2ae0e5d3860474c155532229b9ee01504efd",
     "apple-touch-icon.png": "sha256:8c6227d0b783b579b14dd9094f26a38021312d51bbbf6bb6518c5dc271f37630"
-  },
-  "swiparr": {
-    "favicon.svg": "sha256:749b2b49fe688da78f5a1c3a668f5f40d1f5ac21d56298cff290641ad75c5ba2",
-    "favicon-dark.svg": "sha256:f56b4e115ba3dbbc079e1010b0b4d527ab183e29631f1c6ee804142b27d8d7d2",
-    "favicon-32.png": "sha256:34187aabb5075c772d0f281a1d21273bea4ec7e5a893df51bd086d93a6d7c96c",
-    "apple-touch-icon.png": "sha256:9b66020ce4ff4e8983d440a5eba47543302b827b226c7fb68aa72c577240acf3"
   }
 }

@@ -1,0 +1,12 @@
+{
+  "project": "messer-swipe",
+  "title": "Messer Swipe",
+  "mark": {
+    "glyph": "layers",
+    "source": "lucide"
+  },
+  "accent": {
+    "light": "oklch(0.30 0.008 260)",
+    "dark": "oklch(0.92 0.004 260)"
+  }
+}

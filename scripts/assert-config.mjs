@@ -1,5 +1,5 @@
 // Sanity-checks a consuming project's shadcn config before any screenshot is taken.
-//   node scripts/assert-config.mjs --app ~/Repos/swiparr
+//   node scripts/assert-config.mjs --app ~/Repos/messer-swipe
 
 import fs from "node:fs";
 import path from "node:path";

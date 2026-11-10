@@ -5,7 +5,7 @@ import path from "node:path";
 import crypto from "node:crypto";
 import { fileURLToPath } from "node:url";
 import { parseColor, contrast, accentFg, hueDistance, chartRamp, categoricalRamp, STATUS_HUES } from "./lib/color.mjs";
-import { glyphFile, MARK_FILES } from "./lib/mark.mjs";
+import { GLYPH_SOURCES, glyphFile, MARK_FILES } from "./lib/mark.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const tokens = JSON.parse(fs.readFileSync(path.join(ROOT, "canon/tokens.json"), "utf8"));
@@ -88,8 +88,11 @@ for (const brand of brands) {
     fails.push(`${brand.project}: no mark.glyph in brand/${brand.project}.json`);
     continue;
   }
-  if (!fs.existsSync(glyphFile(ICONS, glyph))) {
-    fails.push(`${brand.project}: mark glyph "${glyph}" is not a Phosphor regular icon`);
+  const source = brand.mark?.source ?? "phosphor";
+  if (!GLYPH_SOURCES.includes(source)) {
+    fails.push(`${brand.project}: mark.source "${source}" is not one of ${GLYPH_SOURCES.join(", ")}`);
+  } else if (!fs.existsSync(glyphFile(ICONS, glyph, source))) {
+    fails.push(`${brand.project}: mark glyph "${glyph}" is not a ${source} icon`);
   }
   const files = manifest[brand.project];
   if (!files) {

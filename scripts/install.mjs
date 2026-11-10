@@ -1,5 +1,5 @@
 // Copies the generated token files into a consuming app and prints the import lines.
-//   node scripts/install.mjs --app ~/Repos/swiparr --brand swiparr --dir src/app/messer
+//   node scripts/install.mjs --app ~/Repos/messer-swipe --brand messer-swipe --dir src/app/messer
 
 import fs from "node:fs";
 import path from "node:path";

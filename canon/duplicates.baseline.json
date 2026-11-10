@@ -1,20 +1,22 @@
 {
-  "generatedAt": "2026-11-09T23:14:20.588Z",
+  "generatedAt": "2026-11-10T10:00:51.259Z",
   "exact": [
+    "ai-router:packages/dashboard/src/components/ui/app-shell.tsx|portal:web/components/ui/app-shell.tsx",
+    "ai-router:packages/dashboard/src/components/ui/app-shell.tsx|request-games:web/app/src/components/ui/app-shell.tsx",
     "ai-router:packages/dashboard/src/components/ui/badge.tsx|studio:src/studio/client/ui/badge.tsx",
     "ai-router:packages/dashboard/src/components/ui/card.tsx|studio:src/studio/client/ui/card.tsx",
     "ai-router:packages/dashboard/src/components/ui/collapsible.tsx|studio:src/studio/client/ui/collapsible.tsx",
     "ai-router:packages/dashboard/src/components/ui/page-header.tsx|portal:web/components/ui/page-header.tsx",
     "ai-router:packages/dashboard/src/components/ui/status-badge.tsx|portal:web/components/ui/status-badge.tsx",
     "ai-router:packages/dashboard/src/components/ui/textarea.tsx|studio:src/studio/client/ui/textarea.tsx",
-    "portal:web/components/ui/badge.tsx|swiparr:src/components/ui/badge.tsx",
-    "portal:web/components/ui/card.tsx|swiparr:src/components/ui/card.tsx",
-    "portal:web/components/ui/hybrid-tooltip.tsx|swiparr:src/components/ui/hybrid-tooltip.tsx",
-    "portal:web/components/ui/input.tsx|swiparr:src/components/ui/input.tsx",
-    "portal:web/components/ui/popover.tsx|swiparr:src/components/ui/popover.tsx",
-    "portal:web/components/ui/select.tsx|swiparr:src/components/ui/select.tsx",
-    "portal:web/components/ui/tabs.tsx|swiparr:src/components/ui/tabs.tsx",
-    "portal:web/components/ui/textarea.tsx|swiparr:src/components/ui/textarea.tsx",
-    "portal:web/lib/get-strict-context.tsx|swiparr:src/lib/get-strict-context.tsx"
+    "messer-swipe:src/components/ui/badge.tsx|portal:web/components/ui/badge.tsx",
+    "messer-swipe:src/components/ui/card.tsx|portal:web/components/ui/card.tsx",
+    "messer-swipe:src/components/ui/hybrid-tooltip.tsx|portal:web/components/ui/hybrid-tooltip.tsx",
+    "messer-swipe:src/components/ui/input.tsx|portal:web/components/ui/input.tsx",
+    "messer-swipe:src/components/ui/popover.tsx|portal:web/components/ui/popover.tsx",
+    "messer-swipe:src/components/ui/tabs.tsx|portal:web/components/ui/tabs.tsx",
+    "messer-swipe:src/components/ui/textarea.tsx|portal:web/components/ui/textarea.tsx",
+    "messer-swipe:src/lib/get-strict-context.tsx|portal:web/lib/get-strict-context.tsx",
+    "portal:web/components/ui/app-shell.tsx|request-games:web/app/src/components/ui/app-shell.tsx"
   ]
 }
