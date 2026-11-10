@@ -36,6 +36,13 @@
       "brand": "request-games",
       "shell": "sidebar",
       "sink": null
+    },
+    {
+      "id": "messer-wtf",
+      "path": "~/Repos/messer-wtf",
+      "brand": "messer",
+      "shell": "topbar",
+      "sink": "http://localhost:5173/ui"
     }
   ]
 }
