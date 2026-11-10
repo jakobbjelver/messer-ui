@@ -1051,3 +1051,23 @@ I committed only the template and the five mark files. That tree needs its `inte
 resolved before any build claim can be made.
 
 **Still to do:** the swipe auth decision, and Studio if it ever grows a full-page surface.
+
+### rev 11 — Phase 7, contact sheet and release, 2026-11-10
+
+**Contact sheet.** `scripts/contact-sheet.mjs` takes `--tile label=<dir|url>` (repeatable), serves
+each directory, screenshots 1280×900 in both themes, and composites one PNG per theme into
+`screenshots/`. `npm run sheet` covers the two locally buildable apps (portal's static export,
+ai-router's dist). Reviewed: the tiles share the topbar height, brand position, type and surface
+steps; they differ by accent and by whether the app has nav — which is the intended difference, not a
+drift. Swipe, studio and request-games need a running sink or a live URL; the script takes both.
+
+**rules.md was missing §11–§14.** The file referenced "§14" but no commit had ever contained a
+`## 11` heading — the Phase 1 sections never landed in this file, even though `canon/states.json` and
+the mark spec were implemented and enforced. Added §11 Interaction states (the measured contract),
+§12 Copy, §13 The mark, §14 What a project may choose. Every `§N` reference now resolves.
+
+**Docs.** README gained the three tiers, the promotion rule, the port-2 freeze, the full command
+list, block installation (GitHub shorthand, not raw URLs) and the new files. `package.json` gained
+`sheet`.
+
+**Release.** `package.json` is `2.0.0`, tag `v2.0.0` pushed.

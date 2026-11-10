@@ -37,9 +37,30 @@ Full rationale, the capability matrix and the deviation policy: [`canon/rules.md
 npm install
 npm run build            # tokens + brands → theme.css, registry items, messer.css
 npm run brand:check      # AA contrast + accent/status hue distance, exit 1 on failure
+npm run marks            # regenerate the five marks + their hash manifest
 npm run sink             # kitchen sink: fonts, overflow, console errors, screenshots
+npm run conformance      # rules + interaction states, measured on the kitchen sink
+npm run selftest         # proves every rule check can fail (fixtures/violations.html)
+npm run check            # brand + build + sink + conformance + selftest
 npm run validate         # npx shadcn registry validate jakobbjelver/messer-ui
+npm run showcase         # build the family showcase into showcase/dist
+npm run sheet -- --tile portal=~/Repos/messer-portal/web/out    # contact sheet
 ```
+
+## Three tiers, and what is frozen
+
+| Tier | What | Where |
+|---|---|---|
+| Canon | values and rules every surface obeys | `canon/` |
+| Blocks | composed, framework-portable components | `registry/` — `app-shell`, `auth-card`, `login-form`, … |
+| Apps | local decisions and dated deviations | each repo's own `MESSER.md` |
+
+**Promote on the second copy.** A component earns a registry item when a second app needs it; before
+that it lives in the app. Atoms stay shadcn's job — we don't wrap what shadcn already ships.
+
+**Port 2 is frozen.** `.m-*` + `packages/css/messer.css` takes security and correctness fixes only:
+no new recipes, templates or shell work. New UI is port 1 (React + shadcn + canon). Port 2 stays
+because the showcase renders in `.m-*` and request-games still serves it.
 
 ## Adopting it in a project
 
@@ -54,6 +75,9 @@ node scripts/install.mjs --app ~/Repos/<project> --brand <project> --dir src/sty
 
 # 3. components (optional — existing shadcn components pick up the tokens automatically)
 npx shadcn@latest add jakobbjelver/messer-ui/messer-style jakobbjelver/messer-ui/messer-fingerprint
+
+# 4. blocks — installed from GitHub shorthand (a raw item URL cannot resolve files[].path)
+npx shadcn@latest add jakobbjelver/messer-ui/app-shell jakobbjelver/messer-ui/auth-card
 ```
 
 Then render the sink at `/ui` and measure it:
@@ -73,8 +97,11 @@ A project's local decisions and its dated deviations live in its own `MESSER.md`
   `fonts/` (self-hosted Golos Text + JetBrains Mono, OFL).
 - `brand/*.json` — accent + chart ramp per project. Nothing else.
 - `registry/` — generated shadcn registry items (`registry.json` uses `include`).
+- `marks/` — one generated mark per project (`favicon.svg`, dark, 32 px, apple-touch, OG) + hash manifest.
 - `fixtures/kitchen-sink.html` — the visual oracle every port must render.
-- `scripts/` — build, brand check, config assert, sink check, sprite/font copy.
+- `fixtures/violations.html` — breaks each rule once; the selftest proves the checker notices.
+- `screenshots/` — the contact sheet (`npm run sheet`), one per theme.
+- `scripts/` — build, brand check, config assert, sink check, marks, conformance, contact sheet.
 
 Generated files (`packages/css/theme.css`, `registry/**`, `registry.json`) are committed so the
 registry validates without a build step. Edit `canon/` or `brand/`, then `npm run build`.
