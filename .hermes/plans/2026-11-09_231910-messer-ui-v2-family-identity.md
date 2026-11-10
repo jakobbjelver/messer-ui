@@ -1188,3 +1188,26 @@ The page was built by a subagent against the established pattern; its self-repor
 401 and `/app/games/1` 200 locally and on the deployment after Komodo recreated the container.
 
 **Next:** the request detail page (status timeline, cancel/retry/delete for admins), then Reports.
+
+### rev 18 — Phase 8, request detail converted, 2026-11-10
+
+`GET /api/requests/{id}` mirrors `RequestDetail`: availability check for completed rows when the user
+has a RomM token, non-admin error sanitising, pending-report lookup. The action list is computed on the
+server from the template's own gates (`approve`/`reject` admin+pending, `retry` admin+failed, `cancel`
+pending/approved, `delete`/`delete_files` admin and not in flight), so the UI cannot offer a button the
+handler would reject. One addition: a non-admin may now only read their own request — the legacy handler
+had no ownership check at all.
+
+Two findings from the port:
+- The legacy cancel form posts `_method=DELETE` to `/requests/{id}`, but no POST route and no
+  method-override middleware exist — **that form has been returning 405**. The SPA calls the real
+  `DELETE` route.
+- `MarkCompleted` is registered but no template renders it. Admin "mark completed" therefore has no
+  UI anywhere, legacy or new — a gap worth closing deliberately rather than by accident.
+
+Verified: `go build`, `go vet`, `vite build` (333 KB / 100 KB gzip), `/api/requests/1` 401 and
+`/app/requests/1` 200 locally and on the deployment. The signed-in path was exercised against a seeded
+DB with real session cookies (owner → cancel, admin pending → approve/reject/cancel, admin failed →
+retry/delete/delete_files, other user → 404, bad id → 404, error text sanitised).
+
+**Next:** Reports, then the admin "mark completed" action, then delete the templates and `_legacy.css`.

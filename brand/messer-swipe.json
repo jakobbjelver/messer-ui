@@ -2,7 +2,7 @@
   "project": "messer-swipe",
   "title": "Messer Swipe",
   "mark": {
-    "glyph": "layers",
+    "glyph": "GalleryHorizontalEnd",
     "source": "lucide"
   },
   "accent": {
