@@ -129,6 +129,9 @@ export function AppShell({
         {nav.map(navRow)}
       </nav>
       {userBlock}
+      {actions ? (
+        <div className="flex items-center justify-end border-t border-border px-3 py-2">{actions}</div>
+      ) : null}
       {footer ? (
         <div className="border-t border-border px-3 py-2 font-mono text-[10.5px] uppercase tracking-[0.1em] text-[var(--text-3)]">
           {footer}
