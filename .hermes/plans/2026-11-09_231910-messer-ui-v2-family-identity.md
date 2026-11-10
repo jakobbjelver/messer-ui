@@ -1129,3 +1129,25 @@ canon tokens from outside the app directory. Both only fail in CI, not locally.
 **Not verified:** a successful login with real credentials — the stack keeps them in Komodo, not in a
 file I can read without printing secrets. Wrong credentials still answer 401 with RomM up, and the
 wake path is proven separately.
+
+**Confirmed by the user, rev 14 follow-up:** logged in on the deployment and it works — the last
+unverified link is closed.
+
+### rev 15 — Phase 8, Discover converted, 2026-11-10
+
+`GET /api/discover/{category}` returns the same four lists as the template (popular, top-rated,
+recent, upcoming; 50 each) with the same retro filter — recent and upcoming are not filtered because
+they are inherently modern. `/app/discover/:category` renders four tabs and the shared grid.
+
+The cover card became `components/game-grid.tsx` on its second copy, so Search and Discover render the
+same component rather than two drifting copies — the promotion rule applied as written.
+
+A self-inflicted detour worth recording: a patch meant to insert the API handler clipped the two legacy
+redirect handlers (`BrowsePage`, `RomDetail`); `go build` caught it immediately and both were restored
+in the same commit.
+
+Measured locally: `go build` + `go vet` ✓, `vite build` ✓ (303 KB / 94.5 KB gzip), `/app/discover/popular`
+200 with the new bundle, `/api/discover/popular` 401 without a session.
+
+**Next:** Requests list + detail, then the request action and Reports. Discover's signed-in render is
+the one thing to eyeball on the deployment.
