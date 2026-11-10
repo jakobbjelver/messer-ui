@@ -14,11 +14,15 @@ const APP_FLAG = (() => {
   return i > -1 ? process.argv[i + 1] : null;
 })();
 const tokens = JSON.parse(fs.readFileSync(path.join(ROOT, "canon/tokens.json"), "utf8"));
-const brands = fs
-  .readdirSync(path.join(ROOT, "brand"))
-  .filter((f) => f.endsWith(".json"))
-  .sort()
-  .map((f) => JSON.parse(fs.readFileSync(path.join(ROOT, "brand", f), "utf8")));
+// `--app` runs inside a checkout that has no node_modules: the glyph lookup needs the Phosphor
+// package, so that mode verifies the *installed copies* only and skips the brand maths.
+const brands = APP_FLAG
+  ? []
+  : fs
+      .readdirSync(path.join(ROOT, "brand"))
+      .filter((f) => f.endsWith(".json"))
+      .sort()
+      .map((f) => JSON.parse(fs.readFileSync(path.join(ROOT, "brand", f), "utf8")));
 
 const fails = [];
 const warns = [];
@@ -181,6 +185,8 @@ if (fails.length) {
   for (const f of fails) console.error("  ✗ " + f);
   process.exit(1);
 }
-console.log(`\nbrand  ${brands.length} brands × 2 modes ✓  AA + lightness band + categorical passed`);
-console.log(`marks  ${brands.length} projects ✓  glyph + assets + hashes current`);
+if (!APP_FLAG) {
+  console.log(`\nbrand  ${brands.length} brands × 2 modes ✓  AA + lightness band + categorical passed`);
+  console.log(`marks  ${brands.length} projects ✓  glyph + assets + hashes current`);
+}
 if (installed) console.log(`marks  ${installed} installed copies in app public dirs ✓`);
