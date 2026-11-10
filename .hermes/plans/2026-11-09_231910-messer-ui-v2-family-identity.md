@@ -1086,3 +1086,20 @@ ignored; CI will build it before `go build` once the Go side embeds it.
 **Next:** JSON endpoints (`/api/me`, `/api/login`, `/api/logout`, `/api/requests`), embed + SPA
 fallback, then convert search → discover → requests → detail → reports, delete templates and
 `_legacy.css`, and drop port 2's pipeline.
+
+### rev 13 — Phase 8, Search converted, 2026-11-10
+
+`GET /api/search` returns IGDB results, the platform list and the same sort order as the legacy page,
+with 401 instead of a redirect. `/app/search` is the first data screen: query + platform + sort +
+modern toggle, a cover grid, and empty states for "no query" and "no results"; each card links to the
+still-legacy game page, because the request flow is the next conversion.
+
+Measured: `go build ./...` ✓, `vite build` ✓ (298 KB / 93 KB gzip), `/app/search` 200 serving the new
+bundle, `/api/search` 401 without a session.
+
+**Not verified here:** the signed-in screen needs RomM, which is not reachable from this host. The
+visual check moves to the deployment, where a real login exists — the same constraint that made the
+login screenshot possible only after the local server was up.
+
+**Next:** Discover, then Requests list + detail, then the request action and Reports; flip each nav
+href as its route converts.
