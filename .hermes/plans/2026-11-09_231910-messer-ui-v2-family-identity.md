@@ -955,3 +955,40 @@ The raw item URL alone did **not** work: without a registry base the CLI cannot 
 file content through the index — that is the install path the docs must use.
 
 **Still open:** the input-border contrast (1.48 / 1.62) awaits a decision; Phase 6 does not depend on it.
+
+### rev 8 — Phase 6, portal adopted, 2026-11-10
+
+**Installed, not copied.** `shadcn add jakobbjelver/messer-ui/app-shell` into `web/` — the registry
+path from main. `navigation-bar.tsx` is deleted; the five nav items live in
+`components/app-chrome.tsx`, the only client part of the layout (`usePathname` → `active`,
+`linkComponent={Link}`).
+
+**Two shell changes came from using it:**
+
+1. `actions` slot — portal's theme toggle had been floating at `absolute right-4 top-2`; it now sits in
+   the bar. Without the slot every app would need a second absolutely positioned element.
+2. At 390px the wordmark, five items and the toggle crowded each other. The wordmark is now hidden
+   below `sm`, the nav takes the free space and scrolls; the re-shot screenshot shows clear gaps.
+
+**Marks and canon.** `marks/portal/*` → `web/public/res/`; `metadata.icons` points at `favicon.svg`
+(any), `favicon-32.png` (32) and `apple-touch-icon.png`. Tokens were reinstalled with `install.mjs`,
+so `styles/messer/theme.css` carries the 2.0.0 header and the check warning about it is gone.
+
+**Measured:**
+
+```
+build      ✔ static export, 10 routes including /ui
+eslint     0
+check      green · 0 failures · 9 warnings (8 pre-existing + avatar circle)
+screens    1280 / 768 / 390 × light, 1280 / 390 × dark — no page errors
+```
+
+The one warning this adoption added is `app-shell.tsx: rounded-full outside the whitelist` — the
+avatar circle, which §1 allows; recorded as a dated deviation in portal's `MESSER.md`. The static scan
+sees a class, not the element.
+
+The local static export shows "Error loading configuration" in the content area: the page fetches
+`/api/...`, which only exists behind the deployed Caddy route. Not a shell defect; the header and
+footer render correctly around it.
+
+**Not done:** portal has not been deployed, and the other four apps are untouched.
