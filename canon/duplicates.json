@@ -1,8 +1,17 @@
 {
-  "generatedAt": "2026-11-10T10:00:51.259Z",
-  "scanned": 298,
+  "generatedAt": "2026-11-10T22:59:10.450Z",
+  "scanned": 345,
   "missing": [],
   "exact": [
+    {
+      "key": "ai-router:packages/dashboard/src/components/ui/app-shell.tsx|messer:src/components/ui/app-shell.tsx",
+      "name": "app-shell.tsx",
+      "vendored": false,
+      "files": [
+        "ai-router:packages/dashboard/src/components/ui/app-shell.tsx",
+        "messer:src/components/ui/app-shell.tsx"
+      ]
+    },
     {
       "key": "ai-router:packages/dashboard/src/components/ui/app-shell.tsx|portal:web/components/ui/app-shell.tsx",
       "name": "app-shell.tsx",
@@ -10,15 +19,6 @@
       "files": [
         "portal:web/components/ui/app-shell.tsx",
         "ai-router:packages/dashboard/src/components/ui/app-shell.tsx"
-      ]
-    },
-    {
-      "key": "ai-router:packages/dashboard/src/components/ui/app-shell.tsx|request-games:web/app/src/components/ui/app-shell.tsx",
-      "name": "app-shell.tsx",
-      "vendored": false,
-      "files": [
-        "ai-router:packages/dashboard/src/components/ui/app-shell.tsx",
-        "request-games:web/app/src/components/ui/app-shell.tsx"
       ]
     },
     {
@@ -49,12 +49,66 @@
       ]
     },
     {
+      "key": "ai-router:packages/dashboard/src/components/ui/hybrid-tooltip.tsx|messer-swipe:src/components/ui/hybrid-tooltip.tsx",
+      "name": "hybrid-tooltip.tsx",
+      "vendored": false,
+      "files": [
+        "messer-swipe:src/components/ui/hybrid-tooltip.tsx",
+        "ai-router:packages/dashboard/src/components/ui/hybrid-tooltip.tsx"
+      ]
+    },
+    {
+      "key": "ai-router:packages/dashboard/src/components/ui/hybrid-tooltip.tsx|portal:web/components/ui/hybrid-tooltip.tsx",
+      "name": "hybrid-tooltip.tsx",
+      "vendored": false,
+      "files": [
+        "portal:web/components/ui/hybrid-tooltip.tsx",
+        "ai-router:packages/dashboard/src/components/ui/hybrid-tooltip.tsx"
+      ]
+    },
+    {
+      "key": "ai-router:packages/dashboard/src/components/ui/page-container.tsx|messer:src/components/ui/page-container.tsx",
+      "name": "page-container.tsx",
+      "vendored": false,
+      "files": [
+        "ai-router:packages/dashboard/src/components/ui/page-container.tsx",
+        "messer:src/components/ui/page-container.tsx"
+      ]
+    },
+    {
+      "key": "ai-router:packages/dashboard/src/components/ui/page-container.tsx|portal:web/components/ui/page-container.tsx",
+      "name": "page-container.tsx",
+      "vendored": false,
+      "files": [
+        "portal:web/components/ui/page-container.tsx",
+        "ai-router:packages/dashboard/src/components/ui/page-container.tsx"
+      ]
+    },
+    {
+      "key": "ai-router:packages/dashboard/src/components/ui/page-header.tsx|messer-swipe:src/components/ui/page-header.tsx",
+      "name": "page-header.tsx",
+      "vendored": false,
+      "files": [
+        "messer-swipe:src/components/ui/page-header.tsx",
+        "ai-router:packages/dashboard/src/components/ui/page-header.tsx"
+      ]
+    },
+    {
       "key": "ai-router:packages/dashboard/src/components/ui/page-header.tsx|portal:web/components/ui/page-header.tsx",
       "name": "page-header.tsx",
       "vendored": false,
       "files": [
         "portal:web/components/ui/page-header.tsx",
         "ai-router:packages/dashboard/src/components/ui/page-header.tsx"
+      ]
+    },
+    {
+      "key": "ai-router:packages/dashboard/src/components/ui/status-badge.tsx|messer:src/components/ui/status-badge.tsx",
+      "name": "status-badge.tsx",
+      "vendored": false,
+      "files": [
+        "ai-router:packages/dashboard/src/components/ui/status-badge.tsx",
+        "messer:src/components/ui/status-badge.tsx"
       ]
     },
     {
@@ -73,6 +127,24 @@
       "files": [
         "ai-router:packages/dashboard/src/components/ui/textarea.tsx",
         "studio:src/studio/client/ui/textarea.tsx"
+      ]
+    },
+    {
+      "key": "ai-router:packages/dashboard/src/components/ui/theme-toggle.tsx|messer:src/components/ui/theme-toggle.tsx",
+      "name": "theme-toggle.tsx",
+      "vendored": false,
+      "files": [
+        "ai-router:packages/dashboard/src/components/ui/theme-toggle.tsx",
+        "messer:src/components/ui/theme-toggle.tsx"
+      ]
+    },
+    {
+      "key": "ai-router:packages/dashboard/src/components/ui/theme-toggle.tsx|portal:web/components/ui/theme-toggle.tsx",
+      "name": "theme-toggle.tsx",
+      "vendored": false,
+      "files": [
+        "portal:web/components/ui/theme-toggle.tsx",
+        "ai-router:packages/dashboard/src/components/ui/theme-toggle.tsx"
       ]
     },
     {
@@ -112,6 +184,15 @@
       ]
     },
     {
+      "key": "messer-swipe:src/components/ui/page-header.tsx|portal:web/components/ui/page-header.tsx",
+      "name": "page-header.tsx",
+      "vendored": false,
+      "files": [
+        "messer-swipe:src/components/ui/page-header.tsx",
+        "portal:web/components/ui/page-header.tsx"
+      ]
+    },
+    {
       "key": "messer-swipe:src/components/ui/popover.tsx|portal:web/components/ui/popover.tsx",
       "name": "popover.tsx",
       "vendored": true,
@@ -148,12 +229,48 @@
       ]
     },
     {
-      "key": "portal:web/components/ui/app-shell.tsx|request-games:web/app/src/components/ui/app-shell.tsx",
+      "key": "messer:src/components/ui/app-shell.tsx|portal:web/components/ui/app-shell.tsx",
       "name": "app-shell.tsx",
       "vendored": false,
       "files": [
         "portal:web/components/ui/app-shell.tsx",
-        "request-games:web/app/src/components/ui/app-shell.tsx"
+        "messer:src/components/ui/app-shell.tsx"
+      ]
+    },
+    {
+      "key": "messer:src/components/ui/page-container.tsx|portal:web/components/ui/page-container.tsx",
+      "name": "page-container.tsx",
+      "vendored": false,
+      "files": [
+        "portal:web/components/ui/page-container.tsx",
+        "messer:src/components/ui/page-container.tsx"
+      ]
+    },
+    {
+      "key": "messer:src/components/ui/stat.tsx|request-games:web/app/src/components/ui/stat.tsx",
+      "name": "stat.tsx",
+      "vendored": false,
+      "files": [
+        "messer:src/components/ui/stat.tsx",
+        "request-games:web/app/src/components/ui/stat.tsx"
+      ]
+    },
+    {
+      "key": "messer:src/components/ui/status-badge.tsx|portal:web/components/ui/status-badge.tsx",
+      "name": "status-badge.tsx",
+      "vendored": false,
+      "files": [
+        "portal:web/components/ui/status-badge.tsx",
+        "messer:src/components/ui/status-badge.tsx"
+      ]
+    },
+    {
+      "key": "messer:src/components/ui/theme-toggle.tsx|portal:web/components/ui/theme-toggle.tsx",
+      "name": "theme-toggle.tsx",
+      "vendored": false,
+      "files": [
+        "portal:web/components/ui/theme-toggle.tsx",
+        "messer:src/components/ui/theme-toggle.tsx"
       ]
     }
   ],
@@ -199,16 +316,6 @@
       ]
     },
     {
-      "key": "messer-swipe:src/components/ui/dropdown-menu.tsx|portal:web/components/ui/dropdown-menu.tsx",
-      "name": "dropdown-menu.tsx",
-      "score": 0.95,
-      "vendored": true,
-      "files": [
-        "messer-swipe:src/components/ui/dropdown-menu.tsx",
-        "portal:web/components/ui/dropdown-menu.tsx"
-      ]
-    },
-    {
       "key": "ai-router:packages/dashboard/src/components/ui/label.tsx|studio:src/studio/client/ui/label.tsx",
       "name": "label.tsx",
       "score": 0.94,
@@ -229,13 +336,13 @@
       ]
     },
     {
-      "key": "messer-swipe:src/components/ui/select.tsx|portal:web/components/ui/select.tsx",
-      "name": "select.tsx",
-      "score": 0.93,
+      "key": "messer-swipe:src/components/ui/dropdown-menu.tsx|portal:web/components/ui/dropdown-menu.tsx",
+      "name": "dropdown-menu.tsx",
+      "score": 0.92,
       "vendored": true,
       "files": [
-        "messer-swipe:src/components/ui/select.tsx",
-        "portal:web/components/ui/select.tsx"
+        "messer-swipe:src/components/ui/dropdown-menu.tsx",
+        "portal:web/components/ui/dropdown-menu.tsx"
       ]
     },
     {
@@ -256,6 +363,16 @@
       "files": [
         "ai-router:packages/dashboard/src/components/ui/tooltip.tsx",
         "studio:src/studio/client/ui/tooltip.tsx"
+      ]
+    },
+    {
+      "key": "messer-swipe:src/components/ui/select.tsx|portal:web/components/ui/select.tsx",
+      "name": "select.tsx",
+      "score": 0.91,
+      "vendored": true,
+      "files": [
+        "messer-swipe:src/components/ui/select.tsx",
+        "portal:web/components/ui/select.tsx"
       ]
     },
     {
@@ -289,6 +406,36 @@
       ]
     },
     {
+      "key": "messer-swipe:src/components/ui/separator.tsx|messer:src/components/ui/separator.tsx",
+      "name": "separator.tsx",
+      "score": 0.88,
+      "vendored": true,
+      "files": [
+        "messer-swipe:src/components/ui/separator.tsx",
+        "messer:src/components/ui/separator.tsx"
+      ]
+    },
+    {
+      "key": "messer-swipe:src/components/ui/card.tsx|messer:src/components/ui/card.tsx",
+      "name": "card.tsx",
+      "score": 0.86,
+      "vendored": true,
+      "files": [
+        "messer-swipe:src/components/ui/card.tsx",
+        "messer:src/components/ui/card.tsx"
+      ]
+    },
+    {
+      "key": "messer:src/components/ui/card.tsx|portal:web/components/ui/card.tsx",
+      "name": "card.tsx",
+      "score": 0.86,
+      "vendored": true,
+      "files": [
+        "portal:web/components/ui/card.tsx",
+        "messer:src/components/ui/card.tsx"
+      ]
+    },
+    {
       "key": "messer-swipe:src/components/ui/switch.tsx|portal:web/components/ui/switch.tsx",
       "name": "switch.tsx",
       "score": 0.85,
@@ -296,26 +443,6 @@
       "files": [
         "messer-swipe:src/components/ui/switch.tsx",
         "portal:web/components/ui/switch.tsx"
-      ]
-    },
-    {
-      "key": "messer-swipe:src/components/ui/page-header.tsx|portal:web/components/ui/page-header.tsx",
-      "name": "page-header.tsx",
-      "score": 0.84,
-      "vendored": false,
-      "files": [
-        "messer-swipe:src/components/ui/page-header.tsx",
-        "portal:web/components/ui/page-header.tsx"
-      ]
-    },
-    {
-      "key": "ai-router:packages/dashboard/src/components/ui/page-header.tsx|messer-swipe:src/components/ui/page-header.tsx",
-      "name": "page-header.tsx",
-      "score": 0.84,
-      "vendored": false,
-      "files": [
-        "messer-swipe:src/components/ui/page-header.tsx",
-        "ai-router:packages/dashboard/src/components/ui/page-header.tsx"
       ]
     },
     {
@@ -329,6 +456,16 @@
       ]
     },
     {
+      "key": "messer:src/components/ui/separator.tsx|portal:web/components/ui/separator.tsx",
+      "name": "separator.tsx",
+      "score": 0.81,
+      "vendored": true,
+      "files": [
+        "portal:web/components/ui/separator.tsx",
+        "messer:src/components/ui/separator.tsx"
+      ]
+    },
+    {
       "key": "ai-router:packages/dashboard/src/components/ui/select.tsx|studio:src/studio/client/ui/select.tsx",
       "name": "select.tsx",
       "score": 0.8,
@@ -336,6 +473,36 @@
       "files": [
         "ai-router:packages/dashboard/src/components/ui/select.tsx",
         "studio:src/studio/client/ui/select.tsx"
+      ]
+    },
+    {
+      "key": "portal:web/components/ui/status-badge.tsx|request-games:web/app/src/components/ui/status-badge.tsx",
+      "name": "status-badge.tsx",
+      "score": 0.8,
+      "vendored": false,
+      "files": [
+        "portal:web/components/ui/status-badge.tsx",
+        "request-games:web/app/src/components/ui/status-badge.tsx"
+      ]
+    },
+    {
+      "key": "ai-router:packages/dashboard/src/components/ui/status-badge.tsx|request-games:web/app/src/components/ui/status-badge.tsx",
+      "name": "status-badge.tsx",
+      "score": 0.8,
+      "vendored": false,
+      "files": [
+        "ai-router:packages/dashboard/src/components/ui/status-badge.tsx",
+        "request-games:web/app/src/components/ui/status-badge.tsx"
+      ]
+    },
+    {
+      "key": "messer:src/components/ui/status-badge.tsx|request-games:web/app/src/components/ui/status-badge.tsx",
+      "name": "status-badge.tsx",
+      "score": 0.8,
+      "vendored": false,
+      "files": [
+        "messer:src/components/ui/status-badge.tsx",
+        "request-games:web/app/src/components/ui/status-badge.tsx"
       ]
     },
     {

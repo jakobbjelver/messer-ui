@@ -50,6 +50,15 @@
       "shell": "sidebar",
       "sink": null,
       "wip": true
+    },
+    {
+      "id": "transcode",
+      "path": "~/Repos/messer-transcode",
+      "brand": "transcode",
+      "shell": "topbar",
+      "marksTarget": "~/Repos/messer-transcode/web/app/public",
+      "sink": null,
+      "wip": true
     }
   ]
 }

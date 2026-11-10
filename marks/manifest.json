@@ -34,5 +34,11 @@
     "favicon-dark.svg": "sha256:d0ab7b9f7fdd7f80d4eefe42e2a349da7de8bf3d57565748b1a63491ded35eae",
     "favicon-32.png": "sha256:85aa3106b33cd550fa6b8282214f2ae0e5d3860474c155532229b9ee01504efd",
     "apple-touch-icon.png": "sha256:8c6227d0b783b579b14dd9094f26a38021312d51bbbf6bb6518c5dc271f37630"
+  },
+  "transcode": {
+    "favicon.svg": "sha256:f01522620df64ea30f9d00d9c7e3a4dafc73215a9b0f01029563463d1aef4e68",
+    "favicon-dark.svg": "sha256:09a7f25884fc0f3ef7b0c807f2814b708f22557af6be465f876fb2e349f8329b",
+    "favicon-32.png": "sha256:bf7cd55b8e6bc5c35e77a70d7accdf21f6e129f6f110026f2ace099330e60528",
+    "apple-touch-icon.png": "sha256:2a68e33d3038855582d229b204adfb34fa719a13f11bbc567638d926aad6ee27"
   }
 }

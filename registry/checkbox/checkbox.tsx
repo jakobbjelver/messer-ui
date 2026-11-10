@@ -1,5 +1,5 @@
-import type { InputHTMLAttributes, ReactNode } from "react";
-import { Check } from "@phosphor-icons/react";
+import { useEffect, useRef, type InputHTMLAttributes, type ReactNode } from "react";
+import { Check, Minus } from "@phosphor-icons/react";
 
 /**
  * The canon checkbox. A native input with `appearance-none` over a Phosphor glyph, so it works in
@@ -12,18 +12,27 @@ import { Check } from "@phosphor-icons/react";
 export type CheckboxProps = Omit<InputHTMLAttributes<HTMLInputElement>, "type"> & {
   /** Rendered inside a <label>; omit it and pass aria-label instead. */
   label?: ReactNode;
+  /** "Some of them" — a property on the input, not an attribute, so it is applied on the ref. */
+  indeterminate?: boolean;
 };
 
-export function Checkbox({ label, className, id, ...props }: CheckboxProps) {
+export function Checkbox({ label, className, id, indeterminate, ...props }: CheckboxProps) {
+  const ref = useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    if (ref.current) ref.current.indeterminate = Boolean(indeterminate);
+  }, [indeterminate]);
+
   const control = (
     <span className="relative inline-flex size-4 shrink-0 items-center justify-center">
       <input
+        ref={ref}
         id={id}
         type="checkbox"
         className={[
           "peer size-4 cursor-pointer appearance-none border border-[var(--border-strong)]",
           "bg-[var(--surface)] transition-colors duration-150",
           "checked:border-primary checked:bg-primary",
+          "indeterminate:border-primary indeterminate:bg-primary",
           "disabled:cursor-not-allowed disabled:opacity-50",
           "aria-invalid:border-[var(--destructive)]",
           className,
@@ -36,7 +45,15 @@ export function Checkbox({ label, className, id, ...props }: CheckboxProps) {
         aria-hidden="true"
         size={12}
         weight="bold"
-        className="pointer-events-none absolute hidden text-[var(--primary-foreground)] peer-checked:block"
+        className="pointer-events-none absolute hidden text-[var(--primary-foreground)] peer-checked:block peer-indeterminate:hidden"
+      />
+      {/* A native input carries `indeterminate` as a property, not an attribute, so the caller sets
+          it on the ref — the CSS :indeterminate pseudo-class then does the rest. */}
+      <Minus
+        aria-hidden="true"
+        size={12}
+        weight="bold"
+        className="pointer-events-none absolute hidden text-[var(--primary-foreground)] peer-indeterminate:block"
       />
     </span>
   );
