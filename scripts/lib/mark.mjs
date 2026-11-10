@@ -12,6 +12,12 @@ export const MARK_FILES = [
   "og.png",
 ];
 
+/**
+ * Rasterised OG cards are not byte-stable across machines (font hinting and AA differ between a
+ * laptop and a CI runner), so they are generated but not hashed. SVGs and small icons are stable.
+ */
+export const MARK_HASHED = MARK_FILES.filter((file) => file !== "og.png");
+
 /** GameController → game-controller (Phosphor's file naming). */
 export const kebab = (name) =>
   String(name)

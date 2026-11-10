@@ -15,7 +15,7 @@ import { createRequire } from "node:module";
 import { fileURLToPath } from "node:url";
 import { oklchToHex } from "./lib/color.mjs";
 import { serve } from "./lib/serve.mjs";
-import { MARK_FILES, markSvg, glyphSvg } from "./lib/mark.mjs";
+import { MARK_HASHED, markSvg, glyphSvg } from "./lib/mark.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const require = createRequire(import.meta.url);
@@ -121,7 +121,7 @@ try {
     }
 
     manifest[brand.project] = Object.fromEntries(
-      MARK_FILES.map((f) => [f, sha(fs.readFileSync(path.join(dir, f)))]),
+      MARK_HASHED.map((f) => [f, sha(fs.readFileSync(path.join(dir, f)))]),
     );
     console.log(`  ${brand.project.padEnd(14)} ${glyph.padEnd(15)} 32 · 180 · 1200×630`);
   }

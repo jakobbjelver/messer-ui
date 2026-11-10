@@ -21,8 +21,10 @@ jobs:
       # not in the image build that deploys ui.messer.wtf
       - run: npm run showcase
       - run: npx playwright install --with-deps chromium
-      # marks are generated: regenerate them and fail if the committed assets are stale
-      - run: npm run marks && git diff --exit-code -- marks/
+      # marks are generated: regenerate them and fail if the committed assets are stale.
+      # og.png is rasterised and not byte-stable across machines (font hinting), so it is
+      # generated but excluded from the diff; the SVGs and icons are hashed and compared.
+      - run: npm run marks && git diff --exit-code -- marks/ ':(exclude)marks/*/og.png'
       - run: npm run sink
       # every new rule check must be able to fail: the violations fixture proves it
       - run: npm run selftest

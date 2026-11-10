@@ -5,7 +5,7 @@ import path from "node:path";
 import crypto from "node:crypto";
 import { fileURLToPath } from "node:url";
 import { parseColor, contrast, accentFg, hueDistance, chartRamp, categoricalRamp, STATUS_HUES } from "./lib/color.mjs";
-import { glyphFile } from "./lib/mark.mjs";
+import { glyphFile, MARK_FILES } from "./lib/mark.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const tokens = JSON.parse(fs.readFileSync(path.join(ROOT, "canon/tokens.json"), "utf8"));
@@ -95,6 +95,11 @@ for (const brand of brands) {
   if (!files) {
     fails.push(`${brand.project}: no marks/${brand.project} — run npm run marks`);
     continue;
+  }
+  for (const name of MARK_FILES) {
+    if (!fs.existsSync(path.join(MARKS, brand.project, name))) {
+      fails.push(`${brand.project}: missing marks/${brand.project}/${name}`);
+    }
   }
   for (const [name, hash] of Object.entries(files)) {
     const file = path.join(MARKS, brand.project, name);
