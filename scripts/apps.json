@@ -38,8 +38,8 @@
       "sink": null
     },
     {
-      "id": "messer-wtf",
-      "path": "~/Repos/messer-wtf",
+      "id": "messer",
+      "path": "~/Repos/messer",
       "brand": "messer",
       "shell": "topbar",
       "sink": "http://localhost:5173/ui"
