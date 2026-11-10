@@ -140,17 +140,17 @@ export function AppShell({
   const topbar = (
     <header
       className={[
-        "flex h-12 shrink-0 items-center gap-6 border-b border-border bg-[var(--surface)] px-4",
+        "flex h-12 shrink-0 items-center gap-3 border-b border-border bg-[var(--surface)] px-3 sm:gap-6 sm:px-4",
         variant === "sidebar" ? "md:hidden" : "",
       ].join(" ")}
     >
       <Link href={brand.href ?? "/"} className="flex shrink-0 items-center gap-2 no-underline">
         {brand.mark ? <span className="shrink-0 [&_svg]:size-5">{brand.mark}</span> : null}
-        <span className="font-mono text-sm font-medium uppercase tracking-[0.1em] text-[var(--foreground)]">
+        <span className="hidden font-mono text-sm font-medium uppercase tracking-[0.1em] text-[var(--foreground)] sm:block">
           {brand.name}
         </span>
       </Link>
-      <nav aria-label="Main" className="flex min-w-0 items-center gap-1 overflow-x-auto">
+      <nav aria-label="Main" className="flex min-w-0 flex-1 items-center gap-1 overflow-x-auto">
         {nav.map((item) => {
           const current = isActiveHref(item.href, active);
           return (
