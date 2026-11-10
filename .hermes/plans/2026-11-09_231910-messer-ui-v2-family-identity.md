@@ -1103,3 +1103,29 @@ login screenshot possible only after the local server was up.
 
 **Next:** Discover, then Requests list + detail, then the request action and Reports; flip each nav
 href as its route converts.
+
+### rev 14 — Phase 8, RomM wakes before login, 2026-11-10
+
+RomM is scale-to-zero behind Caddy + Sablier, and the app's API URL (`http://romm:8080/api`) bypasses
+Caddy — so a stopped RomM returned the same `401 invalid credentials` as a wrong password. Measured
+before the fix, in rev 12's login test.
+
+`internal/romm/wake.go` GETs `http://caddy/` with `Host: games.local` (the local site block; the public
+one sits behind Cloudflare Access). Sablier's blocking strategy holds the request until the container
+answers, so a nil error means RomM is up. Wake runs in `RommAuth.Authenticate` (both login paths), on
+`LoginPage` render in a goroutine, and through public `POST /api/romm/wake`, which the SPA calls on
+mount and renders as "Starting RomM" until it resolves. `ROMM_WAKE_URL`/`ROMM_WAKE_HOST` come from
+`compose.games.yaml`; unset means a nil waker, so local dev is unchanged.
+
+Measured on the deployment: RomM stopped → `POST /api/romm/wake` → **200 `{"awake":true}` in 7.37 s**,
+`romm Up 7 seconds`, `http://romm:8080/` 200. Then stopped again and loaded `/app/login` in a browser:
+the page itself started RomM while showing the status row (`romm Up 11 seconds`), which is the flow a
+user actually takes.
+
+Two image fixes fell out of the cold build: `ARG GO_VERSION` after a `FROM` is stage-scoped (the tag
+resolved to `golang:-alpine`), and the app stage needed `web/styles/` because `index.css` imports the
+canon tokens from outside the app directory. Both only fail in CI, not locally.
+
+**Not verified:** a successful login with real credentials — the stack keeps them in Komodo, not in a
+file I can read without printing secrets. Wrong credentials still answer 401 with RomM up, and the
+wake path is proven separately.
