@@ -1211,3 +1211,26 @@ DB with real session cookies (owner → cancel, admin pending → approve/reject
 retry/delete/delete_files, other user → 404, bad id → 404, error text sanitised).
 
 **Next:** Reports, then the admin "mark completed" action, then delete the templates and `_legacy.css`.
+
+### rev 19 — Phase 8, Reports converted, 2026-11-10
+
+`GET /api/reports` mirrors `ReportsList` with a status filter, a pending count and server-computed
+actions that exist only while a report is pending; `POST /api/reports` shares `submitReport` with the
+form handler (201, or 409 on a duplicate). `/app/reports` renders filter tabs, rows linking to their
+request, and accept/reject that post to the existing endpoints and re-fetch. Request detail gained
+"Report Unplayable", gated on the game actually being available and no report already pending.
+
+A correction to my brief worth recording: I told the subagent a normal user should see their own
+reports, but `ReportsList` is **admin-only** (403) and no owner-scoped query exists. The API mirrors the
+real behaviour rather than inventing a view.
+
+Verified: `go build`, `go vet`, `vite build` (348 KB / 102.7 KB gzip), 401 unauthenticated, 200 for the
+route, and against a seeded DB: admin list 3 rows with `pending_count 1`, `?status=pending` 1 row,
+normal user 403, report create 201 / duplicate 409, accept 303 then state change. Deployed: `/app/reports`,
+`/app/requests`, `/app/discover/popular` and `/app/games/1` all 200; `/api/reports` 401.
+
+**Left before the legacy templates can go:** every screen is converted, but the server routes
+(`/`, `/search`, `/discover/{category}`, `/games/{id}`, `/requests`, `/requests/{id}`, `/reports`, `/login`)
+still render templates. The next slice should turn those into redirects to their `/app` equivalents, and
+only then delete `web/templates` and `_legacy.css`. Also open: where "mark completed" belongs — it has no
+UI anywhere today.
