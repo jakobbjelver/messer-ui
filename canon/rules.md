@@ -221,6 +221,11 @@ The accent hue (one — a neutral accent is a valid choice and is what `messer-s
 its own layout inside the page. Everything in §1–§13 is fixed, including the icon family unless §9
 records the exception.
 
+Two shell-less shapes are sanctioned, and neither is drift: an **overlay** mounted inside another
+app's page (Studio — no shell, no topbar, its own scoped sheet) and an **immersive** surface that has
+no chrome of its own (swipe's deck, `variant: none`), which carries the theme control in its settings
+instead of in an `actions` slot. Every other surface takes a shell, and its header row follows §16.
+
 ## The accent contract
 
 - Light mode accent: `L ≤ 0.55` (white or near-black foreground must clear 4.5:1).

@@ -132,4 +132,23 @@ try {
 }
 
 fs.writeFileSync(path.join(MARKS, "manifest.json"), JSON.stringify(manifest, null, 2) + "\n");
+
+// An app that serves its own icons declares `marksTarget` (its public dir) in apps.json: the files
+// there are a copy of marks/<brand>/, so regenerating them by hand is how a mark goes stale in the
+// repo while the canon says it is current.
+// og.png is rasterised per machine (font hinting), so it is not copied: the app keeps its own share
+// card and only the byte-stable icons are synced.
+const FILES = MARK_HASHED;
+const apps = JSON.parse(fs.readFileSync(path.join(ROOT, "scripts/apps.json"), "utf8")).apps ?? [];
+for (const app of apps) {
+  if (!app.marksTarget) continue;
+  const target = app.marksTarget.replace("~", process.env.HOME ?? "~");
+  if (!fs.existsSync(target)) {
+    console.log(`  ${app.id.padEnd(14)} marksTarget missing — ${target}`);
+    continue;
+  }
+  for (const file of FILES) fs.copyFileSync(path.join(MARKS, app.brand ?? app.id, file), path.join(target, file));
+  console.log(`  ${app.id.padEnd(14)} ${FILES.length} files → ${target}`);
+}
+
 console.log(`\nmarks  ${Object.keys(manifest).length} projects → marks/ · manifest.json`);

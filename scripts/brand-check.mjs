@@ -5,7 +5,7 @@ import path from "node:path";
 import crypto from "node:crypto";
 import { fileURLToPath } from "node:url";
 import { parseColor, contrast, accentFg, hueDistance, chartRamp, categoricalRamp, STATUS_HUES } from "./lib/color.mjs";
-import { GLYPH_SOURCES, glyphFile, MARK_FILES } from "./lib/mark.mjs";
+import { GLYPH_SOURCES, glyphFile, MARK_FILES, MARK_HASHED } from "./lib/mark.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const tokens = JSON.parse(fs.readFileSync(path.join(ROOT, "canon/tokens.json"), "utf8"));
@@ -121,6 +121,36 @@ for (const r of rows) {
     pad(r.fgContrast, 6) + pad(r.text, 6) + pad(r.muted, 7) + pad(r.L, 7) + r.nearest,
   );
 }
+/* ── installed marks ─────────────────────────────────────────────────────── */
+// An app that serves its own icons declares `marksTarget` in apps.json (its public dir). Those files
+// are a copy of marks/<brand>/; compare them so a repo cannot keep an old favicon while marks/ says
+// it is current. og.png is rasterised per machine, so only its presence is required — same rule as
+// the manifest hashes.
+const FILES = MARK_HASHED; // byte-stable icons only; og.png is a per-machine rasterisation
+const apps = JSON.parse(fs.readFileSync(path.join(ROOT, "scripts/apps.json"), "utf8")).apps ?? [];
+let installed = 0;
+for (const app of apps) {
+  if (!app.marksTarget) continue;
+  const target = app.marksTarget.replace("~", process.env.HOME ?? "~");
+  if (!fs.existsSync(target)) {
+    fails.push(`${app.id}: marksTarget missing — ${target}`);
+    continue;
+  }
+  const srcDir = path.join(MARKS, app.brand ?? app.id);
+  for (const name of FILES) {
+    const src = path.join(srcDir, name);
+    const dst = path.join(target, name);
+    if (!fs.existsSync(dst)) {
+      fails.push(`${app.id}: missing ${name} in ${target} — run npm run marks`);
+      continue;
+    }
+    if (fs.existsSync(src) && Buffer.compare(fs.readFileSync(src), fs.readFileSync(dst)) !== 0) {
+      fails.push(`${app.id}: ${name} diverges from marks/${app.brand ?? app.id} — run npm run marks`);
+    }
+    installed++;
+  }
+}
+
 if (warns.length) {
   console.log("\nwarnings:");
   for (const w of warns) console.log("  ! " + w);
@@ -132,3 +162,4 @@ if (fails.length) {
 }
 console.log(`\nbrand  ${brands.length} brands × 2 modes ✓  AA + lightness band + categorical passed`);
 console.log(`marks  ${brands.length} projects ✓  glyph + assets + hashes current`);
+if (installed) console.log(`marks  ${installed} installed copies in app public dirs ✓`);

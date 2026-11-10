@@ -275,7 +275,7 @@ if (app) {
   // scanner pointed at a fixed directory goes quietly green on everything else.
   const SKIP_DIRS = new Set(["node_modules", ".next", ".git", ".messer-ui", "dist", "build", "out",
     "coverage", "vendor", "__pycache__", ".turbo", ".astro", "playwright-report", ".studio",
-    ".vercel", ".cache", "storybook-static"]);
+    ".vercel", ".cache", "storybook-static", ".test-out"]);
   const SKIP_FILES = new Set(["app.css", "styles.css"]); // build output, not source
   const walk = (dir, out = []) => {
     if (!fs.existsSync(dir)) return out;

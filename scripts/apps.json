@@ -17,6 +17,7 @@
       "path": "~/Repos/messer-portal",
       "brand": "portal",
       "shell": "topbar",
+      "marksTarget": "~/Repos/messer-portal/web/public/res",
       "sink": null
     },
     {
@@ -24,6 +25,7 @@
       "path": "~/Repos/messer-ai-router",
       "brand": "ai-router",
       "shell": "topbar",
+      "marksTarget": "~/Repos/messer-ai-router/packages/dashboard/public",
       "sink": null
     },
     {
@@ -38,6 +40,7 @@
       "path": "~/Repos/messer",
       "brand": "messer",
       "shell": "topbar",
+      "marksTarget": "~/Repos/messer/public",
       "sink": null
     },
     {

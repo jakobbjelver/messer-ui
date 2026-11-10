@@ -42,7 +42,23 @@ const items = fs
   })
   .filter(Boolean);
 
-const apps = JSON.parse(fs.readFileSync(path.join(ROOT, "scripts/apps.json"), "utf8")).apps ?? [];
+const allApps = JSON.parse(fs.readFileSync(path.join(ROOT, "scripts/apps.json"), "utf8")).apps ?? [];
+
+// CI checks out one repo at an arbitrary path, where the `~/Repos/...` entries in apps.json resolve
+// to nothing. `--app <dir>` measures that one checkout; it is matched to its apps.json entry by the
+// directory name (portal has no root package.json, so the name is not reliable).
+const APP_DIR = (() => {
+  const i = process.argv.indexOf("--app");
+  return i > -1 ? process.argv[i + 1] : null;
+})();
+
+const apps = APP_DIR
+  ? (() => {
+      const dir = path.resolve(APP_DIR);
+      const hit = allApps.find((a) => path.basename(a.path) === path.basename(dir));
+      return [hit ? { ...hit, path: dir } : { id: path.basename(dir), path: dir, brand: null, shell: null }];
+    })()
+  : allApps;
 
 const rows = [];
 for (const app of apps) {
@@ -77,7 +93,7 @@ const bad = rows.filter((r) => r.status === "differs");
 const skipped = rows.filter((r) => r.status === "deviation" || r.status === "wip");
 
 if (JSON_OUT) {
-  console.log(JSON.stringify({ apps: apps.length, blocks: items.length, rows }, null, 2));
+  console.log(JSON.stringify({ apps: apps.length, blocks: items.length, appDirs: apps.map((a) => a.path), rows }, null, 2));
 } else {
   for (const r of rows.filter((r) => r.status !== "not-installed")) {
     const mark = r.status === "match" ? "✓" : r.status === "differs" ? "✗" : "·";
