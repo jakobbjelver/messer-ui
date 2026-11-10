@@ -1307,3 +1307,18 @@ controls 32, field label 14/500, checkbox 16.
 
 **Known, left alone:** GameDetail renders the platform status badge twice (state block and action slot).
 Small, real, and next.
+
+### rev 23 — Phase 8, root 404, duplicate badge, family updated to 2.0.1, 2026-11-10
+
+Deleting the page routes took `/` with them, so the hostname answered `404 page not found` for anything
+not prefixed with `/app` — the user hit exactly that. Root and `/login` are **entry points**, not
+migration shims, so both 303 into the SPA (verified: `/` → `/app/`, `/login` → `/app/login`, `/app/` 200,
+locally and on the deployment).
+
+GameDetail rendered the same `StatusBadge` twice — once under the platform name, once in the action slot.
+The left copy is gone.
+
+Family update to the newest canon: app-shell **2.0.1** (the actions row) was copied into messer-portal and
+messer-ai-router, both rebuilt and deployed — portal's `build-info.json` reports `e48d98c`, ai-router's
+bundle contains the new actions row. login-form **2.0.2** (sentence-case field labels) affects no shipped
+app today; it matters to the next one that installs it.
