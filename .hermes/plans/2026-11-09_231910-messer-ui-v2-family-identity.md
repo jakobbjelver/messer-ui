@@ -998,3 +998,29 @@ attempt failed with `no such service: portal`. The container came up 6 s later s
 public URL answers 401 at the edge (Cloudflare Access), so the in-container read is the verification.
 
 **Still to do:** ai-router, studio, swipe and request-games.
+
+### rev 9 — Phase 6, ai-router adopted and deployed, 2026-11-10
+
+**Wired at the root.** `src/main.tsx` wraps `<App />` in `AppShell variant="topbar"`, brand
+`Messer AI Router` + `ArrowsSplit`. The theme toggle moved from the page header into the shell's
+`actions`; the page header keeps the version/updated line, pool status and refresh. Single screen, so
+there are no nav items — the shell is the brand frame, not a nav chrome.
+
+**Marks.** `marks/ai-router/*` → `packages/dashboard/public/` (the app had no public dir) and
+`index.html` + `ui.html` now carry the SVG, 32px PNG and apple-touch; `index.html` also gets `og:image`.
+Canon 2.0.0 tokens reinstalled into `src/styles/messer/`.
+
+**Measured:**
+
+```
+build   tsc -b + vite build ✓
+check   green · 0 failures · 4 warnings (3 pre-existing + avatar circle)
+deploy  dev-stack / messer-ai-router — container recreated, deploy update success
+artifact  /app/packages/dashboard/dist/index.html references favicon.svg + favicon-32.png;
+          all five mark assets are in dist/
+```
+
+The image path is `/app/packages/dashboard/dist`, not an nginx html root — that is where the artifact
+check has to look.
+
+**Still to do:** studio, swipe and request-games.
