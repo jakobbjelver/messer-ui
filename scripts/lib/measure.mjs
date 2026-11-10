@@ -62,6 +62,14 @@ export function measure(page) {
         // and the trigger is a 24-28px cell inside it. Measuring both double-counts one control.
         if (el.matches("[role=tab]") && el.closest("[role=tablist]")) return false;
         if (el.matches("input") && ["checkbox", "radio", "range", "color", "file", "hidden"].includes(el.type)) return false;
+        // A visually-hidden input (Base UI/Radix keep a clipped, aria-hidden one beside a custom
+        // trigger) is not a control the user can hit, whatever its type says.
+        if (el.getAttribute("aria-hidden") === "true" || el.closest('[aria-hidden="true"]')) return false;
+        // A button that wraps block content (an accordion header, a whole card) is a region, not a
+        // density control — R10's 28/32/36 is about compact controls.
+        if (el.querySelector("h1, h2, h3, h4, h5, h6, p, ul, ol, li, table, section, article")) return false;
+        // An inline role=button is a text link wearing a role, not a control with a height.
+        if (el.matches("[role=button]") && getComputedStyle(el).display.startsWith("inline")) return false;
         const r = el.getBoundingClientRect();
         return r.width > 0 && r.height > 0;
       })

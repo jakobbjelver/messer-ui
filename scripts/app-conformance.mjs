@@ -137,12 +137,19 @@ function probeApp(page) {
 
     const skip = (el) => el instanceof SVGElement || SKIP.has(el.tagName.toUpperCase());
 
+    // Dev-mode tooling is not app UI. Next injects a <nextjs-portal> with its own button; it lives in
+    // a shadow root, so `closest()` cannot see it — check the root's host instead.
+    const devChrome = (el) => {
+      const root = el.getRootNode();
+      return root instanceof ShadowRoot && /^NEXTJS-PORTAL$/i.test(root.host?.tagName || "");
+    };
+
     // R1 — every visible box is square; only an element explicitly marked as one of the four legal
     // circles (avatar, status dot, slider thumb, toggle dot) may carry a radius.
     const radii = [];
     let radiusChecked = 0;
     for (const el of document.querySelectorAll("body *")) {
-      if (skip(el) || !visible(el)) continue;
+      if (skip(el) || devChrome(el) || !visible(el)) continue;
       radiusChecked++;
       const cs = getComputedStyle(el);
       const r = el.getBoundingClientRect();
@@ -171,13 +178,15 @@ function probeApp(page) {
     // signature, so an app that forgot the class is still caught rather than skipped.
     const meta = [];
     for (const el of document.querySelectorAll("body *")) {
-      if (skip(el) || !visible(el)) continue;
+      if (skip(el) || devChrome(el) || !visible(el)) continue;
       const t = textOf(el);
       if (!t) continue;
       const cs = getComputedStyle(el);
       const explicit = el.matches(".m-label, [data-meta], [data-meta-label]");
       const inferred = cs.textTransform === "uppercase" && px(cs.fontSize) <= 12;
       if (!explicit && !inferred) continue;
+      // A button's own label is a control label, not a meta label.
+      if (!explicit && el.closest("button, [role=button], [role=tab]")) continue;
       // A data value nested inside an explicit meta line (a <time> in a breadcrumb) inherits the
       // uppercase transform but is data, not a second label style. The wrapper is the label.
       if (!explicit && el.closest(".m-label, [data-meta], [data-meta-label]")) continue;
@@ -196,7 +205,7 @@ function probeApp(page) {
     // a mono face at display size is a stat value and must be tabular.
     const numeric = [];
     for (const el of document.querySelectorAll("body *")) {
-      if (skip(el) || !visible(el)) continue;
+      if (skip(el) || devChrome(el) || !visible(el)) continue;
       const t = textOf(el);
       if (!t || t.length > 40) continue;
       const cs = getComputedStyle(el);
@@ -251,7 +260,7 @@ function probeApp(page) {
     // §11 motion — nothing may transition slower than the contract's 200ms.
     const transitions = [];
     for (const el of document.querySelectorAll("body *")) {
-      if (skip(el) || !visible(el)) continue;
+      if (skip(el) || devChrome(el) || !visible(el)) continue;
       const cs = getComputedStyle(el);
       const duration = cs.transitionDuration;
       const ms = Math.max(0, ...String(duration).split(",").map((d) => {
@@ -290,6 +299,12 @@ async function probeHover(page) {
   const limit = Math.min(total, 60);
   for (let i = 0; i < limit; i++) {
     const loc = page.locator(SELECTOR).nth(i);
+    try {
+      if (await loc.evaluate((n) => {
+        const root = n.getRootNode();
+        return root instanceof ShadowRoot && /^NEXTJS-PORTAL$/i.test(root.host?.tagName || "");
+      })) continue;
+    } catch {}
     let visible = false;
     try { visible = await loc.isVisible(); } catch {}
     if (!visible) continue;
@@ -364,6 +379,10 @@ async function probeFocus(page) {
     return {
       el: `${el.tagName.toLowerCase()}${(el.getAttribute("class") || "").split(/\s+/).filter(Boolean).slice(0, 2).map((c) => "." + c).join("")}`,
       label: (el.getAttribute("aria-label") || el.textContent || el.tagName).trim().replace(/\s+/g, " ").slice(0, 28),
+      devChrome: (() => {
+        const root = el.getRootNode();
+        return root instanceof ShadowRoot && /^NEXTJS-PORTAL$/i.test(root.host?.tagName || "");
+      })(),
       control,
       focusVisible: el.matches(":focus-visible"),
       outlineWidth: cs.outlineWidth,
@@ -378,7 +397,7 @@ async function probeFocus(page) {
   for (let step = 0; step < 40; step++) {
     await page.keyboard.press("Tab");
     const hit = await read();
-    if (!hit) continue;
+    if (!hit || hit.devChrome) continue;
     if (!hit.control) {
       // A link is focusable, but the contract asks for the first focusable *control*. Keep the
       // link as a fallback and keep tabbing.
@@ -400,10 +419,11 @@ function assertPage(run) {
   const fails = [];
   const warns = [];
 
-  // R10 — the app's controls are the 32px density.
+  // R10 — the app's controls sit on the canon's three heights: 28 (sm) / 32 (default) / 36 (lg).
+  const DENSITY = [28, 32, 36];
   for (const c of got.controls ?? []) {
-    if (Math.abs(32 - c.h) > 0.6) {
-      fails.push(`${tag}: R10 "${c.label}" height ${c.h} (controls are 32px)`);
+    if (!DENSITY.some((h) => Math.abs(h - c.h) <= 0.6)) {
+      fails.push(`${tag}: R10 "${c.label}" height ${c.h} (controls are 28/32/36)`);
     }
   }
   if (!(got.controls ?? []).length) warns.push(`${tag}: no controls found`);
@@ -587,7 +607,7 @@ const padL = (v, n) => String(v).padStart(n);
 const summary = (run) => {
   if (!run.got) return { cells: ["✗ load", "—", "—", "—", "—", "—", "—", "—", "—"], ok: false };
   const c = run.got.controls ?? [];
-  const badControls = c.filter((x) => Math.abs(32 - x.h) > 0.6).length;
+  const badControls = c.filter((x) => ![28, 32, 36].some((h) => Math.abs(h - x.h) <= 0.6)).length;
   const circles = run.got.radii.filter((r) => r.marked).length;
   const badRadii = run.got.radii.filter((r) => !r.marked).length;
   const badMeta = run.got.meta.filter((m) =>
@@ -605,7 +625,7 @@ const summary = (run) => {
   const maxMs = (run.got.transitions ?? []).reduce((a, t) => Math.max(a, t.ms), 0);
   return {
     cells: [
-      badControls ? `✗ ${badControls}` : `${c.length} @ 32`,
+      badControls ? `✗ ${badControls}` : `${c.length} ok`,
       badRadii ? `✗ ${badRadii}` : `0/${run.got.radiusChecked ?? "?"}${circles ? ` ○${circles}` : ""}`,
       focusOk ? "2 / 2" : "✗",
       badMeta ? `✗ ${badMeta}` : `${run.got.meta.length}`,
