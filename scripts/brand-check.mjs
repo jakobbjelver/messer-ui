@@ -8,6 +8,11 @@ import { parseColor, contrast, accentFg, hueDistance, chartRamp, categoricalRamp
 import { GLYPH_SOURCES, glyphFile, MARK_FILES, MARK_HASHED } from "./lib/mark.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+// `--app <dir>` checks one checkout's installed icons (CI has no ~/Repos tree of siblings).
+const APP_FLAG = (() => {
+  const i = process.argv.indexOf("--app");
+  return i > -1 ? process.argv[i + 1] : null;
+})();
 const tokens = JSON.parse(fs.readFileSync(path.join(ROOT, "canon/tokens.json"), "utf8"));
 const brands = fs
   .readdirSync(path.join(ROOT, "brand"))
@@ -127,11 +132,27 @@ for (const r of rows) {
 // it is current. og.png is rasterised per machine, so only its presence is required — same rule as
 // the manifest hashes.
 const FILES = MARK_HASHED; // byte-stable icons only; og.png is a per-machine rasterisation
-const apps = JSON.parse(fs.readFileSync(path.join(ROOT, "scripts/apps.json"), "utf8")).apps ?? [];
+const allApps = JSON.parse(fs.readFileSync(path.join(ROOT, "scripts/apps.json"), "utf8")).apps ?? [];
+const targets = APP_FLAG
+  ? (() => {
+      const dir = path.resolve(APP_FLAG);
+      const hit = allApps.find((a) => path.basename(a.path) === path.basename(dir));
+      if (!hit) return [];
+      // marksTarget is recorded against the `~/Repos/...` form, so take the suffix before re-rooting.
+      const suffix = hit.marksTarget?.startsWith(hit.path) ? hit.marksTarget.slice(hit.path.length) : "";
+      return [{ ...hit, path: dir, marksSuffix: suffix }];
+    })()
+  : allApps;
+
 let installed = 0;
-for (const app of apps) {
+for (const app of targets) {
   if (!app.marksTarget) continue;
-  const target = app.marksTarget.replace("~", process.env.HOME ?? "~");
+  // The target is recorded as an absolute-ish `~/Repos/<repo>/<suffix>`; under `--app` the checkout
+  // lives somewhere else, so re-root the suffix onto it.
+  const repo = (app.path ?? "").replace("~", process.env.HOME ?? "~");
+  if (!APP_FLAG && (!repo || !fs.existsSync(repo))) continue; // sibling repo absent (CI)
+  const suffix = app.marksSuffix ?? (app.marksTarget.startsWith(app.path) ? app.marksTarget.slice(app.path.length) : "");
+  const target = path.join(app.path.replace("~", process.env.HOME ?? "~"), suffix);
   if (!fs.existsSync(target)) {
     fails.push(`${app.id}: marksTarget missing — ${target}`);
     continue;
