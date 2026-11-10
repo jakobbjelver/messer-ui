@@ -1281,3 +1281,29 @@ correctly (readable labels, visible borders, no light patches).
 **Still not canon-conformant:** the form controls are a repeated `field` class string rather than one atom,
 `PageToolbar`/`Stat`/`StatusBadge` exist unused while their jobs are hand-rolled inline, and headings use
 Tailwind sizes instead of the canon type scale. That is the honest remaining gap in "implements Messer UI".
+
+### rev 22 — Phase 8, canon conformance, 2026-11-10
+
+The "off" feeling had a cause nobody had checked: **the SPA never loaded the canon fonts**. There was no
+`@font-face` in its build at all, so it rendered in system sans — every size and weight was right and it
+still looked wrong. Both faces now load from the existing `/static/fonts` files, and the served CSS bundle
+contains `Golos Text`.
+
+Beyond that: `field.tsx` is the single control (Input/Select/Checkbox/Field over one 32px canon style, all
+`const field` copies gone, `--color-border-strong` a token utility); `Stat` and `StatusBadge` are the canon
+blocks with `lib/status.ts` mapping tones and deduping labels; headings take canon sizes from the base layer
+instead of `text-xl`/`font-medium`; meta labels use `.m-label`; numeric values are mono/tabular.
+
+Canon contradicted itself: `rules.md` §5 says field labels are 14/500 sentence case and explicitly *not*
+the 10.5px mono meta label, while the `login-form` block used the meta label. The app followed the rule and
+the block was fixed upstream in **2.0.2**, so future apps do not inherit the mistake.
+
+The stats row also counted only `failed`, so its numbers did not sum to the list when a request was
+rejected — Rejected is now its own stat.
+
+Verified with signed-in screenshots (seeded DB, minted session) in both themes at 1280×900 and in-browser
+measurements: h1 32/600 Golos, stat label 10.5 JetBrains mono, stat value 24 tabular, badge 20 × square,
+controls 32, field label 14/500, checkbox 16.
+
+**Known, left alone:** GameDetail renders the platform status badge twice (state block and action slot).
+Small, real, and next.
