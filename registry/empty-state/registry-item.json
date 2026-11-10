@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "type": "registry:block",
+  "name": "empty-state",
+  "title": "Messer UI — empty state",
+  "description": "What this is, why it is empty, one action. Panel or bare, icon decorative, title carries the meaning.",
+  "files": [
+    {
+      "path": "registry/empty-state/empty-state.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/empty-state.tsx"
+    }
+  ],
+  "dependencies": []
+}

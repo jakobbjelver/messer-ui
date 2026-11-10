@@ -297,6 +297,63 @@ const componentItems = [
   },
 ].map((c) => ({ ...base, type: "registry:ui", ...c }));
 
+const blockItems = [
+  {
+    name: "app-shell",
+    title: "Messer UI — app shell",
+    description:
+      "Sidebar or topbar frame: brand mark, nav with aria-current and an accent rule, user block and version footer. Presentational: pass `active` and `linkComponent` — no framework imports.",
+    files: [{ path: "registry/app-shell/app-shell.tsx", type: "registry:ui", target: "components/ui/app-shell.tsx" }],
+    dependencies: [],
+  },
+  {
+    name: "hybrid-tooltip",
+    title: "Messer UI — hybrid tooltip",
+    description:
+      "One tooltip for pointer and touch: hover shows a tooltip, a coarse pointer opens a popover on tap. Requires the app's own `tooltip` and `popover` components.",
+    files: [{ path: "registry/hybrid-tooltip/hybrid-tooltip.tsx", type: "registry:ui", target: "components/ui/hybrid-tooltip.tsx" }],
+    dependencies: [],
+  },
+  {
+    name: "empty-state",
+    title: "Messer UI — empty state",
+    description:
+      "What this is, why it is empty, one action. Panel or bare, icon decorative, title carries the meaning.",
+    files: [{ path: "registry/empty-state/empty-state.tsx", type: "registry:ui", target: "components/ui/empty-state.tsx" }],
+    dependencies: [],
+  },
+  {
+    name: "stat",
+    title: "Messer UI — stat",
+    description:
+      "One number with its label: mono-caps label, tabular value, optional trend as icon + value with status colour reinforcing.",
+    files: [{ path: "registry/stat/stat.tsx", type: "registry:ui", target: "components/ui/stat.tsx" }],
+    dependencies: [],
+  },
+  {
+    name: "page-toolbar",
+    title: "Messer UI — page toolbar",
+    description: "The row between the page header and the content: search and filters left, actions right, 32px tall.",
+    files: [{ path: "registry/page-toolbar/page-toolbar.tsx", type: "registry:ui", target: "components/ui/page-toolbar.tsx" }],
+    dependencies: [],
+  },
+  {
+    name: "time",
+    title: "Messer UI — time",
+    description:
+      "A timestamp in the machine voice: mono, tabular, absolute value in the title. Relative, absolute or both; no date library.",
+    files: [{ path: "registry/time/time.tsx", type: "registry:ui", target: "components/ui/time.tsx" }],
+    dependencies: [],
+  },
+  {
+    name: "copy-button",
+    title: "Messer UI — copy button",
+    description: "Icon-only copy control at a control height, accessible name, check mark for 1.5s after copying.",
+    files: [{ path: "registry/copy-button/copy-button.tsx", type: "registry:ui", target: "components/ui/copy-button.tsx" }],
+    dependencies: ["@phosphor-icons/react"],
+  },
+].map((b) => ({ ...base, type: "registry:block", ...b }));
+
 const agentItem = {
   ...base,
   name: "messer-agent",
@@ -319,7 +376,7 @@ const brandItems = brands.map((b) => ({
   cssVars: { light: shadcnOnly(brandVars(b, "light")), dark: shadcnOnly(brandVars(b, "dark")) },
 }));
 
-const items = [styleItem, fontsItem, fingerprintItem, ...componentItems, agentItem, ...brandItems];
+const items = [styleItem, fontsItem, fingerprintItem, ...componentItems, ...blockItems, agentItem, ...brandItems];
 
 write(
   "registry.json",

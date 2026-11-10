@@ -79,8 +79,8 @@ condition "deleted when request-games is a React app".
 {
   "apps": [
     { "id": "swiparr",     "path": "~/Repos/swiparr",             "brand": "swiparr",     "sink": null, "shell": "none" },
-    { "id": "portal",      "path": "~/Repos/server-portal",       "brand": "portal",      "sink": null, "shell": "topbar" },
-    { "id": "ai-router",   "path": "~/Repos/ai-router",           "brand": "ai-router",   "sink": null, "shell": "topbar" },
+    { "id": "portal",      "path": "~/Repos/messer-portal",       "brand": "portal",      "sink": null, "shell": "topbar" },
+    { "id": "ai-router",   "path": "~/Repos/messer-ai-router",           "brand": "ai-router",   "sink": null, "shell": "topbar" },
     { "id": "studio",      "path": "~/Repos/site",                "brand": "studio",      "sink": null, "shell": "topbar" },
     { "id": "request-games","path": "~/Repos/messer-request-games","brand": "request-games","sink": null, "shell": "sidebar" }
   ]
@@ -111,8 +111,8 @@ Run and record in §7:
 ```bash
 cd ~/Repos/messer-ui && npm run check
 node scripts/check.mjs --app ~/Repos/swiparr --static
-node scripts/check.mjs --app ~/Repos/server-portal --static
-node scripts/check.mjs --app ~/Repos/ai-router --static
+node scripts/check.mjs --app ~/Repos/messer-portal --static
+node scripts/check.mjs --app ~/Repos/messer-ai-router --static
 node scripts/check.mjs --app ~/Repos/site --static
 node scripts/check.mjs --app ~/Repos/messer-request-games --static
 ```
@@ -360,7 +360,7 @@ and one `data-page` composition (PageHeader + toolbar + table + exactly one prim
 accent budget.
 
 **Modify the five app sinks** with the same `data-*` hooks:
-`swiparr/src/app/_ui/page.tsx`, `server-portal/web/app/ui/page.tsx`,
+`swiparr/src/app/_ui/page.tsx`, `messer-portal/web/app/ui/page.tsx`,
 `ai-router/packages/dashboard/ui.html`, `site/src/studio/client/dev/Sink.tsx`,
 `messer-request-games/web/templates/ui.html`.
 
@@ -459,7 +459,7 @@ entry. Run `npm run build:registry && npm run validate` after each.
 
 #### Task 4.8 — Pilot install
 
-Install all seven into `server-portal` (`npx shadcn@latest add jakobbjelver/messer-ui/<item>`), render
+Install all seven into `messer-portal` (`npx shadcn@latest add jakobbjelver/messer-ui/<item>`), render
 them in `/ui`, and run `messer check`. **Fix the block, never the app** — the pilot's job is to find
 the block's missing affordance.
 
@@ -625,7 +625,7 @@ React app.
 
 **Apps**
 `swiparr/src/app/layout.tsx`, `src/app/_ui/page.tsx`, `src/components/login/*`, `public/*`, `MESSER.md`
-`server-portal/web/app/layout.tsx`, `web/app/ui/page.tsx`, `web/components/navigation-bar.tsx` (delete), `web/public/res/*`, `MESSER.md`
+`messer-portal/web/app/layout.tsx`, `web/app/ui/page.tsx`, `web/components/navigation-bar.tsx` (delete), `web/public/res/*`, `MESSER.md`
 `ai-router/packages/dashboard/{src,ui.html,public/}`, `MESSER.md`
 `site/src/studio/client/{dev/Sink.tsx,shell?}`, `MESSER.md`
 `messer-request-games/web/templates/{base,ui}.html`, `web/static/*`, `MESSER.md`
@@ -833,3 +833,51 @@ sink         4 runs · 56 fixtures · clean ✓
 
 The two warnings are `no [data-state-selected] fixture` in each theme — by design until Phase 4 ships
 `AppShell` with a selected nav row.
+
+### rev 5 — Phase 4 (blocks), 2026-11-10
+
+**Seven blocks, one shape each.** `app-shell` (sidebar / topbar / none), `hybrid-tooltip`,
+`empty-state`, `stat`, `page-toolbar`, `time`, `copy-button`. The registry is 18 items and
+`shadcn registry validate` passes.
+
+**Why the shell takes `active` instead of `usePathname`.** swiparr and portal use `next/link`,
+ai-router is Vite + React Router, Studio is Astro. A component that imports a router works in one of
+them; `linkComponent` + `active` works in all four. The component is presentational, so it also
+stays a server component.
+
+**Typecheck was the pilot.** Each block was copied into the two apps that differ most and compiled
+with their own tsconfig: messer-portal (Next, Radix) — 0 errors; messer-ai-router (Vite, Base UI) —
+0 errors. Two real defects came out of that:
+
+1. `HybridTooltipProvider` hardcoded `delayDuration={0}`. Base UI's provider has no such prop
+   (`delay` / `timeout` instead) and the block did not compile. The provider now passes props
+   through; the app sets its own timing.
+2. ai-router already had a `hybrid-tooltip.tsx` (a Base UI port) that the dupes scan does not flag
+   because it differs from the Radix pair. It tracks `matchMedia` changes — a tablet that gains a
+   mouse flips pointer type mid-session — and the block now does the same.
+
+**Repos were renamed mid-phase:** `server-portal` → `messer-portal`, `ai-router` →
+`messer-ai-router`. `scripts/apps.json` and this plan were updated. `dupes.mjs` now **fails** when a
+configured app path is missing (`--allow-missing` is the escape hatch) instead of skipping it: a
+renamed repo would otherwise shrink the scan and keep CI green.
+
+**Selected fixture.** The kitchen sink gained a fixture-only nav row mirroring `AppShell`'s geometry
+(10% tint + 2 px rule), so the selected rule is exercised now; conformance is **0 failures ·
+0 warnings**. `AppShell` also emits `data-state-selected` on its active row, so app sinks get the
+fixture for free.
+
+**Showcase.** A Blocks section (shell, stat, empty state, toolbar) at the real geometry, vision-checked.
+
+**Gate E, measured:**
+
+```
+registry   ✔ Checked 1 registry file and 18 items
+portal     tsc --noEmit  0 errors
+ai-router  tsc -b        0 errors
+conformance green · 0 failures · 0 warnings
+selftest   9/9
+```
+
+**Not provable here:** `npx shadcn view jakobbjelver/messer-ui/app-shell` and `add --diff` read the
+registry from GitHub, so they need the branch on main. That proof belongs to the release step; the
+per-app install (portal's sink renders all seven) is Phase 6's adoption commit.

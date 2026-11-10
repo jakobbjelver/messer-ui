@@ -169,6 +169,17 @@ const html = `<!doctype html>
   .foot .m-data { color: var(--text-3); }
   .icon { width: 16px; height: 16px; fill: currentColor; flex: none; }
   @media (max-width: 640px) { main.m-shell { padding-block: 24px 64px; gap: 32px; } .top .meta { display: none; } }
+  /* blocks — the composed layer, shown at the same geometry the React component uses */
+  .block-shell { border: 1px solid var(--border); background: var(--surface); width: 240px; }
+  .block-shell__brand { display: flex; align-items: center; gap: 8px; height: 56px; padding: 0 16px; border-bottom: 1px solid var(--border); background: var(--background); }
+  .block-mark { display: inline-block; width: 20px; height: 20px; background: var(--foreground); }
+  .block-nav { position: relative; display: flex; align-items: center; height: 32px; padding: 0 12px; color: var(--text-2); font-size: 14px; text-decoration: none; }
+  .block-nav--active { background: color-mix(in oklab, var(--primary) 10%, transparent); color: var(--text); }
+  .block-nav--active::after { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: var(--primary); }
+  .block-shell__user { display: flex; align-items: center; gap: 8px; border-top: 1px solid var(--border); padding: 12px; }
+  .block-stat { display: grid; gap: 4px; }
+  .block-stat__value { font-family: var(--font-mono); font-size: 24px; line-height: 1; font-variant-numeric: tabular-nums; }
+  .block-toolbar { display: flex; align-items: center; gap: 8px; min-height: 32px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
 </style>
 </head>
 <body>
@@ -310,6 +321,57 @@ const html = `<!doctype html>
           <span class="m-hint" style="margin:0">Progress — accent fill, 62%</span>
           <div class="m-skeleton" style="height:24px"></div>
           <span class="m-hint" style="margin:0">Skeleton — surface-2 wash while loading</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <span class="m-label">Blocks · composed</span>
+    <div class="grid-2">
+      <div class="m-panel">
+        <div class="m-panel__head"><h3 class="m-panel__title">App shell</h3><span class="m-data">sidebar · 240px</span></div>
+        <div class="m-panel__body stack">
+          <div class="block-shell">
+            <div class="block-shell__brand"><span class="block-mark"></span><span class="m-data">SWIPARR</span></div>
+            <a class="block-nav block-nav--active" href="#" aria-current="page">Home</a>
+            <a class="block-nav" href="#">Music</a>
+            <a class="block-nav" href="#">Lists</a>
+            <div class="block-shell__user"><span class="m-avatar">JB</span><span class="m-data">jakob · admin</span></div>
+          </div>
+          <p class="m-hint" style="margin:0">One nav shape for every app: 32px rows, the active row is a 10% accent tint plus a 2px accent rule, and the user block sits at the bottom. A topbar is the same thing rotated.</p>
+        </div>
+      </div>
+      <div class="m-panel">
+        <div class="m-panel__head"><h3 class="m-panel__title">Stat</h3><span class="m-data">value · trend</span></div>
+        <div class="m-panel__body stack">
+          <div class="row" style="gap:32px">
+            <div class="block-stat"><span class="m-label">Requests</span><span class="block-stat__value">1,204</span><span class="m-hint" style="display:inline-flex;align-items:center;gap:4px"><span style="color:var(--success)">${icon("caret-up")} 12%</span> vs last week</span></div>
+            <div class="block-stat"><span class="m-label">Uptime</span><span class="block-stat__value">99.98%</span><span class="m-hint">30 days</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="m-panel">
+        <div class="m-panel__head"><h3 class="m-panel__title">Empty state</h3><span class="m-data">what · why · one action</span></div>
+        <div class="m-panel__body">
+          <div class="m-empty">
+            ${icon("folder")}
+            <strong>No libraries yet</strong>
+            <span class="m-hint">Add a folder to start indexing.</span>
+            <button class="m-btn m-btn--sm">Add library</button>
+          </div>
+        </div>
+      </div>
+      <div class="m-panel">
+        <div class="m-panel__head"><h3 class="m-panel__title">Page toolbar</h3><span class="m-data">32px row</span></div>
+        <div class="m-panel__body stack">
+          <div class="block-toolbar">
+            <span class="m-badge">All</span><span class="m-badge">Active</span>
+            <span style="flex:1"></span>
+            <button class="m-btn m-btn--sm">${icon("funnel")} Filter</button>
+            <button class="m-btn m-btn--sm m-btn--primary">New request</button>
+          </div>
+          <p class="m-hint" style="margin:0">Search and filters left, the page's one primary action right.</p>
         </div>
       </div>
     </div>

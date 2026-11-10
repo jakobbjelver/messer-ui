@@ -61,10 +61,12 @@ function jaccard(a, b) {
 
 /* ── collect ─────────────────────────────────────────────────────────────── */
 const files = [];
+const missing = [];
 for (const app of apps) {
   const base = expand(app.path);
   if (!fs.existsSync(base)) {
     console.error(`  ! ${app.id}: ${base} not found — skipped`);
+    missing.push(app.id);
     continue;
   }
   for (const abs of walk(base)) {
@@ -139,10 +141,17 @@ near.sort((a, b) => b.score - a.score);
 const report = {
   generatedAt: new Date().toISOString(),
   scanned: files.length,
+  missing,
   exact,
   near,
 };
 writeJson("canon/duplicates.json", report);
+
+if (missing.length && !has("--allow-missing")) {
+  console.error(`\n✗ ${missing.length} app path(s) missing: ${missing.join(", ")}`);
+  console.error("  Fix scripts/apps.json — repos get renamed. Use --allow-missing to scan the rest.");
+  process.exit(1);
+}
 
 const pad = (s, n) => String(s).padEnd(n);
 console.log(`scanned ${files.length} .tsx across ${apps.length} apps`);

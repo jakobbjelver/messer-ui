@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "type": "registry:block",
+  "name": "copy-button",
+  "title": "Messer UI — copy button",
+  "description": "Icon-only copy control at a control height, accessible name, check mark for 1.5s after copying.",
+  "files": [
+    {
+      "path": "registry/copy-button/copy-button.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/copy-button.tsx"
+    }
+  ],
+  "dependencies": [
+    "@phosphor-icons/react"
+  ]
+}

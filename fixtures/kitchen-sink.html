@@ -16,6 +16,10 @@
   .demo-group { display: grid; gap: 12px; padding: 16px; border: 1px solid var(--border); }
   .swatch-row { display: flex; gap: 0; }
   .swatch { flex: 1; height: 32px; border: 1px solid var(--border); }
+  /* fixture-only mirror of AppShell's active nav row: 10% tint + 2px accent rule */
+  .fixture-nav { position: relative; display: flex; align-items: center; height: 32px; padding: 0 10px; font-size: 14px; color: var(--text-2); text-decoration: none; }
+  .fixture-nav[aria-current="page"] { background: color-mix(in oklab, var(--primary) 10%, transparent); color: var(--text); }
+  .fixture-nav[aria-current="page"]::after { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: var(--primary); }
 </style>
 </head>
 <body>
@@ -278,7 +282,11 @@
       <button class="m-btn" data-state-focus data-fixture="state-btn-focus">Focus</button>
     </div>
     <input class="m-input" data-state-focus data-fixture="state-input-focus" placeholder="Focus me" aria-label="Focus fixture">
-    <p class="m-hint" style="margin:0">Hover is one surface step, 120 ms, no shadow and no movement. Focus is a 2 px ring at 2 px offset. Disabled is 50% and not clickable. Measured, not asserted.</p>
+    <div style="width: 200px; border: 1px solid var(--border)">
+      <a href="#" class="fixture-nav" aria-current="page" data-state-selected data-fixture="state-nav-active">Home</a>
+      <a href="#" class="fixture-nav">Music</a>
+    </div>
+    <p class="m-hint" style="margin:0">Hover is one surface step, 120 ms, no shadow and no movement. Focus is a 2 px ring at 2 px offset. Disabled is 50% and not clickable. Selected is a 10% tint plus a 2 px rule. Measured, not asserted.</p>
   </section>
 
   <!-- page composition: the accent budget is measured here, not on the whole sink -->

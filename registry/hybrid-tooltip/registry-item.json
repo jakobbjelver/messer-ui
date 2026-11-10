@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "type": "registry:block",
+  "name": "hybrid-tooltip",
+  "title": "Messer UI — hybrid tooltip",
+  "description": "One tooltip for pointer and touch: hover shows a tooltip, a coarse pointer opens a popover on tap. Requires the app's own `tooltip` and `popover` components.",
+  "files": [
+    {
+      "path": "registry/hybrid-tooltip/hybrid-tooltip.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/hybrid-tooltip.tsx"
+    }
+  ],
+  "dependencies": []
+}

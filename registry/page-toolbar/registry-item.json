@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "type": "registry:block",
+  "name": "page-toolbar",
+  "title": "Messer UI — page toolbar",
+  "description": "The row between the page header and the content: search and filters left, actions right, 32px tall.",
+  "files": [
+    {
+      "path": "registry/page-toolbar/page-toolbar.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/page-toolbar.tsx"
+    }
+  ],
+  "dependencies": []
+}

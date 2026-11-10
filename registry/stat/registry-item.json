@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "type": "registry:block",
+  "name": "stat",
+  "title": "Messer UI — stat",
+  "description": "One number with its label: mono-caps label, tabular value, optional trend as icon + value with status colour reinforcing.",
+  "files": [
+    {
+      "path": "registry/stat/stat.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/stat.tsx"
+    }
+  ],
+  "dependencies": []
+}

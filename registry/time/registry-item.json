@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "type": "registry:block",
+  "name": "time",
+  "title": "Messer UI — time",
+  "description": "A timestamp in the machine voice: mono, tabular, absolute value in the title. Relative, absolute or both; no date library.",
+  "files": [
+    {
+      "path": "registry/time/time.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/time.tsx"
+    }
+  ],
+  "dependencies": []
+}

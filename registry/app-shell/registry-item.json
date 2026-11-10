@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "type": "registry:block",
+  "name": "app-shell",
+  "title": "Messer UI — app shell",
+  "description": "Sidebar or topbar frame: brand mark, nav with aria-current and an accent rule, user block and version footer. Presentational: pass `active` and `linkComponent` — no framework imports.",
+  "files": [
+    {
+      "path": "registry/app-shell/app-shell.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/app-shell.tsx"
+    }
+  ],
+  "dependencies": []
+}
