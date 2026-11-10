@@ -48,18 +48,24 @@ export function measure(page) {
       rec.backgroundColor = toRgb(cs.backgroundColor);
       out[el.dataset.fixture] = rec;
     }
-    // Controls are measured by height (rule 10). Checkboxes, radios and multi-line textareas are
-    // not controls in that sense and are excluded.
+    // Controls are measured by height (rule 10). Toggles are not density-scaled controls: a switch is
+    // 18x32 and a checkbox is 16x16 in every port, and the pinned canon reference records switch at
+    // 18.39. Radix and Base UI render them as <button role=switch|checkbox|radio>, so the exclusion
+    // has to be by role — filtering on input[type] alone lets every port that uses the shadcn atoms
+    // fail on geometry the canon itself ships.
+    const TOGGLE = "[role=switch], [role=checkbox], [role=radio], [role=radiogroup], [role=slider]";
     const controls = [...document.querySelectorAll("button, [role=button], select, input")]
       .filter((el) => {
         if (el.closest("[data-overlay]")) return false;
+        if (el.matches(TOGGLE)) return false;
         if (el.matches("input") && ["checkbox", "radio", "range", "color", "file", "hidden"].includes(el.type)) return false;
         const r = el.getBoundingClientRect();
         return r.width > 0 && r.height > 0;
       })
       .map((el) => ({
         h: Math.round(el.getBoundingClientRect().height * 10) / 10,
-        label: (el.getAttribute("aria-label") || el.textContent || el.tagName).trim().replace(/\s+/g, " ").slice(0, 24),
+        label: (el.getAttribute("aria-label") || el.textContent || el.getAttribute("role") || el.tagName)
+          .trim().replace(/\s+/g, " ").slice(0, 24),
       }));
 
     // The accent budget is measured per [data-page] composition, not per sink: a kitchen sink shows

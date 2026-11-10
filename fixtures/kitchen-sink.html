@@ -134,6 +134,10 @@
       <label class="m-check-row"><input type="radio" name="r" class="m-radio" data-fixture="radio" checked> Keep</label>
       <label class="m-check-row"><input type="radio" name="r" class="m-radio" data-fixture="radio-off"> Replace</label>
       <label class="m-check-row"><input type="checkbox" class="m-switch" data-fixture="switch" checked> Enabled</label>
+      <!-- Ports that use the shadcn atoms render the same toggle as <button role="switch"> at 18.4px.
+           R10 must ignore it, or every Radix/Base UI app turns red on the canon's own geometry. -->
+      <button type="button" role="switch" aria-checked="true" aria-label="Enabled"
+        style="width: 32px; height: 18.4px; border: 1px solid var(--primary); background: var(--primary)"></button>
     </div>
     <div class="m-field">
       <label class="m-label" for="f-bad">Path</label>

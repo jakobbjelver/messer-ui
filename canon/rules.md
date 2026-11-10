@@ -111,6 +111,10 @@ Extend the table when you hit a new icon; do not invent a second family.
 28 (`sm`) / 32 (default) / 36 (`lg`). Row heights 32 (`row-sm`) / 36 (`row`). Density is chosen per
 surface from these three values — not by inventing a fourth height or by scaling padding ad hoc.
 
+Toggles sit outside the scale: a switch is an 18 px track (32 px wide), a checkbox 16 px, in every
+port. They are geometry, not density, and `check` excludes `role=switch|checkbox|radio|slider` from
+the control-height sweep.
+
 ---
 
 # 11. States
