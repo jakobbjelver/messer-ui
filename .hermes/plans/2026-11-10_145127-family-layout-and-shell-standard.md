@@ -1,5 +1,16 @@
 # Family layout standard + shell conformance — implementation plan
 
+> **rev 2 — executed 2026-11-10 (Phase 0–3).** D1 = 1152/896/1440 with the 32px gutter; D4 = portal
+> titles move to Golos h1; D6 = execute Phase 0–3 now. Status: canon §16 + tokens, app-shell 2.1,
+> `page-container`, `theme-toggle`, the two new harness rules and the block-drift gate are in and
+> green; portal, ai-router and messer.wtf adopt them. **Phase 4 (hygiene) not started** — see §12.
+>
+> **A concurrent session was committing in these repos throughout.** Its blanket `git add` swept my
+> in-progress files into commits whose messages describe other work (`69dacc5`, `aaf5320`,
+> `68e3ae8`), and it bumped `package.json` back to 2.0.2 mid-run; the real 2.1.0 bump is inside
+> `aaf5320`. Nothing was lost, but the history under-describes these changes — read the file list,
+> not the subject line. Everything below is committed under an accurate message.
+
 **Goal:** give messer-ui a written and *enforced* layout rule (one page width, one gutter, one header
 alignment, one theme button), promote the messer.wtf topbar patch into the registry, and close the
 conformance gaps the audit found in portal, ai-router, the front door, Studio and swipe.
@@ -67,16 +78,16 @@ in `canon/tokens.json` — see Decisions.
 
 ---
 
-## 3. Decisions to confirm
+## 3. Decisions (answered by the user, 2026-11-10)
 
-| # | Question | Recommendation | If deferred |
-|---|---|---|---|
-| D1 | Page width | `default` **1152**, `narrow` 896, `wide` 1440, gutter 32/16 | take 1152 (it is the current majority width) |
-| D2 | Front door | adopt the same stops → 1080 becomes 1152 | keep 1080 as a named `marketing` stop in §16 |
-| D3 | Theme button | **portal's outlined 32 px button** everywhere (front door changes from borderless to outlined) | as stated — the user asked for this |
-| D4 | Portal page titles | bring the 10 mono h1s onto `PageHeader` (Golos h1) | write an explicit §14 exception for portal and keep the mono titles |
-| D5 | Theme storage key | unify on `messer-theme` in all apps | leave per-app keys; document them in §14 |
-| D6 | Execution scope now | Phase 0–3 (canon + blocks + portal + ai-router + front door), hygiene in Phase 4 | plan only, execute on a later `go` |
+| # | Question | Answer — as executed |
+|---|---|---|
+| D1 | Page width | **`default` 1152, `narrow` 896, `wide` 1440**, gutter 32 at `md+` / 16 below |
+| D2 | Front door | adopts the same stops; its 1080/20 measure became 1152/16-32 |
+| D3 | Theme button | portal's outlined 32 px control, promoted to the `theme-toggle` block and used by all three apps |
+| D4 | Portal page titles | **fixed** — 10 mono-uppercase h1s became Golos h1s (the `PageHeader` block was not forced on the centred-title layout) |
+| D5 | Theme storage key | `messer-theme` in ai-router and the front door; portal still uses next-themes' default (`theme`) — **left open**, see §12 |
+| D6 | Execution scope | Phase 0–3 executed; Phase 4 hygiene deferred |
 
 ---
 
@@ -400,8 +411,48 @@ Acceptance, measured not eyeballed (1440 × 900, both themes):
 - **Registry publishing:** blocks install by name from `main` — merge before any app can
   `shadcn add`; otherwise Task 3.x silently uses the old item.
 
-## 11. Open questions (fold answers back here as rev 2)
+## 11. Execution record (rev 2)
 
-1. D1 width — 1152 (rec) / 1200 (the canon's current declared value) / 1080 (messer.wtf)?
-2. D4 portal titles — Golos h1 via `PageHeader` (rec) or a documented exception?
-3. D6 scope — execute Phase 0–3 now, or wait for a separate `go`?
+Gates run on the tree as committed, not paraphrased:
+
+```
+messer-ui    npm run check      → check green ✓ 0 failures 0 warnings · selftest 11/11
+messer-ui    npm run blocks     → blocks 22/26 installed copies identical · 4 declared deviation/wip (exit 0)
+portal       tsc --noEmit       → exit 0
+portal       check --app … --url localhost:3000/ui   → green ✓ 0 failures · 19 warnings (pre-existing)
+ai-router    npm run typecheck  → exit 0
+ai-router    check --url localhost:5173/ui.html      → green ✓ 0 failures · 25 warnings (pre-existing)
+ai-router    curl icons         → /favicon.svg 200 image/svg+xml · /favicon-32.png 200 · /apple-touch-icon.png 200 · /og.png 200 · /favicon-dark.svg 200
+messer       tsc -b --force     → exit 0
+messer       check --url localhost:5180/ui           → green ✓ 0 failures · 1 warning (theme-color hex in index.html)
+```
+
+Measured geometry at 1440×900 (Playwright, both themes): header row and page container are both
+`left 144 / width 1152 / padding 32` in portal, ai-router and messer.wtf; the wordmark and the first
+content child both land on `x 176`. Theme control in all three: `32×32`, `1px` border, radius `0`,
+`aria-label` present, surface background that follows the theme.
+
+Commits (each staged by path; a co-session's blanket adds also carried some of this work into
+`69dacc5`, `aaf5320`, `68e3ae8`):
+
+| repo | commit | what |
+|---|---|---|
+| messer-ui | `aaf5320` | canon 2.1.0 (tokens `--shell*`, §16 in `rules.md`) |
+| messer-ui | `6407e28` | harness: §16 + R3 probes survive real apps; tab-track and bottom-rule fixes |
+| messer-ui | (swept) | `app-shell` 2.1, `page-container`, `theme-toggle`, `blocks.mjs`, `apps.json`, `brand/messer.json` |
+| messer-portal | `cf99e9e` | container contract, theme block, Golos h1s |
+| messer-ai-router | `dabcd74` | header in the box, PageHeader, icons served, pre-paint theme |
+| messer | `d7784bc` | local header patch deleted, measure 1152, theme block |
+| messer-swipe | `45a6ec5` | hybrid-tooltip + page-header from the registry |
+
+## 12. Still open
+
+1. **Phase 4 hygiene** — `messer-ui.yml` is missing in `~/Repos/site` and `~/Repos/messer`; Studio's
+   `apps.json` shell is now corrected to `none` but canon §14 does not yet *say* an overlay carries no
+   shell; `marks/messer/*` are not copied into the front door's `public/` by a script.
+2. **D5 storage key** — portal still stores under next-themes' default `theme`; switching it to
+   `messer-theme` resets every user's choice once.
+3. **PageHeader adoption in portal** — page titles are Golos now but six screens still hand-roll the
+   centred-title-with-floating-actions bar; folding that shape into `PageHeader` is a design change,
+   not a typo fix.
+4. **request-games** stays WIP: it is reported by `blocks.mjs` but not gated (`wip: true`).
