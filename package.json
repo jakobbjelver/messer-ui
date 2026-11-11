@@ -1,6 +1,6 @@
 {
   "name": "messer-ui",
-  "version": "2.1.1",
+  "version": "2.2.0",
   "private": true,
   "type": "module",
   "description": "Messer UI — the shared design system for Messer and Jakob Bjelvér projects.",

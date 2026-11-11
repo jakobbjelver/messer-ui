@@ -200,6 +200,10 @@ one accent.
 
 ## 12. Copy
 
+- **Say less.** A control says what it does; a screen does not explain itself. If a sentence is
+  genuinely needed — a first-time reader needs the why, not every reader — put it in a
+  `HybridTooltip` (hover on a pointer, tap on touch). No helper paragraph under a heading, no caption
+  under a caption. Minimal is the default; text is the exception.
 - Sentence case for humans, mono caps for machine labels.
 - Errors say what happened and what to do next. Auth never enumerates accounts: "Invalid email or
   password" for both a wrong address and a wrong password.
