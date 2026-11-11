@@ -304,6 +304,8 @@ widths at once (a nested narrower strip under a wider container is a bug, not a 
 | `wide` | `--shell-wide` | 1440 px | data tables and boards only |
 
 - **Gutter** `--page-pad` (32 px) at `md` and up, 16 px below; vertical rhythm `py-6 md:py-10`.
+- **A version string is not navigation.** The header holds identity, navigation and page actions;
+  the version belongs in the footer with the canon/standard it names. No `v1.2.3` in the topbar.
 - **The header sits in the page's box.** The topbar's inner row is constrained to the same stop as the
   page container and shares its gutter; the bar's own border still spans the viewport, so the surface
   is full-bleed and the content is not. A wordmark that does not line up with the content below it is
