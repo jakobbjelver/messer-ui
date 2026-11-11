@@ -262,7 +262,7 @@ const html = `<!doctype html>
   /* hero — type-led, one thought */
   .hero .shell { padding-block: 80px 64px; }
   .hero h1 { margin-top: 16px; font-size: clamp(2.75rem, 7vw, 5rem); line-height: .95; letter-spacing: -.035em; max-width: 15ch; text-wrap: balance; }
-  .hero .sub { margin-top: 20px; max-width: 52ch; font-size: 15px; line-height: 1.6; color: var(--text-2); }
+  .hero .sub { margin-top: 20px; max-width: 72ch; font-size: 15px; line-height: 1.6; color: var(--text-2); text-wrap: pretty; }
   .hero-links { display: flex; flex-wrap: wrap; gap: 28px; margin-top: 40px; }
   .textlink { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; text-decoration: none; background-image: linear-gradient(var(--border-strong), var(--border-strong)); background-position: 0 100%; background-repeat: no-repeat; background-size: 100% 1px; transition: background-size .2s; }
   .textlink:hover, .textlink:focus-visible { background-size: 100% 2px; }
