@@ -1,6 +1,6 @@
 # messer-ui
 
-The design system for Messer and Jakob Bjelvér projects. One visual family, five surfaces, measured
+The design system for Messer and Jakob Bjelvér projects. One visual family, eight surfaces, measured
 rather than eyeballed.
 
 **The idea:** a platform-neutral canon (`canon/`), a pinned React reference implementation
@@ -30,6 +30,9 @@ port 3  lookalike SwiftUI / Flutter, tokens only        later
 | 10 | Density comes from three control heights: 28 / 32 / 36 | Consistency without a spacing argument |
 
 Full rationale, the capability matrix and the deviation policy: [`canon/rules.md`](canon/rules.md).
+The canon continues after §10 with the state contract (§11), copy (§12), the mark (§13), choices
+(§14), the select rule (§15), layout (§16), overrides (§17), badges (§18), the type floor (§19) and
+the back control (§20).
 
 ## Commands
 
@@ -37,7 +40,7 @@ Full rationale, the capability matrix and the deviation policy: [`canon/rules.md
 npm install
 npm run build            # tokens + brands → theme.css, registry items, messer.css
 npm run brand:check      # AA contrast + accent/status hue distance, exit 1 on failure
-npm run marks            # regenerate the five marks + their hash manifest
+npm run marks            # regenerate every mark + their hash manifest
 npm run sink             # kitchen sink: fonts, overflow, console errors, screenshots
 npm run conformance      # rules + interaction states, measured on the kitchen sink
 npm run selftest         # proves every rule check can fail (fixtures/violations.html)

@@ -1,7 +1,8 @@
 # The ten rules
 
 The fingerprint. A project may look like itself; it may not look like a different family. Anything a
-project is allowed to choose is listed under §14. Everything here is fixed.
+project is allowed to choose is listed under §14; a declared override (§17) is the only other way out.
+Everything here is fixed.
 
 ## 1. Square corners
 
@@ -24,6 +25,12 @@ placement or an icon instead).
 
 JetBrains Mono for h3–h6, labels, numbers, IDs, timestamps, table headers, code, keyboard hints.
 Machine-generated or machine-consumed text is monospaced; that is how a glance tells data from prose.
+
+**Mono is a minority voice.** This rule fixes *what* is machine text, not how much of a screen may be.
+Golos carries the majority of the visible text — prose, buttons, field labels, empty states, values.
+Mono is the register for numbers, IDs, timestamps, code, meta labels and h3–h6: the texture that makes
+an instrument scannable. A page whose body, controls and labels are all mono has stopped being an
+instrument and become a terminal.
 
 ## 4. Golos is the human voice
 
@@ -125,7 +132,7 @@ Width is not density — the page's measure and gutter live in §16.
 
 ---
 
-# 11. States
+## 11. Interaction states
 
 Rules 1–10 fix how a surface *looks at rest*. These fix what it does when touched. Every port measures
 them; `canon/states.json` is the machine copy of this table.
@@ -143,19 +150,24 @@ Transitions use `--dur-fast` and `--ease`; only `background-color`, `border-colo
 and `transform` may animate. `prefers-reduced-motion: reduce` removes all of it. A hover that changes
 layout is a bug, not a flourish.
 
-# 12. Copy
+## 12. Copy
 
 The system does not own a voice, but it owns the small words that appear in every app.
 
+- **Say less.** A control says what it does; a screen does not explain itself. If a sentence is
+  genuinely needed — a first-time reader needs the why, not every reader — put it in a
+  `HybridTooltip` (hover on a pointer, tap on touch). No helper paragraph under a heading, no caption
+  under a caption. Minimal is the default; text is the exception.
 - **Verbs.** `Save`, `Cancel`, `Delete`, `Create`, `Retry`. Not `Update` for a save, not `Apply`, not
   `Submit`, not `OK` in a destructive dialog.
 - **Empty state.** What this is, why it is empty, one action. No illustration required.
-- **Error.** What happened, then what to do. No blame, no "Oops", no exclamation marks.
+- **Error.** What happened, then what to do. No blame, no "Oops", no exclamation marks. Auth never
+  enumerates accounts: "Invalid email or password" for both a wrong address and a wrong password.
 - **Confirmation.** Name the object and the count — "Delete 3 requests?", never "Are you sure?".
 - **Dates and numbers.** Absolute date in `title`, relative in the label; numbers are tabular (rule 6).
 - **Case.** Sentence case everywhere except the meta label (rule 5).
 
-# 13. The mark
+## 13. The mark
 
 Every project has one mark, generated from its brand file — never drawn by hand.
 
@@ -171,7 +183,7 @@ Every project has one mark, generated from its brand file — never drawn by han
 The mark is the only place a project's identity may be a picture. Everything else is type, space and
 one accent.
 
-# 14. What a project may choose
+## 14. What a project may choose
 
 | Variable | Fixed | Chosen |
 |---|---|---|
@@ -182,43 +194,8 @@ one accent.
 | Accent hue | | ✓ `brand-<project>.json` |
 | Chart ramp | derived from the accent | ✓ derived |
 | Logo, illustration, imagery | | ✓ must read as a mark, not a UI colour |
-| Layout, shell, navigation shape | | ✓ within §1–§10 |
+| Layout, shell, navigation shape | | ✓ within §1–§10 and §16 |
 | Copy voice | | ✓ (this is not a voice-and-tone system) |
-
-## 11. Interaction states
-
-- **Hover** is one surface step (`--surface` → `--surface-2`), 120 ms, no shadow and no movement. Only
-  on things that are clickable.
-- **Focus-visible** is a 2 px `--ring` outline at 2 px offset, radius 0.
-- **Active** is the hover step; it adds nothing.
-- **Selected** is an 8–10% accent tint plus a 2 px accent rule (left in a sidebar, bottom in a topbar).
-  Never a filled accent row.
-- **Disabled** is 40–50% text with `aria-disabled`; not `pointer-events: none` (that hides the reason
-  from keyboards and screen readers).
-- **Loading**: a skeleton only where the layout's shape is known; a control shows a spinner at its own
-  size. No skeleton cards in app pages.
-
-## 12. Copy
-
-- **Say less.** A control says what it does; a screen does not explain itself. If a sentence is
-  genuinely needed — a first-time reader needs the why, not every reader — put it in a
-  `HybridTooltip` (hover on a pointer, tap on touch). No helper paragraph under a heading, no caption
-  under a caption. Minimal is the default; text is the exception.
-- Sentence case for humans, mono caps for machine labels.
-- Errors say what happened and what to do next. Auth never enumerates accounts: "Invalid email or
-  password" for both a wrong address and a wrong password.
-- Relative time in the label, absolute in `title`.
-- Empty states: what this is, why it is empty, one action.
-
-## 13. The mark
-
-- An ink box (the foreground colour) with the page-colour glyph. Never the accent, never a gradient.
-- `fill` glyph (Phosphor) or `stroke` glyph (Lucide, the messer-swipe exception) at 75 % — 24 px
-  inside a 32 px box.
-- Square. The only circles in the system are the avatar, the status dot and the slider thumb.
-- Generated by `npm run marks`; `brand:check` fails when a committed hash is stale.
-
-## 14. What a project may choose
 
 The accent hue (one — a neutral accent is a valid choice and is what `messer-swipe`, `portal` and
 `studio` use), its mark glyph and glyph source, the shell variant (`sidebar` / `topbar` / `none`) and
@@ -276,23 +253,7 @@ is kept alive, not developed.
 Port 3 (SwiftUI/Flutter) is a lookalike: it consumes `canon/tokens.json` and must match
 `fixtures/kitchen-sink.html` visually. No component code is shared and none is expected to be.
 
----
-
-# 15. Deviations
-
-A project may deviate. It must say so, in its own `MESSER.md`, dated, with the rule number and the
-exit condition:
-
-```md
-| 2026-11-08 | R2 | Swiparr's player bar keeps a 1px top border + blur | Blur is the only way to read
-lyrics over artwork; drop when the artwork column becomes opaque |
-```
-
-Maximum five open deviations per project. The sixth is a design conversation, not a commit.
-
----
-
-# 16. Layout — one width, one gutter
+## 16. Layout — one width, one gutter
 
 Every screen picks **one** container stop. A page never hand-writes a `max-w-*`, and never carries two
 widths at once (a nested narrower strip under a wider container is a bug, not a hierarchy).
@@ -316,3 +277,85 @@ widths at once (a nested narrower strip under a wider container is a bug, not a 
 - **Body copy** inside any stop caps at `72ch`. A table or a board may use the full stop.
 - `check` measures the header row against the page container at 1280 px and fails on a mismatch.
 
+## 17. Overrides — a decision, not drift
+
+A project may break a rule. It may not break one quietly. An override is legitimate when the medium
+demands it and the reason is structural — a document that is not an instrument, a deck that is not a
+dashboard — never because a screen was easier to build that way. A declared override is part of the
+family; an undeclared one is drift.
+
+Record it in the project's `MESSER.md`, dated, with the rule, the scope and the exit condition:
+
+```md
+| 2026-11-08 | R2 | The player bar keeps a 1px top border + blur | Blur is the only way to read
+lyrics over artwork; drop when the artwork column becomes opaque |
+```
+
+The test is scope: an override covers a named surface and a named rule; it never becomes "this app
+does it differently". The instrument parts of an overridden app still follow the canon — News may
+print a serif paper, but its board and desk stay Golos + JetBrains.
+
+**Two standing precedents.** They are the standard, not a loophole:
+
+- **Messer News** — a serif reading face inside the edition, and a kicker cut harder than the canon
+  label. The edition is a newspaper: a document with a masthead and a reading measure. The serif is
+  confined to the paper; the board and desk stay canon.
+- **Messer Swipe** — poster typography, thumb-first density, and the Lucide icon family (§9). A swipe
+  deck is a mobile medium before it is a dashboard: targets are thumbs, type is read at arm's length,
+  and motion is the interaction.
+
+Maximum five open overrides per project. The sixth is a design conversation, not a commit.
+
+## 18. Badges
+
+A badge is a word in a box, not a stamp.
+
+- **Case.** Sentence case with the first letter capitalised — `Healthy`, `Queued`, `All`, `12 open`.
+  Never uppercase (the meta label, §5, is the only all-caps style in the system) and never a raw
+  lowercase enum value. A badge is not a label and does not inherit a label's uppercase.
+- **One geometry.** 20 px tall, `padding-inline: 8px`, `6px` between icon and word, 12 px/500 in
+  Golos, square, 1 px `--border-strong`. The box follows the label; it never shrinks to fit.
+- **Room to breathe.** At least 8 px of clear space on every side: 8 px between two badges, 8 px
+  between a badge and a heading, a value or a table cell's edge. A badge touching text reads as part
+  of that text. Badge rows use `gap: 8px`; a badge inside a padded cell keeps that padding.
+- **Colour reinforces** (§8): icon and word first, tone second.
+
+A badge never becomes a button and never carries a second line.
+
+## 19. The type floor
+
+Nothing in the system renders below **10px**, and 10px belongs to machine meta alone. The canon's meta
+label sits at 10.5 (§5); a dense instrument may drop the half-step for a mono chip, a table unit or a
+kicker — never for language. It is the machine whisper, not a way to fit more prose on a screen.
+
+- **Language is 12.5px or larger.** Body 14, `small` 12.5, prose 15. Captions, helper lines, empty
+  states, field labels, badge words and control labels all sit in that band.
+- **No one-off sizes.** The scale is the scale: 10 / 10.5 / 12 / 12.5 / 14 / 15 / 16 / 24 / 32 — the
+  two smallest steps are machine meta only. A 9px micro-label, an 8px corner note or a hand-written
+  `font-size: 11px` is drift, not density.
+- **If it does not fit, say less** (§12). Smaller type is never the answer to a crowded screen.
+- The only exception is an override under §17 — News' kicker is the one standing case, and it is
+  confined to the paper.
+
+## 20. Going back
+
+A page below the top level has one way out, and it is the same in every project:
+
+- **A button, not a word.** A 32 px outlined control (`--surface`, `--border-strong`, square) with a
+  Phosphor `ArrowLeft` at 16 px, bold, `currentColor`. Never a bare `←` character, never a ghost text
+  link, never a breadcrumb posing as a control.
+- **Name the destination.** The label is `Back to <where it came from>` — "Back to the queue", "Back
+  to today's edition", "Back to search". "Back" alone is legal only when the destination has no name.
+  Sentence case, Golos, 14 px.
+- **Dynamic by origin, fixed in shape.** The label and the `href` come from the link that opened the
+  page (router state), falling back to the parent route when the URL was opened cold. The button's
+  width follows that label; the internal spacing does not — 8 px between arrow and text, 10 px inline
+  padding, 16 px to the page title below.
+- **Left-aligned with the content column**, above the title, never in the page header's `actions`
+  slot (actions point forward).
+- **One implementation:** the `back-link` block. An app resolves its origin into `href` and `label`
+  and passes them in; it does not restyle the control. `history.back()` may be wired through
+  `onNavigate` when returning should restore the origin's own state, but the `href` must still be a
+  real destination — a back control that dead-ends on a cold load is a broken link. A page-level
+  navigation button that leaves the screen (forward or back) takes the same 32 px shape, arrow and
+  gap.

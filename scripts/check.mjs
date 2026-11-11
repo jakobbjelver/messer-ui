@@ -227,6 +227,24 @@ for (const theme of runs) {
   }
   if (layout.h1Families.some((f) => !/Golos/.test(f)))
     fails.push(`${tag}: R3 h1 is "${layout.h1Families.find((f) => !/Golos/.test(f))}" — headings h1–h2 are Golos`);
+  // canon §19: 10px is the floor, reserved for machine meta. A leaf element with
+  // visible text smaller than that is drift, not density.
+  const belowFloor = await page.evaluate(() => {
+    const out = [];
+    for (const el of document.querySelectorAll("body *")) {
+      if (el.children.length) continue;
+      const text = (el.textContent || "").trim();
+      if (!text) continue;
+      const cs = getComputedStyle(el);
+      if (cs.display === "none" || cs.visibility === "hidden" || Number(cs.opacity) === 0) continue;
+      if (el.closest('[aria-hidden="true"]')) continue;
+      const size = parseFloat(cs.fontSize);
+      if (size > 0 && size < 9.95) out.push({ text: text.slice(0, 32), size: cs.fontSize, tag: el.tagName.toLowerCase() });
+    }
+    return out.slice(0, 6);
+  });
+  for (const t of belowFloor)
+    fails.push(`${tag}: §19 "${t.text}" is ${t.size} (floor 10px)`);
   const states = profile === "full" ? await probeStates(page, contract) : null;
   if (DEBUG && states) console.error(`  · vars ${JSON.stringify(states.vars)}`);
   await context.close();

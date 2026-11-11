@@ -41,6 +41,7 @@ const PROJECTS = [
   { id: "request-games", name: "Request Games", role: "Game requests", href: "https://request-games.messer.wtf", repo: "https://github.com/jakobbjelver/messer-request-games", private: true },
   { id: "studio", name: "Site Studio", role: "Site publishing", href: "https://studio.messer.wtf", repo: "https://github.com/jakobbjelver/site", private: true },
   { id: "transcode", name: "Transcode", role: "Transcode queue", href: "https://transcode.messer.wtf", repo: "https://github.com/jakobbjelver/messer-transcode", private: true },
+  { id: "news", name: "News", role: "Daily briefing", href: "https://news.messer.wtf", repo: "https://github.com/jakobbjelver/messer-news", private: true },
 ].filter((project) => brands.some((brand) => brand.project === project.id));
 
 for (const p of PROJECTS) {
@@ -113,30 +114,41 @@ const brandCss = brands
  * A hand-copied list is how the old page went stale.
  */
 const rulesMd = fs.readFileSync(path.join(ROOT, "canon/rules.md"), "utf8");
-const plainRule = (body) =>
-  body
-    .replace(/```[\s\S]*?```/g, " ")
+const plainRule = (body) => {
+  // Code samples are content the rule wants read (a CSS voice table, a MESSER.md row); protect them
+  // from the table/backtick cleanup, then put them back verbatim.
+  const code = [];
+  const text = body.replace(/```[^\n]*\n([\s\S]*?)```/g, (_, inner) => {
+    code.push(inner.trim());
+    return `\n@code${code.length - 1}@\n`;
+  });
+  return text
     .split("\n")
     .filter((line) => !/^\s*\|/.test(line))
     .join("\n")
     .replace(/\[([^\]]+)\]\([^)]*\)/g, "$1")
+    .replace(/\*\*([^*]+)\*\*/g, "$1")
     .replace(/\*([^*\n]+)\*/g, "$1")
     .replace(/`/g, "")
     .replace(/^#+\s*/gm, "")
     .replace(/\n{2,}/g, "\n")
     .replace(/[ \t]{2,}/g, " ")
+    .replace(/@code(\d+)@/g, (_, i) => code[Number(i)])
     .trim();
+};
 
 const rules = [];
 for (const m of rulesMd.matchAll(/^## (\d+)\. (.+)$/gm)) {
   const n = Number(m[1]);
-  if (n > 10) continue;
   const start = m.index + m[0].length;
   const rest = rulesMd.slice(start);
   const next = rest.search(/^#{1,2} /m);
   rules.push({ n, title: m[2].trim(), body: plainRule(next === -1 ? rest : rest.slice(0, next)) });
 }
-if (rules.length !== 10) throw new Error(`showcase: expected 10 rules in canon/rules.md, parsed ${rules.length}`);
+const tenRules = rules.filter((r) => r.n <= 10);
+const moreRules = rules.filter((r) => r.n > 10);
+if (tenRules.length !== 10) throw new Error(`showcase: expected the ten rules in canon/rules.md, parsed ${tenRules.length}`);
+if (!moreRules.length) throw new Error("showcase: the canon has no sections after §10");
 
 const numberWord = { 5: "Five", 6: "Six", 7: "Seven", 8: "Eight", 9: "Nine", 10: "Ten" };
 const surfaceCount = numberWord[PROJECTS.length] ?? String(PROJECTS.length);
@@ -196,24 +208,22 @@ const marksRow = PROJECTS.map(
   (p) => `<div class="mk">${mark(p.id, 32)}<span class="m-data">${esc(p.name)}</span></div>`,
 ).join("");
 
-const ruleRows = rules
-  .map(
-    (r) =>
-      `<button type="button" class="rule" data-tip="${esc(r.body)}" aria-label="Rule ${r.n}: ${esc(r.title)}">
-        <span class="rule-n">${String(r.n).padStart(2, "0")}</span>
-        <span class="rule-t">${esc(r.title)}</span>
-        ${icon("info")}
-      </button>`,
-  )
-  .join("");
+const ruleRow = (r) =>
+  `<button type="button" class="rule" data-tip="${esc(r.body)}" aria-label="Rule ${r.n}: ${esc(r.title)}">
+    <span class="rule-n">${String(r.n).padStart(2, "0")}</span>
+    <span class="rule-t">${esc(r.title)}</span>
+    ${icon("info")}
+  </button>`;
+const ruleRows = tenRules.map(ruleRow).join("");
+const moreRuleRows = moreRules.map(ruleRow).join("");
 
 const html = `<!doctype html>
 <html lang="en" class="brand-${DEFAULT_BRAND}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Messer UI — one family, ${surfaceCount.toLowerCase()} surfaces</title>
-<meta name="description" content="The Messer UI design system: tokens, rules, blocks and the seven projects that adopt them.">
+<title>Messer UI</title>
+<meta name="description" content="The Messer UI design system: tokens, rules, blocks and the ${surfaceCount.toLowerCase()} projects that adopt them.">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <script>try{var t=localStorage.getItem("messer-ui-theme");if(t==="dark"||(!t&&matchMedia("(prefers-color-scheme: dark)").matches))document.documentElement.classList.add("dark")}catch(e){}</script>
 <link rel="stylesheet" href="css/messer.css">
@@ -230,7 +240,6 @@ const html = `<!doctype html>
   .brand { display: flex; align-items: center; gap: 8px; text-decoration: none; flex: none; }
   .brand img { width: 20px; height: 20px; }
   .brand .name { font-family: var(--font-mono); font-size: 14px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; }
-  .top .meta { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--text-3); white-space: nowrap; }
   .nav { display: flex; align-items: center; gap: 2px; margin-left: auto; min-width: 0; overflow-x: auto; scrollbar-width: none; }
   .nav::-webkit-scrollbar { display: none; }
   .nav a { display: flex; align-items: center; height: 32px; padding: 0 8px; font-size: 14px; color: var(--text-2); text-decoration: none; white-space: nowrap; transition: background-color .12s, color .12s; position: relative; }
@@ -245,7 +254,6 @@ const html = `<!doctype html>
   .icon-btn .moon { display: none; }
   .icon-btn[data-dark] .sun { display: none; }
   .icon-btn[data-dark] .moon { display: grid; }
-  @media (max-width: 1080px) { .top .meta { display: none; } }
   @media (max-width: 640px) { .top .name { display: none; } }
 
   /* the drafting sheet: column rules, plus a second copy that brightens under the pointer */
@@ -312,7 +320,7 @@ const html = `<!doctype html>
 
   /* rules — titles visible, the rule itself on hover/tap */
   .rules { display: grid; }
-  .rule { display: grid; grid-template-columns: 24px minmax(0, 1fr) 14px; align-items: center; gap: 8px; width: 100%; height: 36px; padding: 0 4px; border: 0; border-top: 1px solid var(--border); background: transparent; color: var(--text); text-align: left; cursor: help; transition: background-color .12s; }
+  .rule { display: grid; grid-template-columns: 24px minmax(0, 1fr) 14px; align-items: center; gap: 8px; width: 100%; min-height: 36px; padding: 7px 4px; border: 0; border-top: 1px solid var(--border); background: transparent; color: var(--text); text-align: left; cursor: help; transition: background-color .12s; }
   .rule:first-child { border-top: 0; }
   .rule:hover { background: var(--surface-2); }
   .rule-n { font-family: var(--font-mono); font-size: 10.5px; color: var(--text-3); }
@@ -360,7 +368,6 @@ const html = `<!doctype html>
       <img src="favicon.svg" alt="" width="20" height="20">
       <span class="name">Messer UI</span>
     </a>
-    <span class="meta">v${esc(pkg.version)} · canon</span>
     <nav class="nav" aria-label="Sections">
       <a href="#projects">Projects</a>
       <a href="#foundations">Foundations</a>
@@ -382,7 +389,7 @@ const html = `<!doctype html>
 
     <section class="hero" id="top">
       <div class="shell">
-        <p class="m-label">Messer UI · canon ${esc(pkg.version)}</p>
+        <p class="m-label">The canon</p>
         <h1>One family.<br>${surfaceCount} surfaces.</h1>
         <p class="sub">Tokens, rules and blocks — the same system under every project I run.</p>
         <div class="hero-links">
@@ -421,6 +428,12 @@ const html = `<!doctype html>
             <div class="m-panel__head"><h3 class="m-panel__title">Ten rules</h3><a class="m-data" href="https://github.com/jakobbjelver/messer-ui/blob/main/canon/rules.md" target="_blank" rel="noreferrer">canon ${icon("arrow-up-right")}</a></div>
             <div class="m-panel__body" style="padding-block:4px">
               <div class="rules">${ruleRows}</div>
+            </div>
+          </div>
+          <div class="m-panel">
+            <div class="m-panel__head"><h3 class="m-panel__title">Canon, continued</h3><span class="m-data">§11–§20</span></div>
+            <div class="m-panel__body" style="padding-block:4px">
+              <div class="rules">${moreRuleRows}</div>
             </div>
           </div>
           <div class="m-panel">
@@ -504,6 +517,12 @@ const html = `<!doctype html>
                 <span class="m-hint">Add a folder to start indexing.</span>
                 <button class="m-btn m-btn--sm">Add library</button>
               </div>
+            </div>
+          </div>
+          <div class="m-panel">
+            <div class="m-panel__head"><h3 class="m-panel__title">Back link</h3><span class="m-data">origin-aware · §20</span></div>
+            <div class="m-panel__body">
+              <a class="m-btn" href="#blocks">${icon("arrow-left")} Back to the queue</a>
             </div>
           </div>
           <div class="m-panel">

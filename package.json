@@ -1,9 +1,9 @@
 {
   "name": "messer-ui",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "private": true,
   "type": "module",
-  "description": "Messer UI — the shared design system for Messer and Jakob Bjelvér projects.",
+  "description": "Messer UI \u2014 the shared design system for Messer and Jakob Bjelv\u00e9r projects.",
   "license": "MIT",
   "engines": {
     "node": ">=22"

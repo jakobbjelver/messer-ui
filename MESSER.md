@@ -1,6 +1,6 @@
 # MESSER.md — <project>
 
-Port: **1 (React)** · Brand: **`brand-<project>`** · Sink: **`/_ui`** · Canon: **`2.0.0`**
+Port: **1 (React)** · Brand: **`brand-<project>`** · Sink: **`/_ui`** · Canon: **`2.3.0`**
 
 ## Adoption
 
@@ -14,18 +14,22 @@ npx shadcn@latest add jakobbjelver/messer-ui/messer-style \
 ## Local decisions
 
 Things this project owns: layout, navigation shape, logo, copy. Nothing visual outside
-[`canon/rules.md`](../messer-ui/canon/rules.md) §14.
+[`canon/rules.md`](canon/rules.md) §14.
 
-## Deviations
+## Overrides
 
-| Date | Rule | What | Exit |
+A rule may be broken for a structural reason (canon §17), never quietly. One row per override, dated,
+with the rule, the surface it covers and the exit condition.
+
+| Date | Rule | What, and why it stands | Exit |
 |---|---|---|---|
 | | | | |
 
 ## Verify
 
 ```bash
-npm run messer:check        # assert-config + conformance (port 1)
+node ~/Repos/messer-ui/scripts/check.mjs --app <dir> --static
+node ~/Repos/messer-ui/scripts/check.mjs --url http://127.0.0.1:<port>/ui --app <dir>
 ```
 
 A green run is required before deploy. The report records whether it measured a local build or the

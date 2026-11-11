@@ -257,6 +257,19 @@ function probeApp(page) {
       monoWidthDelta: Math.round(Math.abs(widthOf('"JetBrains Mono", monospace') - widthOf("monospace")) * 100) / 100,
     };
 
+    // §19 — the type floor. A visible leaf of text below 10px is drift; the meta label itself
+    // sits exactly at 10.5 and is the only style allowed to.
+    const smallText = [];
+    for (const el of document.querySelectorAll("body *")) {
+      if (skip(el) || devChrome(el) || !visible(el) || el.children.length) continue;
+      const t = textOf(el);
+      if (!t) continue;
+      const size = px(getComputedStyle(el).fontSize);
+      if (size > 0 && size < 9.95) {
+        smallText.push({ el: describe(el), text: t.slice(0, 32), fontSize: getComputedStyle(el).fontSize });
+      }
+    }
+
     // §11 motion — nothing may transition slower than the contract's 200ms.
     const transitions = [];
     for (const el of document.querySelectorAll("body *")) {
@@ -284,6 +297,7 @@ function probeApp(page) {
       meta,
       numeric,
       headings,
+      smallText,
       transitions,
       dark: document.documentElement.classList.contains("dark"),
     };
@@ -442,6 +456,11 @@ function assertPage(run) {
     if (m.transform !== "uppercase") fails.push(`${tag}: R5 "${m.text}" is not uppercase`);
     if (Math.abs(num(m.letterSpacing) - 1.05) > 0.12) fails.push(`${tag}: R5 "${m.text}" tracking ${m.letterSpacing} (0.1em)`);
     if (Math.abs(num(m.weight) - 500) > 50) fails.push(`${tag}: R5 "${m.text}" weight ${m.weight} (500)`);
+  }
+
+  // §19 — nothing renders below the 10.5px floor.
+  for (const s of got.smallText ?? []) {
+    fails.push(`${tag}: §19 "${s.text}" is ${s.fontSize} (floor 10px)`);
   }
 
   // R6 — numeric/stat values are tabular.

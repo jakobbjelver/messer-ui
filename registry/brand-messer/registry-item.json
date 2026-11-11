@@ -2,8 +2,8 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "brand-messer",
   "type": "registry:theme",
-  "title": "Messer UI — messer",
-  "description": "Accent and chart ramp for messer. Nothing else: radii, type and geometry come from messer-style.",
+  "title": "Messer UI — Messer",
+  "description": "Accent and chart ramp for Messer. Nothing else: radii, type and geometry come from messer-style.",
   "cssVars": {
     "light": {
       "--primary": "oklch(0.30 0.008 260)",
