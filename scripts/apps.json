@@ -36,6 +36,14 @@
       "sink": null
     },
     {
+      "id": "news",
+      "path": "~/Repos/messer-news",
+      "brand": "news",
+      "shell": "topbar",
+      "sink": null,
+      "wip": true
+    },
+    {
       "id": "messer",
       "path": "~/Repos/messer",
       "brand": "messer",

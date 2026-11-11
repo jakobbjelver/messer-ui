@@ -17,6 +17,12 @@
     "favicon-32.png": "sha256:d44005e045d45c85970f3e5ffc8946567850f817d43adca0da655143d85bc54a",
     "apple-touch-icon.png": "sha256:f654cc038cac7e73a1cc539ea32ebf0b5ce0d1c69eee2579bc9843ec67384813"
   },
+  "news": {
+    "favicon.svg": "sha256:9bcb1876d3c05398abb2d40fb835577cd9564e5879a6c2fc6f65e0c8742f8d8c",
+    "favicon-dark.svg": "sha256:d5d814911789aa529bb1736836b8f7c74d092ce8e8b0e8ec031bd056f5b690e3",
+    "favicon-32.png": "sha256:2c4cda1df95a897ab9f060ccb2ac73fc43f2dc1f705bf8a334ae0750da15d1a9",
+    "apple-touch-icon.png": "sha256:c6144985ef5392059c192cbdc7f1326177d91db02ebe0cbccaba7d429e848a91"
+  },
   "portal": {
     "favicon.svg": "sha256:3cc65fb5bb989679b2096e28f6f5b842c4046fdcde58f1db0aaa88ab04ebe1cb",
     "favicon-dark.svg": "sha256:26dac93632e9d15d3811996418374a5b74423562984e909e05169990dfc3715d",

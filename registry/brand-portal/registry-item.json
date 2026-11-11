@@ -2,8 +2,8 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "brand-portal",
   "type": "registry:theme",
-  "title": "Messer UI — Server Portal",
-  "description": "Accent and chart ramp for Server Portal. Nothing else: radii, type and geometry come from messer-style.",
+  "title": "Messer UI — Portal",
+  "description": "Accent and chart ramp for Portal. Nothing else: radii, type and geometry come from messer-style.",
   "cssVars": {
     "light": {
       "--primary": "oklch(0.30 0.008 260)",
