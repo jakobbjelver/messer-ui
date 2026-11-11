@@ -233,8 +233,11 @@ const html = `<!doctype html>
   .top .meta { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--text-3); white-space: nowrap; }
   .nav { display: flex; align-items: center; gap: 2px; margin-left: auto; min-width: 0; overflow-x: auto; scrollbar-width: none; }
   .nav::-webkit-scrollbar { display: none; }
-  .nav a { display: flex; align-items: center; height: 32px; padding: 0 8px; font-size: 14px; color: var(--text-2); text-decoration: none; white-space: nowrap; transition: background-color .12s, color .12s; }
+  .nav a { display: flex; align-items: center; height: 32px; padding: 0 8px; font-size: 14px; color: var(--text-2); text-decoration: none; white-space: nowrap; transition: background-color .12s, color .12s; position: relative; }
   .nav a:hover { background: var(--surface-2); color: var(--text); }
+  /* §11 selected: accent tint + a 2px accent rule, never a filled accent row */
+  .nav a[aria-current="page"] { background: color-mix(in oklab, var(--primary) 10%, transparent); color: var(--text); }
+  .nav a[aria-current="page"]::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: var(--primary); }
   .actions { display: flex; align-items: center; gap: 8px; flex: none; }
   .icon-btn { display: grid; place-items: center; width: 32px; height: 32px; border: 1px solid var(--border); background: var(--surface); color: var(--text); text-decoration: none; cursor: pointer; transition: background-color .12s, border-color .12s, color .12s; }
   .icon-btn:hover { background: var(--surface-2); }
@@ -621,6 +624,23 @@ npm run check   # the canon's own gate</pre>
   for (const c of chips) c.addEventListener("click", () => setBrand(c.dataset.brandBtn, true));
   const savedBrand = localStorage.getItem(BRAND_KEY);
   setBrand(brands.some((b) => b.id === savedBrand) ? savedBrand : "${DEFAULT_BRAND}", false);
+
+  /* the current section, marked with §11's selected state */
+  const sections = [...document.querySelectorAll("section[id]")].filter((s) => s.id !== "top");
+  const navFor = new Map([...document.querySelectorAll(".nav a")].map((a) => [a.getAttribute("href").slice(1), a]));
+  const spy = () => {
+    let current = null;
+    for (const s of sections) if (s.getBoundingClientRect().top <= 80) current = s.id;
+    // The last section cannot reach the top (the footer follows it); at the bottom it is current.
+    if (scrollY + innerHeight >= document.documentElement.scrollHeight - 2) current = sections[sections.length - 1].id;
+    for (const [id, a] of navFor) {
+      if (id === current) a.setAttribute("aria-current", "page");
+      else a.removeAttribute("aria-current");
+    }
+  };
+  addEventListener("scroll", spy, { passive: true });
+  addEventListener("resize", spy, { passive: true });
+  spy();
 
   /* the sheet: column rules brighten in a disc under the pointer */
   const sheet = document.querySelector(".sheet");
