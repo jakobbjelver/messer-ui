@@ -1,6 +1,6 @@
 {
   "project": "news",
-  "title": "Garage Allehanda",
+  "title": "Messer News",
   "mark": { "glyph": "Newspaper" },
   "accent": {
     "light": "oklch(0.30 0.008 260)",

@@ -295,10 +295,12 @@ print a serif paper, but its board and desk stay Golos + JetBrains.
 
 **Two standing precedents.** They are the standard, not a loophole:
 
-| Project | Override | Why it stands |
-|---|---|---|
-| Messer News | Serif reading face inside the edition; `.kicker` at 9.5px | The edition is a newspaper — a document with a masthead and a reading measure. The serif is confined to the paper; the board and desk stay canon. |
-| Messer Swipe | Poster typography, thumb-first density, and the Lucide icon family (§9) | A swipe deck is a mobile medium before it is a dashboard: targets are thumbs, type is read at arm's length, and motion is the interaction. |
+- **Messer News** — a serif reading face inside the edition, and a kicker cut harder than the canon
+  label. The edition is a newspaper: a document with a masthead and a reading measure. The serif is
+  confined to the paper; the board and desk stay canon.
+- **Messer Swipe** — poster typography, thumb-first density, and the Lucide icon family (§9). A swipe
+  deck is a mobile medium before it is a dashboard: targets are thumbs, type is read at arm's length,
+  and motion is the interaction.
 
 Maximum five open overrides per project. The sixth is a design conversation, not a commit.
 
@@ -320,17 +322,18 @@ A badge never becomes a button and never carries a second line.
 
 ## 19. The type floor
 
-Nothing in the system renders below **10.5px**, and 10.5px is reserved for exactly one style: the meta
-label (§5). It is the machine whisper — an eyebrow, a table head, a unit — not a way to fit more prose
-on a screen.
+Nothing in the system renders below **10px**, and 10px belongs to machine meta alone. The canon's meta
+label sits at 10.5 (§5); a dense instrument may drop the half-step for a mono chip, a table unit or a
+kicker — never for language. It is the machine whisper, not a way to fit more prose on a screen.
 
 - **Language is 12.5px or larger.** Body 14, `small` 12.5, prose 15. Captions, helper lines, empty
   states, field labels, badge words and control labels all sit in that band.
-- **No one-off sizes.** The scale is the scale: 10.5 / 12 / 12.5 / 14 / 15 / 16 / 24 / 32. A
-  `text-[10px]`, a 9px kicker or a hand-written `font-size: 11px` is drift, not density.
+- **No one-off sizes.** The scale is the scale: 10 / 10.5 / 12 / 12.5 / 14 / 15 / 16 / 24 / 32 — the
+  two smallest steps are machine meta only. A 9px micro-label, an 8px corner note or a hand-written
+  `font-size: 11px` is drift, not density.
 - **If it does not fit, say less** (§12). Smaller type is never the answer to a crowded screen.
-- The only exception is an override under §17 — News' 9.5px kicker is the one standing case, and it
-  is confined to the paper.
+- The only exception is an override under §17 — News' kicker is the one standing case, and it is
+  confined to the paper.
 
 ## 20. Going back
 

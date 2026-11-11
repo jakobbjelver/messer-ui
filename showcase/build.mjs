@@ -41,7 +41,7 @@ const PROJECTS = [
   { id: "request-games", name: "Request Games", role: "Game requests", href: "https://request-games.messer.wtf", repo: "https://github.com/jakobbjelver/messer-request-games", private: true },
   { id: "studio", name: "Site Studio", role: "Site publishing", href: "https://studio.messer.wtf", repo: "https://github.com/jakobbjelver/site", private: true },
   { id: "transcode", name: "Transcode", role: "Transcode queue", href: "https://transcode.messer.wtf", repo: "https://github.com/jakobbjelver/messer-transcode", private: true },
-  { id: "news", name: "News", role: "Daily briefing", href: "https://news.messer.wtf", repo: "https://github.com/jakobbjelver/messer-garage-allehanda", private: true },
+  { id: "news", name: "News", role: "Daily briefing", href: "https://news.messer.wtf", repo: "https://github.com/jakobbjelver/messer-news", private: true },
 ].filter((project) => brands.some((brand) => brand.project === project.id));
 
 for (const p of PROJECTS) {
@@ -114,9 +114,15 @@ const brandCss = brands
  * A hand-copied list is how the old page went stale.
  */
 const rulesMd = fs.readFileSync(path.join(ROOT, "canon/rules.md"), "utf8");
-const plainRule = (body) =>
-  body
-    .replace(/```[\s\S]*?```/g, " ")
+const plainRule = (body) => {
+  // Code samples are content the rule wants read (a CSS voice table, a MESSER.md row); protect them
+  // from the table/backtick cleanup, then put them back verbatim.
+  const code = [];
+  const text = body.replace(/```[^\n]*\n([\s\S]*?)```/g, (_, inner) => {
+    code.push(inner.trim());
+    return `\n@code${code.length - 1}@\n`;
+  });
+  return text
     .split("\n")
     .filter((line) => !/^\s*\|/.test(line))
     .join("\n")
@@ -127,7 +133,9 @@ const plainRule = (body) =>
     .replace(/^#+\s*/gm, "")
     .replace(/\n{2,}/g, "\n")
     .replace(/[ \t]{2,}/g, " ")
+    .replace(/@code(\d+)@/g, (_, i) => code[Number(i)])
     .trim();
+};
 
 const rules = [];
 for (const m of rulesMd.matchAll(/^## (\d+)\. (.+)$/gm)) {

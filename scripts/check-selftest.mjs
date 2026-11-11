@@ -23,6 +23,7 @@ const EXPECT = [
   ["disabled/", "a disabled control that still looks clickable"],
   ["selected/", "an opaque selected row with no accent rule"],
   ["§16 header row", "a topbar row wider than the page container"],
+  ["§19", "a line below the 10px type floor"],
   ["R3 h1", "an h1 set in mono"],
 ];
 
