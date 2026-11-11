@@ -20,7 +20,10 @@ jobs:
       # the showcase is generated from the canon; a canon change that breaks it must fail here,
       # not in the image build that deploys ui.messer.wtf
       - run: npm run showcase
-      - run: npx playwright install --with-deps chromium
+      # The runner image carries Chromium's shared libraries. `--with-deps` runs apt-get, which has
+      # twice failed on runner DNS (archive.ubuntu.com) and turned the gate red for infrastructure
+      # reasons; the browser download is the only part the measurements need.
+      - run: npx playwright install chromium
       # marks are generated: regenerate them and fail if the committed assets are stale.
       # og.png is rasterised and not byte-stable across machines (font hinting), so it is
       # generated but excluded from the diff; the SVGs and icons are hashed and compared.
