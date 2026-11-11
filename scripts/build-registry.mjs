@@ -301,6 +301,14 @@ const componentItems = [
 
 const blockItems = [
   {
+    name: "back-link",
+    title: "Messer UI — back link",
+    description:
+      "The one way back (canon §20): a 32px outlined control with a Phosphor arrow and a destination label. Presentational — the app resolves the origin into `href`/`label` and may restore its state through `onNavigate`.",
+    files: [{ path: "registry/back-link/back-link.tsx", type: "registry:ui", target: "components/ui/back-link.tsx" }],
+    dependencies: ["@phosphor-icons/react"],
+  },
+  {
     name: "checkbox",
     title: "Messer UI — checkbox",
     description:
