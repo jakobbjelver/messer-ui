@@ -115,10 +115,21 @@ export function measure(page) {
       fixtures: out,
       bodyFont: getComputedStyle(document.body).fontFamily
         .split(",")[0].replace(/["']/g, "").trim().replace(/\s+Variable$/, ""),
+      // document.fonts.check() answers "could this be used", and it returns true
+      // when NOTHING has loaded — a family that no @font-face declares silently
+      // falls back to system sans and still passes. Ask the FontFaceSet instead:
+      // a face must exist for that exact family and be loaded. This is how the
+      // Fontsource-variable trap was caught ("Golos Text Variable" declared,
+      // "Golos Text" requested, everything measured correct in SF).
       fontsLoaded: {
-        golos: document.fonts.check('14px "Golos Text"') || document.fonts.check("14px Golos"),
-        mono: document.fonts.check('12px "JetBrains Mono"') || document.fonts.check("12px JetBrains Mono"),
+        golos: [...document.fonts].some(
+          (f) => f.family.replace(/["']/g, "") === "Golos Text" && f.status === "loaded",
+        ),
+        mono: [...document.fonts].some(
+          (f) => f.family.replace(/["']/g, "") === "JetBrains Mono" && f.status === "loaded",
+        ),
       },
+      fontFamilies: [...new Set([...document.fonts].map((f) => f.family.replace(/["']/g, "")))],
       docWidth: document.documentElement.scrollWidth,
       viewport: innerWidth,
       controls,

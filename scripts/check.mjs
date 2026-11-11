@@ -232,7 +232,14 @@ for (const theme of runs) {
   await context.close();
 
   if (errors.length) fails.push(`${tag}: ${errors.length} console error(s) — ${errors[0]}`);
-  if (!got.fontsLoaded.golos || !got.fontsLoaded.mono) fails.push(`${tag}: family fonts not loaded`);
+  // An app owns its @font-face (canon ships stacks only), so a missing face is a
+  // failure there. messer-ui's own sink is a CSS artifact with no files by
+  // design — it warns, because a canon repo cannot be held to shipping fonts.
+  if (!got.fontsLoaded.golos || !got.fontsLoaded.mono) {
+    const msg = `${tag}: family fonts not loaded — the sheet asks for Golos/JetBrains but the FontFaceSet has only [${(got.fontFamilies || []).join(", ")}]; system sans is rendering`;
+    if (app) fails.push(msg);
+    else warns.push(msg);
+  }
   if (got.bodyFont !== "Golos Text") fails.push(`${tag}: body font is "${got.bodyFont}"`);
   if (got.docWidth > got.viewport + 1) fails.push(`${tag}: page overflows ${got.docWidth} > ${got.viewport}`);
 
