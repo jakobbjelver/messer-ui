@@ -359,3 +359,23 @@ A page below the top level has one way out, and it is the same in every project:
   real destination — a back control that dead-ends on a cold load is a broken link. A page-level
   navigation button that leaves the screen (forward or back) takes the same 32 px shape, arrow and
   gap.
+
+## 21. Links — the arrow tells the destination
+
+A link that moves **within** the current surface — an in-page anchor, another route in the same app,
+a detail view — carries a Phosphor `ArrowRight` after its label.
+
+A link that leaves the current surface — another origin, another subdomain, a new tab, a public
+repository — carries a Phosphor `ArrowUpRight` after its label.
+
+- The arrow is 12 px, `--text-3`, `currentColor`, 6 px from the label, `aria-hidden`. It never
+  replaces the link's accessible name.
+- **One arrow, at the end.** Do not put a leading arrow, a bare `→` character or an icon-only link
+  where a label would fit.
+- **Rows, cards and tiles are the affordance.** A row that navigates as a whole, a project tile or a
+  card does not repeat an arrow in every cell; the row's own hover and the title link carry the
+  action.
+- **A contents rail is a destination list, not body copy.** Its items do not each need an arrow; the
+  rail's selected state is the affordance. Header, footer and body text links follow the rule.
+- The same geometry applies in a React shell and a generated static document; the markup differs,
+  the affordance does not.

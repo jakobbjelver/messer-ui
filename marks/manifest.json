@@ -5,6 +5,12 @@
     "favicon-32.png": "sha256:050059e4c5b0304ef01123fcd36e3bf4578cae76f63a6c4631c4eafd4f77b432",
     "apple-touch-icon.png": "sha256:04e3bd3127dddcf807f61d0fabec68f8642706ac4af48b508ad50297a9004dcd"
   },
+  "messer-projects": {
+    "favicon.svg": "sha256:657cb9c9c3b97023744e8a91103a5ff8c2222700790d899cf19ab9ee6d3cdb4c",
+    "favicon-dark.svg": "sha256:341fc34beb736bf8d06afbbf46013c8484645426ddff00cfeb50f0b9b3c400fc",
+    "favicon-32.png": "sha256:5600c5add504883802f894ce77b728c5c05430f1eb03e3468d262b0fb85d14c4",
+    "apple-touch-icon.png": "sha256:f900f1d47b82cd8a75c16b1eef34bab1309a5e81a60a01d9e6a889ae4e88549c"
+  },
   "messer-swipe": {
     "favicon.svg": "sha256:07f838a4d9ea7db14660042cd31d500a16190eb9c1b42918f97eda40f2c5f624",
     "favicon-dark.svg": "sha256:5e954f9eedc252a58f4b0b892f38723c1083a65add776d981c1939743347caca",

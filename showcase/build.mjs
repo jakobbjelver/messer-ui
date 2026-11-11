@@ -35,6 +35,7 @@ const pkg = JSON.parse(fs.readFileSync(path.join(ROOT, "package.json"), "utf8"))
  */
 const PROJECTS = [
   { id: "messer", name: "Messer", role: "Front door", href: "https://messer.wtf", repo: null, private: false },
+  { id: "messer-projects", name: "Projects", role: "The standard", href: "https://projects.messer.wtf", repo: "https://github.com/jakobbjelver/messer-projects", private: true },
   { id: "portal", name: "Portal", role: "Server dashboard", href: "https://portal.messer.wtf", repo: "https://github.com/jakobbjelver/messer-portal", private: true },
   { id: "ai-router", name: "AI Router", role: "Key pool proxy", href: "https://ai.messer.wtf", repo: "https://github.com/jakobbjelver/messer-ai-router", private: true },
   { id: "messer-swipe", name: "Swipe", role: "Media deck", href: "https://swipe-server.messer.wtf", repo: "https://github.com/jakobbjelver/messer-swipe", private: true },
@@ -369,11 +370,11 @@ const html = `<!doctype html>
       <span class="name">Messer UI</span>
     </a>
     <nav class="nav" aria-label="Sections">
-      <a href="#projects">Projects</a>
-      <a href="#foundations">Foundations</a>
-      <a href="#blocks">Blocks</a>
-      <a href="#components">Components</a>
-      <a href="#adopting">Adopt</a>
+      <a href="#projects">Projects ${icon("arrow-right")}</a>
+      <a href="#foundations">Foundations ${icon("arrow-right")}</a>
+      <a href="#blocks">Blocks ${icon("arrow-right")}</a>
+      <a href="#components">Components ${icon("arrow-right")}</a>
+      <a href="#adopting">Adopt ${icon("arrow-right")}</a>
     </nav>
     <div class="actions">
       <a class="icon-btn" href="https://github.com/jakobbjelver/messer-ui" target="_blank" rel="noreferrer" aria-label="Source on GitHub" title="Source">${icon("github-logo")}</a>
@@ -393,8 +394,8 @@ const html = `<!doctype html>
         <h1>One family.<br>${surfaceCount} surfaces.</h1>
         <p class="sub">Tokens, rules and blocks — the same system under every project I run.</p>
         <div class="hero-links">
-          <a class="textlink" href="#projects">Projects ${icon("arrow-down")}</a>
-          <a class="textlink" href="#adopting">Adopt ${icon("arrow-up-right")}</a>
+          <a class="textlink" href="#projects">Projects ${icon("arrow-right")}</a>
+          <a class="textlink" href="#adopting">Adopt ${icon("arrow-right")}</a>
           <a class="textlink" href="https://github.com/jakobbjelver/messer-ui" target="_blank" rel="noreferrer">Source ${icon("arrow-up-right")}</a>
         </div>
       </div>
