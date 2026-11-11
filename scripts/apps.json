@@ -18,7 +18,10 @@
       "brand": "portal",
       "shell": "topbar",
       "marksTarget": "~/Repos/messer-portal/web/public/res",
-      "sink": null
+      "sink": null,
+      "blockDeviations": {
+        "checkbox": "the app keeps its Base UI/shadcn prop surface (checked/onCheckedChange/indeterminate) in a thin adapter over the canon native input, so call sites do not move; classes are the block's"
+      }
     },
     {
       "id": "ai-router",
@@ -33,7 +36,10 @@
       "path": "~/Repos/site",
       "brand": "studio",
       "shell": "none",
-      "sink": null
+      "sink": null,
+      "blockDeviations": {
+        "checkbox": "the app keeps its Base UI/shadcn prop surface (checked/onCheckedChange/indeterminate) in a thin adapter over the canon native input, so call sites do not move; classes are the block's"
+      }
     },
     {
       "id": "messer",
