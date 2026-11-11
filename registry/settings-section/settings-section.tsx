@@ -12,8 +12,11 @@ export type SettingsSectionProps = {
 };
 
 /**
- * One block of a settings page: title, description, fields, and a save bar that sticks to the bottom
- * while the section scrolls. The parent owns `dirty`; the section owns the pending state.
+ * One block of a settings page: title, description, fields, and — only when the
+ * section is editable — a save bar that sticks to the bottom while it scrolls.
+ * The parent owns `dirty`; the section owns the pending state. A read-only
+ * section (no `onSave`) renders no bar: a permanently disabled Save button is a
+ * promise the surface cannot keep.
  */
 export function SettingsSection({
   title,
@@ -44,24 +47,25 @@ export function SettingsSection({
 
       <div className="px-4 pb-4">{children}</div>
 
-      {footer ?? (
-        <div className="sticky bottom-0 flex items-center justify-end gap-2 border-t border-border bg-[var(--background)] px-4 py-3">
-          <span
-            className="mr-auto font-mono text-[10.5px] uppercase tracking-[0.1em] text-[var(--text-3)]"
-            aria-live="polite"
-          >
-            {dirty ? "Unsaved changes" : "Saved"}
-          </span>
-          <button
-            type="button"
-            onClick={save}
-            disabled={!dirty || pending || !onSave}
-            className="inline-flex h-8 items-center justify-center bg-primary px-3 text-sm font-medium text-[var(--primary-foreground)] transition-opacity duration-150 hover:opacity-90 disabled:opacity-50"
-          >
-            {pending ? "Saving…" : "Save changes"}
-          </button>
-        </div>
-      )}
+      {footer ??
+        (onSave ? (
+          <div className="sticky bottom-0 flex items-center justify-end gap-2 border-t border-border bg-[var(--background)] px-4 py-3">
+            <span
+              className="mr-auto font-mono text-[10.5px] uppercase tracking-[0.1em] text-[var(--text-3)]"
+              aria-live="polite"
+            >
+              {dirty ? "Unsaved changes" : "Saved"}
+            </span>
+            <button
+              type="button"
+              onClick={save}
+              disabled={!dirty || pending}
+              className="inline-flex h-8 items-center justify-center bg-primary px-3 text-sm font-medium text-[var(--primary-foreground)] transition-opacity duration-150 hover:opacity-90 disabled:opacity-50"
+            >
+              {pending ? "Saving…" : "Save changes"}
+            </button>
+          </div>
+        ) : null)}
     </section>
   );
 }
