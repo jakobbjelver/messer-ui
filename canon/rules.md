@@ -271,6 +271,10 @@ widths at once (a nested narrower strip under a wider container is a bug, not a 
   page container and shares its gutter; the bar's own border still spans the viewport, so the surface
   is full-bleed and the content is not. A wordmark that does not line up with the content below it is
   the defect this section exists to prevent.
+- **The bar is 48 px including its hairline.** A 48 px row plus a 1 px border is a 49 px bar, and a
+  49 px bar puts the selected rule on a different half pixel than the 48 px one beside it — measure
+  the box, not the row. `AppShell` renders `h-12` + `border-b` (48 total, 47 content) and a generated
+  document matches it: `height: 47px` on the row, `border-bottom: 1px` on the bar.
 - `AppShell` takes `container` (`default` | `narrow` | `wide` | `none`) and a page renders
   `PageContainer` with the same value. The shell and the page must not disagree — hence both read the
   same prop/token rather than each carrying a number.
@@ -377,5 +381,11 @@ repository — carries a Phosphor `ArrowUpRight` after its label.
   action.
 - **A contents rail is a destination list, not body copy.** Its items do not each need an arrow; the
   rail's selected state is the affordance. Header, footer and body text links follow the rule.
+- **The header nav is exempt.** A nav item in the topbar — the app's own sections, or the front
+  door's surfaces — carries no arrow. The bar's 32 px hit area, its `--surface-2` hover and its
+  selected rule are the affordance, and six arrows in one 48 px row are noise. This is the single
+  mechanical exemption, and it is measured: `chrome-check.mjs` fails a header nav item that renders
+  an `svg`/`img`. An icon-only *action* in the bar's action slot (source, theme) is a control, not a
+  labelled link, so §9 governs it instead.
 - The same geometry applies in a React shell and a generated static document; the markup differs,
   the affordance does not.

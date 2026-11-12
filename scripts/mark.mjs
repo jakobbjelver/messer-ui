@@ -16,6 +16,7 @@ import { fileURLToPath } from "node:url";
 import { oklchToHex } from "./lib/color.mjs";
 import { serve } from "./lib/serve.mjs";
 import { MARK_HASHED, markSvg, glyphSvg } from "./lib/mark.mjs";
+import { readApps } from "./lib/apps.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const require = createRequire(import.meta.url);
@@ -139,7 +140,7 @@ fs.writeFileSync(path.join(MARKS, "manifest.json"), JSON.stringify(manifest, nul
 // og.png is rasterised per machine (font hinting), so it is not copied: the app keeps its own share
 // card and only the byte-stable icons are synced.
 const FILES = MARK_HASHED;
-const apps = JSON.parse(fs.readFileSync(path.join(ROOT, "scripts/apps.json"), "utf8")).apps ?? [];
+const apps = readApps().apps;
 for (const app of apps) {
   if (!app.marksTarget) continue;
   const target = app.marksTarget.replace("~", process.env.HOME ?? "~");

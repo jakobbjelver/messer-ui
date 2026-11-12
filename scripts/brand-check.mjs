@@ -6,6 +6,7 @@ import crypto from "node:crypto";
 import { fileURLToPath } from "node:url";
 import { parseColor, contrast, accentFg, hueDistance, chartRamp, categoricalRamp, STATUS_HUES } from "./lib/color.mjs";
 import { GLYPH_SOURCES, glyphFile, MARK_FILES, MARK_HASHED } from "./lib/mark.mjs";
+import { readApps } from "./lib/apps.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 // `--app <dir>` checks one checkout's installed icons (CI has no ~/Repos tree of siblings).
@@ -136,7 +137,7 @@ for (const r of rows) {
 // it is current. og.png is rasterised per machine, so only its presence is required — same rule as
 // the manifest hashes.
 const FILES = MARK_HASHED; // byte-stable icons only; og.png is a per-machine rasterisation
-const allApps = JSON.parse(fs.readFileSync(path.join(ROOT, "scripts/apps.json"), "utf8")).apps ?? [];
+const allApps = readApps().apps;
 const targets = APP_FLAG
   ? (() => {
       const dir = path.resolve(APP_FLAG);

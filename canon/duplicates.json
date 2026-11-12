@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-11-11T11:26:12.558Z",
-  "scanned": 413,
+  "generatedAt": "2026-11-12T14:55:09.735Z",
+  "scanned": 431,
   "missing": [],
   "exact": [
     {
@@ -499,6 +499,15 @@
       ]
     },
     {
+      "key": "news:app/src/components/ui/checkbox.tsx|transcode:web/app/src/components/ui/checkbox.tsx",
+      "name": "checkbox.tsx",
+      "vendored": true,
+      "files": [
+        "news:app/src/components/ui/checkbox.tsx",
+        "transcode:web/app/src/components/ui/checkbox.tsx"
+      ]
+    },
+    {
       "key": "news:app/src/components/ui/empty-state.tsx|request-games:web/app/src/components/ui/empty-state.tsx",
       "name": "empty-state.tsx",
       "vendored": false,
@@ -550,6 +559,24 @@
       "files": [
         "news:app/src/components/ui/page-header.tsx",
         "transcode:web/app/src/components/ui/page-header.tsx"
+      ]
+    },
+    {
+      "key": "news:app/src/components/ui/page-toolbar.tsx|transcode:web/app/src/components/ui/page-toolbar.tsx",
+      "name": "page-toolbar.tsx",
+      "vendored": false,
+      "files": [
+        "news:app/src/components/ui/page-toolbar.tsx",
+        "transcode:web/app/src/components/ui/page-toolbar.tsx"
+      ]
+    },
+    {
+      "key": "news:app/src/components/ui/settings-section.tsx|transcode:web/app/src/components/ui/settings-section.tsx",
+      "name": "settings-section.tsx",
+      "vendored": false,
+      "files": [
+        "news:app/src/components/ui/settings-section.tsx",
+        "transcode:web/app/src/components/ui/settings-section.tsx"
       ]
     },
     {
@@ -670,6 +697,15 @@
       ]
     },
     {
+      "key": "request-games:web/app/src/components/ui/checkbox.tsx|transcode:web/app/src/components/ui/checkbox.tsx",
+      "name": "checkbox.tsx",
+      "vendored": true,
+      "files": [
+        "request-games:web/app/src/components/ui/checkbox.tsx",
+        "transcode:web/app/src/components/ui/checkbox.tsx"
+      ]
+    },
+    {
       "key": "request-games:web/app/src/components/ui/empty-state.tsx|transcode:web/app/src/components/ui/empty-state.tsx",
       "name": "empty-state.tsx",
       "vendored": false,
@@ -736,6 +772,16 @@
       "files": [
         "ai-router:packages/dashboard/src/components/ui/button.tsx",
         "studio:src/studio/client/ui/button.tsx"
+      ]
+    },
+    {
+      "key": "request-games:web/app/src/components/ui/select.tsx|transcode:web/app/src/components/ui/select.tsx",
+      "name": "select.tsx",
+      "score": 0.96,
+      "vendored": true,
+      "files": [
+        "request-games:web/app/src/components/ui/select.tsx",
+        "transcode:web/app/src/components/ui/select.tsx"
       ]
     },
     {

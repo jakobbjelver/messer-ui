@@ -12,6 +12,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { readApps, ledgerNote } from "./lib/apps.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const JSON_OUT = process.argv.includes("--json");
@@ -42,7 +43,7 @@ const items = fs
   })
   .filter(Boolean);
 
-const allApps = JSON.parse(fs.readFileSync(path.join(ROOT, "scripts/apps.json"), "utf8")).apps ?? [];
+const allApps = readApps().apps;
 
 // CI checks out one repo at an arbitrary path, where the `~/Repos/...` entries in apps.json resolve
 // to nothing. `--app <dir>` measures that one checkout; it is matched to its apps.json entry by the

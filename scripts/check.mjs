@@ -8,6 +8,7 @@ import { createRequire } from "node:module";
 import { fileURLToPath } from "node:url";
 import { CIRCLE, MUST_MONO, MUST_SANS, measure, num, rgbClose } from "./lib/measure.mjs";
 import { probeStates } from "./lib/states.mjs";
+import { readApps } from "./lib/apps.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const require = createRequire(import.meta.url);
@@ -322,7 +323,7 @@ if (app) {
   // family default. The package name is the app's id and travels with the checkout.
   const family = (() => {
     try {
-      const apps = JSON.parse(fs.readFileSync(path.join(ROOT, "scripts/apps.json"), "utf8")).apps ?? [];
+      const apps = readApps().apps;
       let pkgName = null;
       try {
         pkgName = JSON.parse(fs.readFileSync(path.join(app, "package.json"), "utf8")).name ?? null;

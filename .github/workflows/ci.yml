@@ -17,9 +17,8 @@ jobs:
       - run: npm ci
       - run: npm run brand:check
       - run: npm run build
-      # the showcase is generated from the canon; a canon change that breaks it must fail here,
-      # not in the image build that deploys ui.messer.wtf
-      - run: npm run showcase
+      # The showcase (ui.messer.wtf) is a private surface and builds in messer-ui-site, which reads
+      # this checkout. A canon change that breaks it fails there, not here.
       # The runner image carries Chromium's shared libraries. `--with-deps` runs apt-get, which has
       # twice failed on runner DNS (archive.ubuntu.com) and turned the gate red for infrastructure
       # reasons; the browser download is the only part the measurements need.
@@ -29,7 +28,10 @@ jobs:
       # generated but excluded from the diff; the SVGs and icons are hashed and compared.
       - run: npm run marks && git diff --exit-code -- marks/ ':(exclude)marks/*/og.png'
       - run: npm run sink
-      # every new rule check must be able to fail: the violations fixture proves it
+      # every new rule check must be able to fail: the violations fixture proves it, and the chrome
+      # check carries its own fixture suite (a headless page gate needs a served page, its selftest
+      # does not)
+      - run: npm run chrome:selftest
       - run: npm run selftest
       - uses: actions/upload-artifact@v4
         if: always()

@@ -19,12 +19,13 @@
     "sink": "node scripts/sink-check.mjs",
     "conformance": "node scripts/check.mjs --url \"file://$(pwd)/fixtures/kitchen-sink.html\" --no-reference",
     "conformance:url": "node scripts/app-conformance.mjs",
+    "chrome": "node scripts/chrome-check.mjs",
+    "chrome:selftest": "node scripts/chrome-check.mjs --selftest",
     "selftest": "node scripts/check-selftest.mjs",
     "validate": "npx shadcn@latest registry validate jakobbjelver/messer-ui",
-    "check": "npm run brand:check && npm run build && npm run sink && npm run conformance && npm run selftest",
+    "check": "npm run brand:check && npm run build && npm run sink && npm run conformance && npm run chrome:selftest && npm run selftest",
     "blocks": "node scripts/blocks.mjs",
-    "sheet": "node scripts/contact-sheet.mjs --tile portal=../messer-portal/web/out --tile ai-router=../messer-ai-router/packages/dashboard/dist",
-    "showcase": "node showcase/build.mjs"
+    "sheet": "node scripts/contact-sheet.mjs --tile portal=../messer-portal/web/out --tile ai-router=../messer-ai-router/packages/dashboard/dist"
   },
   "devDependencies": {
     "@fontsource-variable/golos-text": "^5.3.0",

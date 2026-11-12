@@ -13,6 +13,7 @@ import os from "node:os";
 import path from "node:path";
 import crypto from "node:crypto";
 import { fileURLToPath } from "node:url";
+import { readApps } from "./lib/apps.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const arg = (n, d) => {
@@ -28,7 +29,7 @@ const writeJson = (p, body) => {
   fs.writeFileSync(path.join(ROOT, p), JSON.stringify(body, null, 2) + "\n");
 };
 
-const { apps } = readJson("scripts/apps.json");
+const { apps } = readApps();
 const atoms = new Set(readJson("scripts/atoms.json"));
 const expand = (p) => p.replace(/^~/, os.homedir());
 
