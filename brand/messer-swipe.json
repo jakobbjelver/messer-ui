@@ -2,8 +2,8 @@
   "project": "messer-swipe",
   "title": "Swipe",
   "mark": {
-    "glyph": "GalleryHorizontalEnd",
-    "source": "lucide"
+    "glyph": "CardsThree",
+    "source": "phosphor"
   },
   "accent": {
     "light": "oklch(0.30 0.008 260)",

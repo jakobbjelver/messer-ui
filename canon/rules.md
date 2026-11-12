@@ -85,11 +85,13 @@ Status hues are fixed and independent of the accent: danger 25°, warning 75°, 
 `currentColor`, 16px default, 14px in compact rows, 20px in navigation. No mixing icon families, no
 filled/duotone as decoration, no emoji as icons.
 
-**One declared exception: `messer-swipe` uses Lucide.** The product is a poster deck — its own mark
-is a Lucide glyph, and the family's stroke weight reads as one voice with it where Phosphor's solid
-weight competes with artwork. The exception is declared once, per app, in `scripts/apps.json`
-(`iconFamily: "lucide"`); it is not a precedent and it does not travel to another brand. `check`
-enforces it in both directions, so the app cannot drift back to a mixed set.
+**Fill is state, never decoration.** One family draws both: an icon is `regular` unless it is showing
+something the user has set or is looking at — a selected tab, a liked heart, a rating star, a saved
+bookmark. `weight="fill"` is the only permitted second weight; duotone, bold and thin are not.
+`messer-swipe`'s deck tabs (`CardsThree`, `Heart`) and its mark are the standing example.
+
+The app-level exception mechanism still exists (`iconFamily` in `scripts/apps.json`, enforced by
+`check` in both directions), but no brand declares one: `messer-swipe` dropped Lucide in 2.4.0.
 
 | Lucide | Phosphor | | Lucide | Phosphor |
 |---|---|---|---|---|
@@ -116,6 +118,14 @@ enforces it in both directions, so the app cannot drift back to a mixed set.
 | `Folder` | `Folder` | | `Server` | `HardDrives` |
 | `Zap` | `Lightning` | | `Wifi` | `WifiHigh` |
 | `Volume2` | `SpeakerHigh` | | `VolumeX` | `SpeakerSlash` |
+| `Dices` | `DiceFive` | | `Rewind` | `Rewind` |
+| `HardDrive` | `HardDrives` | | `HeartOff` | `HeartBreak` |
+| `Library` | `Books` | | `Tv` | `Television` |
+| `WifiOff` | `WifiSlash` | | `TrendingUp` | `TrendUp` |
+| `RefreshCcw` | `ArrowsCounterClockwise` | | `RotateCcw` | `ArrowCounterClockwise` |
+| `GalleryHorizontalEnd` | `CardsThree` | | `Share2` | `ShareNetwork` |
+| `SlidersHorizontal` | `SlidersHorizontal` | | `Sparkles` | `Sparkle` |
+| `OctagonX` | `XCircle` | | `UserX` | `UserMinus` |
 
 Extend the table when you hit a new icon; do not invent a second family.
 
@@ -189,7 +199,7 @@ one accent.
 |---|---|---|
 | Type families | ✓ Golos + JetBrains Mono | |
 | Corner radius | ✓ 0 | |
-| Icon family | ✓ Phosphor (declared exception: `messer-swipe` → Lucide, §9) | |
+| Icon family | ✓ Phosphor, fill only for state (§9) | |
 | Label style, density, motion | ✓ | |
 | Accent hue | | ✓ `brand-<project>.json` |
 | Chart ramp | derived from the accent | ✓ derived |
