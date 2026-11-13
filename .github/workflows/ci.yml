@@ -32,6 +32,9 @@ jobs:
       # check carries its own fixture suite (a headless page gate needs a served page, its selftest
       # does not)
       - run: npm run chrome:selftest
+      # the two generated documents are measured together; their fixture suite runs here, the
+      # pages themselves live in private checkouts and run in the nightly
+      - run: npm run page:selftest
       - run: npm run selftest
       - uses: actions/upload-artifact@v4
         if: always()
