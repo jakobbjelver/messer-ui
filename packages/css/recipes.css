@@ -89,6 +89,7 @@
   transition: translate var(--dur-fast) var(--ease);
 }
 .m-switch:checked { background: var(--primary); border-color: var(--primary); }
+.m-switch:disabled { cursor: not-allowed; opacity: 0.5; }
 .m-switch:checked::after { translate: 14px 0; }
 
 /* ── surfaces ────────────────────────────────────────────────────────────── */

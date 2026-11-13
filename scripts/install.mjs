@@ -24,6 +24,7 @@ const files = [
   ["packages/css/theme.css", "theme.css"],
   ["packages/css/type.css", "type.css"],
   ["packages/css/utilities.css", "utilities.css"],
+  ["packages/css/recipes.css", "recipes.css"],
   [`packages/css/brand/${brand}.css`, "brand.css"],
 ];
 const target = path.join(app, dir);
@@ -39,6 +40,7 @@ Add to your global stylesheet, after the Tailwind import:
   @import "./${dir.replace(/^.*\//, "")}/theme.css";
   @import "./${dir.replace(/^.*\//, "")}/type.css";
   @import "./${dir.replace(/^.*\//, "")}/utilities.css";
+  @import "./${dir.replace(/^.*\//, "")}/recipes.css";
   @import "./${dir.replace(/^.*\//, "")}/brand.css";
 
 Then keep only app-specific extras (sidebar vars, custom utilities) in that file — no colour
