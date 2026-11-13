@@ -279,6 +279,17 @@ const measurePage = async () => {
     transparent,
     bareTables,
     list: list ? { style: getComputedStyle(list).listStyleType } : null,
+    // An empty list under the scope strip must draw ONE rule. The strip already closes with a rule of
+    // its own, and the list's top rule exists to head a table of rows — with none, it is a second
+    // divider 14px under the first, which reads as a rendering defect (found on a paused project).
+    empty: (() => {
+      const scope = document.querySelector(".bl__scope");
+      if (!list || !scope || !list.querySelector(".bl__empty")) return null;
+      return {
+        listTop: px(getComputedStyle(list).borderTopWidth),
+        scopeBottom: px(getComputedStyle(scope).borderBottomWidth),
+      };
+    })(),
     badges,
     switches,
     titles,
@@ -312,6 +323,13 @@ const measurePage = async () => {
 };
 
 /* ── assertions ───────────────────────────────────────────────────────────── */
+
+/** A18, as one function: the filter states below reach an empty list, so the rule is measured in the
+ *  state it is about rather than only where the default view happens to be empty. */
+function emptyRuleViolation(m) {
+  if (!m.empty || !(m.empty.listTop > 0 && m.empty.scopeBottom > 0)) return null;
+  return `A18 an empty list draws two rules (${m.empty.scopeBottom}px above ${m.empty.listTop}px) — one divider, then the message`;
+}
 
 function judge(m) {
   const fails = [];
@@ -418,6 +436,11 @@ function judge(m) {
     );
   }
 
+  // A18 — an empty list draws one rule, not two: the scope strip above it already closes with a rule,
+  // and the list's own top rule exists to head rows that are not there.
+  const emptyFail = emptyRuleViolation(m);
+  if (emptyFail) fails.push(emptyFail);
+
   return { fails: [...new Set(fails)], warn: [...new Set(warn)] };
 }
 
@@ -491,6 +514,22 @@ async function runPages() {
                   : "A17 auto-fix is disabled for a project that is not paused",
               );
             }
+            // A18 — and reach the empty list deliberately: with a project scoped, every severity that
+            // project has none of prints the list's own "no findings" marker, which is where the two
+            // dividers sat. The full judge stays on the default view (A15 wants "All" pressed).
+            const sevBtns = page.locator(".bl__sev-btn");
+            const sevCount = await sevBtns.count();
+            let sawEmpty = false;
+            for (let s = 0; s < sevCount; s++) {
+              await sevBtns.nth(s).click();
+              await page.waitForTimeout(120);
+              const state = await page.evaluate(measurePage);
+              if (!state.empty) continue;
+              sawEmpty = true;
+              const emptyFail = emptyRuleViolation(state);
+              if (emptyFail && !fails.includes(emptyFail)) fails.push(emptyFail);
+            }
+            if (!sawEmpty) warn.push("no filter reached an empty list — A18 was not exercised");
           }
           results.push({ file, theme, fails, warn, m: before, after });
         }
@@ -645,6 +684,14 @@ const CASES = [
   ["footer grammar", [['Messer Fixture · canon 2.4.0 · built 2026-11-13', 'Messer Fixture · canon 2.4.0 · 2026-11-13']], /footer meta reads/],
   ["two h1", [['<span class="pg-sec__n">02</span>Two</h2>', '<span class="pg-sec__n">02</span>Two</h2><h1>Second</h1>']], /2 h1 elements/],
   ["two pressed", [['data-sev="error" aria-pressed="false"', 'data-sev="error" aria-pressed="true"']], /severity filter has 2 selected/],
+  [
+    "double rule under an empty list",
+    [
+      ['<ol class="bl__list"><li class="bl__item"><span class="bl__rank">01</span></li></ol>', '<ol class="bl__list"><li class="bl__empty">No findings match this filter.</li></ol>'],
+      ["</style>", ".bl__scope { border-bottom:1px solid var(--border); } .bl__list { border-top:1px solid var(--border); }</style>"],
+    ],
+    /draws two rules/,
+  ],
   ["no eyebrow", [['<p class="m-label">Fixture kind</p>', ""]], /no eyebrow/],
 ];
 
