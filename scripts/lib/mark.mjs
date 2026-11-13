@@ -63,33 +63,45 @@ export function glyphPaths(iconsDir, glyph, source = "phosphor") {
 
 const boxFor = (source) => (source === "lucide" ? LUCIDE_BOX : 256);
 
+/**
+ * A brand may rotate its glyph (`mark.rotate`, degrees, clockwise). The rotation is about the
+ * centre of the source box, so the glyph stays centred and nothing is mirrored — a 90° rotation
+ * only moves the stack from the top edge to one side.
+ */
+const rotated = (shapes, rotate, source) => {
+  if (!rotate) return shapes;
+  const c = boxFor(source) / 2;
+  return `<g transform="rotate(${rotate} ${c} ${c})">${shapes}</g>`;
+};
+
 /** The <g> that places the glyph inside a box of `size`, in the source's own coordinate space. */
-function glyphGroup(glyph, { size, paper, source, iconsDir }) {
+function glyphGroup(glyph, { size, paper, source, iconsDir, rotate = 0 }) {
   const pad = +(size * 0.125).toFixed(3);
   const scale = +((size * 0.75) / boxFor(source)).toFixed(6);
   const paint =
     source === "lucide"
       ? `fill="none" stroke="${paper}" stroke-width="${LUCIDE_STROKE}" stroke-linecap="round" stroke-linejoin="round"`
       : `fill="${paper}"`;
-  return `<g transform="translate(${pad} ${pad}) scale(${scale})" ${paint}>${glyphPaths(iconsDir, glyph, source)}</g>`;
+  const shapes = rotated(glyphPaths(iconsDir, glyph, source), rotate, source);
+  return `<g transform="translate(${pad} ${pad}) scale(${scale})" ${paint}>${shapes}</g>`;
 }
 
 /** Ink box + paper glyph. Glyph occupies 75 % of the box, centred. */
-export function markSvg(glyph, { ink, paper, size = 32, source = "phosphor" }, iconsDir) {
+export function markSvg(glyph, { ink, paper, size = 32, source = "phosphor", rotate = 0 }, iconsDir) {
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${size} ${size}" width="${size}" height="${size}">
   <rect width="${size}" height="${size}" fill="${ink}"/>
-  ${glyphGroup(glyph, { size, paper, source, iconsDir })}
+  ${glyphGroup(glyph, { size, paper, source, iconsDir, rotate })}
 </svg>
 `;
 }
 
 /** The glyph alone, transparent — for the OG image, which already sits on ink. */
-export function glyphSvg(glyph, { fill, size = 96, source = "phosphor" }, iconsDir) {
+export function glyphSvg(glyph, { fill, size = 96, source = "phosphor", rotate = 0 }, iconsDir) {
   const scale = +((size * 0.75) / boxFor(source)).toFixed(6);
   const pad = +(size * 0.125).toFixed(3);
   const paint =
     source === "lucide"
       ? `fill="none" stroke="${fill}" stroke-width="${LUCIDE_STROKE}" stroke-linecap="round" stroke-linejoin="round"`
       : `fill="${fill}"`;
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${size} ${size}" width="${size}" height="${size}"><g transform="translate(${pad} ${pad}) scale(${scale})" ${paint}>${glyphPaths(iconsDir, glyph, source)}</g></svg>`;
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${size} ${size}" width="${size}" height="${size}"><g transform="translate(${pad} ${pad}) scale(${scale})" ${paint}>${rotated(glyphPaths(iconsDir, glyph, source), rotate, source)}</g></svg>`;
 }

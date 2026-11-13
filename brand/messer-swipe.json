@@ -3,7 +3,8 @@
   "title": "Swipe",
   "mark": {
     "glyph": "CardsThree",
-    "source": "phosphor"
+    "source": "phosphor",
+    "rotate": 270
   },
   "accent": {
     "light": "oklch(0.30 0.008 260)",

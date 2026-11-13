@@ -56,7 +56,7 @@ const frame = (inner, w, h, bg) =>
    html,body{margin:0;padding:0;width:${w}px;height:${h}px;background:${bg};overflow:hidden}
    </style></head><body>${inner}</body></html>`;
 
-const ogHtml = (brand, glyph, ink, paper, fontBase, source = "phosphor") => {
+const ogHtml = (brand, glyph, ink, paper, fontBase, source = "phosphor", rotate = 0) => {
   const sub = brand.title && brand.title.toLowerCase() !== brand.project.toLowerCase()
     ? `<div class="sub">${brand.title}</div>` : "";
   return `<!doctype html><html><head><meta charset="utf-8"><style>
@@ -70,7 +70,7 @@ const ogHtml = (brand, glyph, ink, paper, fontBase, source = "phosphor") => {
   .foot{display:flex;justify-content:space-between;font-family:"JetBrains Mono",monospace;font-size:14px;letter-spacing:.1em;text-transform:uppercase;opacity:.5}
 </style></head><body>
   <div class="top">
-    <div style="width:96px;height:96px">${glyphSvg(glyph, { fill: paper, size: 96, source }, ICONS)}</div>
+    <div style="width:96px;height:96px">${glyphSvg(glyph, { fill: paper, size: 96, source, rotate }, ICONS)}</div>
     <div><div class="name">${brand.project}</div>${sub}</div>
   </div>
   <div class="foot"><span>messer.wtf</span><span>messer-ui canon ${pkg.version}</span></div>
@@ -95,23 +95,24 @@ try {
     fs.mkdirSync(dir, { recursive: true });
 
     const source = brand.mark?.source ?? "phosphor";
-    const light = markSvg(glyph, { ink: inkLight, paper: paperLight, size: 32, source }, ICONS);
-    const dark = markSvg(glyph, { ink: inkDark, paper: paperDark, size: 32, source }, ICONS);
+    const rotate = Number(brand.mark?.rotate ?? 0);
+    const light = markSvg(glyph, { ink: inkLight, paper: paperLight, size: 32, source, rotate }, ICONS);
+    const dark = markSvg(glyph, { ink: inkDark, paper: paperDark, size: 32, source, rotate }, ICONS);
     fs.writeFileSync(path.join(dir, "favicon.svg"), light);
     fs.writeFileSync(path.join(dir, "favicon-dark.svg"), dark);
 
     const shots = [
       {
         file: "favicon-32.png", w: 32, h: 32,
-        html: frame(markSvg(glyph, { ink: inkLight, paper: paperLight, size: 32, source }, ICONS), 32, 32, inkLight),
+        html: frame(markSvg(glyph, { ink: inkLight, paper: paperLight, size: 32, source, rotate }, ICONS), 32, 32, inkLight),
       },
       {
         file: "apple-touch-icon.png", w: 180, h: 180,
-        html: frame(markSvg(glyph, { ink: inkLight, paper: paperLight, size: 180, source }, ICONS), 180, 180, inkLight),
+        html: frame(markSvg(glyph, { ink: inkLight, paper: paperLight, size: 180, source, rotate }, ICONS), 180, 180, inkLight),
       },
       {
         file: "og.png", w: 1200, h: 630,
-        html: ogHtml(brand, glyph, inkLight, paperLight, server.url, source),
+        html: ogHtml(brand, glyph, inkLight, paperLight, server.url, source, rotate),
       },
     ];
 

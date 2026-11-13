@@ -77,16 +77,19 @@
 
 .m-switch {
   appearance: none; position: relative; flex: none; width: 32px; height: 18px; margin: 0;
-  border: 1px solid var(--border-strong); border-radius: 0; background: var(--surface-2); cursor: pointer;
+  border: 1px solid var(--border-strong); border-radius: 0; background: var(--border-strong); cursor: pointer;
   transition: background-color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
 }
+/* The knob is the page colour in both states: a text-coloured knob reads as disabled, and it flips
+   tone when you toggle. Only the track changes, and the unchecked track is a step darker than the
+   surround so a paper knob still has an edge on it. */
 .m-switch::after {
   content: ""; position: absolute; top: 1px; left: 1px; width: 14px; height: 14px;
-  background: var(--text-3);
-  transition: translate var(--dur-fast) var(--ease), background-color var(--dur-fast) var(--ease);
+  box-sizing: border-box; background: var(--background);
+  transition: translate var(--dur-fast) var(--ease);
 }
 .m-switch:checked { background: var(--primary); border-color: var(--primary); }
-.m-switch:checked::after { translate: 14px 0; background: var(--primary-foreground); }
+.m-switch:checked::after { translate: 14px 0; }
 
 /* ── surfaces ────────────────────────────────────────────────────────────── */
 .m-panel { border: 1px solid var(--border); background: var(--surface); }
