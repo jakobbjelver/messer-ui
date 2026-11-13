@@ -519,7 +519,9 @@ function assertPage(run) {
   // states.json (a surface step is 120 ms with 200 ms of tolerance); a general transition is allowed
   // up to `--dur-slow` (240 ms, STANDARD §6.5). Applying the hover budget globally failed the canon's
   // own `.m-progress` fill, which animates at 240 ms by design.
-  const MOTION_MAX = 240;
+  // The budget lives in the canon, not in this file: `motion.durationMaxMs` (falling back to 240 while
+  // an older checkout is measured). A checker with its own number drifts from the thing it measures.
+  const MOTION_MAX = contract.motion?.durationMaxMs ?? 240;
   const slowest = got.transitions.reduce((a, b) => (b.ms > a.ms ? b : a), { ms: 0, el: "—" });
   for (const t of got.transitions) {
     if (t.ms > MOTION_MAX) {

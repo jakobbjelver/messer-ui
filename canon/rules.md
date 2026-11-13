@@ -160,6 +160,12 @@ Transitions use `--dur-fast` and `--ease`; only `background-color`, `border-colo
 and `transform` may animate. `prefers-reduced-motion: reduce` removes all of it. A hover that changes
 layout is a bug, not a flourish.
 
+**Motion budget.** A hover is a `--dur-fast` (120 ms) surface step, and `states.json` allows 200 ms of
+tolerance for it. Everything else — a progress fill, a panel fading in — may take up to `--dur-slow`
+(240 ms) and no longer; `states.json`'s `motion.durationMaxMs` is that number, and it is the one a
+checker reads. The hover budget is not a global ceiling: applying it to every transition failed the
+canon's own `.m-progress`.
+
 ## 12. Copy
 
 The system does not own a voice, but it owns the small words that appear in every app.

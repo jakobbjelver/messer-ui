@@ -21,5 +21,9 @@
   "loading": {
     "skeletonFor": "content",
     "spinnerFor": "action"
+  },
+  "motion": {
+    "durationMaxMs": 240,
+    "note": "§11 / §6.5: a general transition may take up to --dur-slow (240ms). The hover budget above is the 120ms surface step plus tolerance — it is not a global ceiling."
   }
 }
