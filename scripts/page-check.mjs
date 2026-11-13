@@ -96,10 +96,10 @@ function startServer(file) {
   let state = { paused: [], autofix: [] };
   try {
     const data = JSON.parse(fs.readFileSync(path.join(dir, "backlog.json"), "utf8"));
-    // Switches render as on for one project, so the state is measured where it is shown, not only
-    // where it hides.
-    const first = (data.findings ?? [])[0];
-    if (first?.projectId) state = { paused: [], autofix: [first.projectId], updated_at: new Date().toISOString() };
+    // Every project is paused *and* on auto-fix in the control plane: the pair the UI must resolve.
+    // Clicking any chip then measures the disabled auto-fix switch in the state where the strip exists.
+    const ids = [...new Set((data.findings ?? []).map((f) => f.projectId).filter(Boolean))];
+    if (ids.length) state = { paused: ids, autofix: ids, updated_at: new Date().toISOString() };
   } catch { /* no dashboard on this page */ }
 
   return new Promise((resolve) => {
@@ -300,6 +300,14 @@ const measurePage = async () => {
       hasSev: Boolean(document.querySelector(".bl__sev-btn")),
       hasProj: Boolean(document.querySelector("[data-proj]")),
     },
+    // The project's two decisions, as drawn. A paused project is not audited, so auto-fix cannot act
+    // on it — the pair is exclusive, and the strip must show that rather than offering both.
+    decisions: (() => {
+      const fix = document.querySelector("[data-fix]");
+      const pause = document.querySelector("[data-pause]");
+      if (!fix || !pause) return null;
+      return { paused: pause.checked, fixOn: fix.checked, fixDisabled: fix.disabled };
+    })(),
   };
 };
 
@@ -399,6 +407,17 @@ function judge(m) {
   const missing = CHROME.filter((c) => !m.chrome[c]);
   ok(missing.length === 0, `the page does not use the shared chrome (${missing.join(", ")})`);
 
+  // A17 — the two project decisions are exclusive: a paused project is not audited, so auto-fix may
+  // not be offered on it.
+  if (m.decisions) {
+    ok(
+      m.decisions.paused === m.decisions.fixDisabled,
+      m.decisions.paused
+        ? "a paused project can still be switched to auto-fix — the two decisions are exclusive, so it must be disabled"
+        : "auto-fix is disabled for a project that is not paused",
+    );
+  }
+
   return { fails: [...new Set(fails)], warn: [...new Set(warn)] };
 }
 
@@ -463,6 +482,14 @@ async function runPages() {
             if (!shown.length) fails.push("A8 selecting a project chip showed no project switches — the decisions are unreachable");
             for (const s of shown) {
               if (!s.wordVisible) fails.push(`A8 in the scoped state “${s.word || "a switch"}” has no visible label — the word must not depend on the switch being on`);
+            }
+            // A17 — and that the two decisions cannot both be live.
+            if (after.decisions && after.decisions.paused !== after.decisions.fixDisabled) {
+              fails.push(
+                after.decisions.paused
+                  ? "A17 a paused project can still be switched to auto-fix — a paused project is not audited, so the switch must be disabled"
+                  : "A17 auto-fix is disabled for a project that is not paused",
+              );
             }
           }
           results.push({ file, theme, fails, warn, m: before, after });
@@ -574,9 +601,10 @@ const GOOD = `<!doctype html><html lang="en"><head><meta charset="utf-8">
       <button class="bl__sev-btn" data-sev="error" aria-pressed="false">Errors</button>
       <button class="bl__chip" data-proj="all" aria-pressed="true">All</button>
       <button class="bl__chip" data-proj="fixture" aria-pressed="false">Fixture</button>
-      <div class="bl__scope"><span class="bl__scope-name">All projects</span>
+      <div class="bl__scope"><span class="bl__scope-name">Fixture</span>
         <span class="m-badge" data-badge>auto-fix</span>
-        <label class="bl__sw"><input class="m-switch" type="checkbox" role="switch" aria-label="Auto-fix Fixture"><span class="bl__sw-t">Auto-fix</span></label>
+        <label class="bl__sw"><input class="m-switch" type="checkbox" role="switch" aria-label="Auto-fix Fixture" data-fix disabled><span class="bl__sw-t">Auto-fix</span></label>
+        <label class="bl__sw"><input class="m-switch" type="checkbox" role="switch" aria-label="Pause Fixture" data-pause checked><span class="bl__sw-t">Paused</span></label>
       </div>
       <ol class="bl__list"><li class="bl__item"><span class="bl__rank">01</span></li></ol>
     </div>
@@ -608,8 +636,9 @@ const CASES = [
   ["list marker", [["</style>", ".bl__list { list-style:decimal outside; }</style>"]], /renders markers/],
   ["bare table", [["<div class=\"pg-data\"><table>", "<div><table>"]], /no opaque surface behind it/],
   ["wrapping badge", [["</style>", ".m-badge { white-space:normal; height:auto; }</style>"]], /white-space: nowrap/],
-  ["custom switch", [['<input class="m-switch" type="checkbox" role="switch" aria-label="Auto-fix Fixture">', '<button role="switch" aria-label="Auto-fix Fixture" class="sw"></button>']], /not the canon .m-switch input|does not carry the .m-switch/],
+  ["custom switch", [['<input class="m-switch" type="checkbox" role="switch" aria-label="Auto-fix Fixture" data-fix disabled>', '<button role="switch" aria-label="Auto-fix Fixture" data-fix disabled class="sw"></button>']], /not the canon .m-switch input|does not carry the .m-switch/],
   ["silent switch", [["</style>", ".bl__sw-t { position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); }</style>"]], /no visible label/],
+  ["paused but fixable", [['aria-label="Auto-fix Fixture" data-fix disabled', 'aria-label="Auto-fix Fixture" data-fix']], /paused project can still be switched to auto-fix/],
   ["native tooltip", [['<a class="pg-brand" href="#one">Fixture</a>', '<a class="pg-brand" href="#one" title="Home">Fixture</a>']], /native title tooltip/],
   ["sub-10px text", [["</style>", ".bl__meta { font-size:9px; }</style>"]], /text below 10px/],
   ["duplicate timestamp", [["<h1>Fixture</h1>", "<h1>Fixture 2026-11-13 03:00</h1>"]], /prints twice in one view/],

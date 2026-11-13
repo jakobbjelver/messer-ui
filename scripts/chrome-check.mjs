@@ -136,8 +136,10 @@ const measureChrome = async () => {
   const rrect = row ? row.getBoundingClientRect() : null;
   const rcs = row ? getComputedStyle(row) : null;
 
-  // §11 selected: measure the item that carries aria-current; force one if the page has none, and
-  // say so, so a page is still measured before its scrollspy has run.
+  // §11 selected: measure the item that carries aria-current; force one if the page has none, so the
+  // state is measured whatever the page's scrollspy is doing. A generated front marks *nothing* at the
+  // top of the page on purpose — the hero is the document's opening, not a section — so forcing here is
+  // the normal case, not a defect, and it is not reported.
   let selected = links.find((a) => a.getAttribute("aria-current"));
   const forced = !selected && links.length > 0;
   if (forced) selected = links[0];
@@ -290,7 +292,6 @@ function judge(url, theme, m) {
   } else {
     warn.push("§11 no nav item carries aria-current and none could be forced");
   }
-  if (m.stateForced) warn.push("§11 selected state was forced on the first nav item (no aria-current in the DOM)");
 
   return { fails, warn };
 }
