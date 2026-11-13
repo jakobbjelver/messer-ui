@@ -306,6 +306,10 @@ widths at once (a nested narrower strip under a wider container is a bug, not a 
   49 px bar puts the selected rule on a different half pixel than the 48 px one beside it — measure
   the box, not the row. `AppShell` renders `h-12` + `border-b` (48 total, 47 content) and a generated
   document matches it: `height: 47px` on the row, `border-bottom: 1px` on the bar.
+- **The bar sticks.** `AppShell`'s topbar and a generated document's `.pg-bar` are `position: sticky`
+  at `top: 0`, on an opaque `--surface`, `z-index: 30`: the page scrolls under the header, and a
+  scrolled screen never loses its identity or its navigation. The sidebar variant's mobile topbar
+  sticks the same way; an immersive screen (`variant="none"`) has no bar to stick.
 - `AppShell` takes `container` (`default` | `narrow` | `wide` | `none`) and a page renders
   `PageContainer` with the same value. The shell and the page must not disagree — hence both read the
   same prop/token rather than each carrying a number.
