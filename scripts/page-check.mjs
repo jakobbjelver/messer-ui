@@ -96,7 +96,8 @@ function startServer(file) {
   let state = { paused: [], autofix: [] };
   try {
     const data = JSON.parse(fs.readFileSync(path.join(dir, "backlog.json"), "utf8"));
-    // Let one row carry the badge, so the badge is measured where it is shown, not only where it hides.
+    // Switches render as on for one project, so the state is measured where it is shown, not only
+    // where it hides.
     const first = (data.findings ?? [])[0];
     if (first?.projectId) state = { paused: [], autofix: [first.projectId], updated_at: new Date().toISOString() };
   } catch { /* no dashboard on this page */ }
@@ -198,15 +199,32 @@ const measurePage = async () => {
 
   const switches = [...document.querySelectorAll(".bl [role='switch']")].map((el) => {
     const cs = getComputedStyle(el);
+    // §15/§18: a switch's word is visible language, not a clipped span for the accessible name — a
+    // label you cannot see is a control nobody can read, and the old badge that appeared only when
+    // the switch was on said nothing at all while it was off.
+    const label = el.closest("label");
+    const wordEl = label ? [...label.children].find((c) => c !== el && (c.textContent ?? "").trim()) : null;
     return {
       tag: el.tagName,
       cls: String(el.className),
       w: px(cs.width),
       h: px(cs.height),
       radius: px(cs.borderTopLeftRadius),
-      labelled: Boolean(el.getAttribute("aria-label")),
+      labelled:
+        Boolean(el.getAttribute("aria-label")) ||
+        Boolean(wordEl) ||
+        Boolean(el.id && document.querySelector(`label[for="${CSS.escape(el.id)}"]`)),
+      word: wordEl ? text(wordEl) : "",
+      rendered: el.getBoundingClientRect().height > 4,
+      wordVisible: Boolean(wordEl) && wordEl.getBoundingClientRect().width > 1 && visible(wordEl),
     };
   });
+
+  // §15: a native tooltip is the browser's pop, not the system's. `<title>` inside an `<svg>` is
+  // accessible markup and carries no attribute, so `[title]` is exactly the defect.
+  const titles = [...document.querySelectorAll("[title]")].map(
+    (el) => `${el.tagName.toLowerCase()}${el.className ? "." + String(el.className).trim().split(/\s+/)[0] : ""} "${el.getAttribute("title")}"`,
+  );
 
   // §19 type floor: visible text, not a specimen, not decoration.
   const tiny = [];
@@ -263,6 +281,7 @@ const measurePage = async () => {
     list: list ? { style: getComputedStyle(list).listStyleType } : null,
     badges,
     switches,
+    titles,
     tiny,
     stamps,
     dupes,
@@ -333,14 +352,22 @@ function judge(m) {
     if (b.visible) ok(b.height <= BADGE_MAX, `§18 a badge is ${b.height}px tall — it has wrapped onto a second line`);
   }
 
-  // A8 — the switch is the canon atom, not a hand-painted pill.
+  // A8 — the switch is the canon atom, not a hand-painted pill, and its word is visible.
   for (const s of m.switches) {
     ok(s.tag === "INPUT", `a dashboard switch is a <${s.tag.toLowerCase()}>, not the canon .m-switch input`);
     ok(/\bm-switch\b/.test(s.cls), "a dashboard switch does not carry the .m-switch atom");
     ok(Math.abs(s.w - SWITCH.w) <= 0.5 && Math.abs(s.h - SWITCH.h) <= 0.5, `a switch measures ${s.w}×${s.h}, not ${SWITCH.w}×${SWITCH.h}`);
     ok(s.radius === 0, `§1 a switch has ${s.radius}px radius — everything square but avatars, dots and scrollbar thumbs`);
     ok(s.labelled, "a switch has no accessible name");
+    // Only where the switch is on the page: with "All" pressed the strip is absent by design, and the
+    // scoped state is measured after a project chip is clicked.
+    if (s.rendered) {
+      ok(s.wordVisible, `a dashboard switch has no visible label${s.word ? ` (“${s.word}” is clipped)` : ""} — the word says what the switch does and must not depend on the switch being on`);
+    }
   }
+
+  // A16 — never a native tooltip (§15).
+  ok(m.titles.length === 0, `§15 ${m.titles.length} element${m.titles.length === 1 ? " carries" : "s carry"} a native title tooltip (${m.titles.slice(0, 3).join("; ")}${m.titles.length > 3 ? "; …" : ""}) — a tooltip is data-tip and the hybrid pop, or it is nothing`);
 
   // A9 — the type floor.
   ok(m.tiny.length === 0, `§19 text below ${FLOOR}px (${m.tiny.slice(0, 4).join("; ")})`);
@@ -431,6 +458,12 @@ async function runPages() {
               fails.push(`A15 selecting a project chip cleared the severity filter (selected: ${after.filters.sev.join(", ") || "none"}) — the two dimensions share one state`);
             }
             if (after.filters.proj.length !== 1) fails.push(`A15 selecting a project chip left ${after.filters.proj.length} project chips selected`);
+            // The strip exists only in this state: measure that each switch still carries its word.
+            const shown = after.switches.filter((s) => s.rendered);
+            if (!shown.length) fails.push("A8 selecting a project chip showed no project switches — the decisions are unreachable");
+            for (const s of shown) {
+              if (!s.wordVisible) fails.push(`A8 in the scoped state “${s.word || "a switch"}” has no visible label — the word must not depend on the switch being on`);
+            }
           }
           results.push({ file, theme, fails, warn, m: before, after });
         }
@@ -445,14 +478,26 @@ async function runPages() {
 
   const label = (f) => path.resolve(f).split("/").slice(-3).join("/");
   const width = Math.min(48, Math.max(...results.map((r) => label(r.file).length + 2), 12));
-  console.log(`page${" ".repeat(Math.max(0, width - 4))}theme     nav  rail data list badge swit floor time foot h2   verdict`);
+  const cols = ["nav", "rail", "data", "list", "badge", "swit", "tip", "floor", "time", "foot", "h2"];
+  console.log(`page${" ".repeat(Math.max(0, width - 4))}theme     ${cols.map((c) => c.padEnd(4)).join("  ")}  verdict`);
   for (const r of results) {
-    const m = r.m;
     const cell = (good) => (good ? " ok " : " ✗  ");
     const hit = (needle) => !r.fails.some((f) => f.includes(needle));
     console.log(
       `${label(r.file).padEnd(width)}${r.theme.padEnd(9)} ` +
-        [hit("nav order"), hit("contents rail"), hit("transparent"), hit("markers"), hit("badge"), hit(".m-switch"), hit("below 10px"), hit("timestamp"), hit("footer meta"), hit("h1")]
+        [
+          hit("nav order"),
+          hit("contents rail"),
+          hit("transparent"),
+          hit("markers"),
+          hit("badge"),
+          hit(".m-switch") && hit("visible label"),
+          hit("native title"),
+          hit("below 10px"),
+          hit("timestamp"),
+          hit("footer meta"),
+          hit("h1"),
+        ]
           .map(cell)
           .join("  ") +
         `  ${r.fails.length ? "FAIL" : "pass"}`,
@@ -511,7 +556,7 @@ const GOOD = `<!doctype html><html lang="en"><head><meta charset="utf-8">
   .bl__rank { font-family:monospace; font-size:10.5px; }
   .m-badge { display:inline-flex; align-items:center; height:20px; padding-inline:8px; border:1px solid var(--border-strong); background:var(--surface); font-size:12px; white-space:nowrap; }
   .m-switch { appearance:none; position:relative; width:32px; height:18px; border:1px solid var(--border-strong); border-radius:0; background:var(--border-strong); }
-  .bl__sw-t { position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); }
+  .bl__sw-t { font-size:12.5px; color:#525252; }
   pre { background:var(--surface); border:1px solid var(--border); }
 </style></head><body>
 <header class="pg-bar"><div class="pg-bar__row">
@@ -531,7 +576,7 @@ const GOOD = `<!doctype html><html lang="en"><head><meta charset="utf-8">
       <button class="bl__chip" data-proj="fixture" aria-pressed="false">Fixture</button>
       <div class="bl__scope"><span class="bl__scope-name">All projects</span>
         <span class="m-badge" data-badge>auto-fix</span>
-        <label class="bl__sw"><input class="m-switch" type="checkbox" role="switch" aria-label="Auto-fix Fixture"><span class="bl__sw-t">fix</span></label>
+        <label class="bl__sw"><input class="m-switch" type="checkbox" role="switch" aria-label="Auto-fix Fixture"><span class="bl__sw-t">Auto-fix</span></label>
       </div>
       <ol class="bl__list"><li class="bl__item"><span class="bl__rank">01</span></li></ol>
     </div>
@@ -564,6 +609,8 @@ const CASES = [
   ["bare table", [["<div class=\"pg-data\"><table>", "<div><table>"]], /no opaque surface behind it/],
   ["wrapping badge", [["</style>", ".m-badge { white-space:normal; height:auto; }</style>"]], /white-space: nowrap/],
   ["custom switch", [['<input class="m-switch" type="checkbox" role="switch" aria-label="Auto-fix Fixture">', '<button role="switch" aria-label="Auto-fix Fixture" class="sw"></button>']], /not the canon .m-switch input|does not carry the .m-switch/],
+  ["silent switch", [["</style>", ".bl__sw-t { position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); }</style>"]], /no visible label/],
+  ["native tooltip", [['<a class="pg-brand" href="#one">Fixture</a>', '<a class="pg-brand" href="#one" title="Home">Fixture</a>']], /native title tooltip/],
   ["sub-10px text", [["</style>", ".bl__meta { font-size:9px; }</style>"]], /text below 10px/],
   ["duplicate timestamp", [["<h1>Fixture</h1>", "<h1>Fixture 2026-11-13 03:00</h1>"]], /prints twice in one view/],
   ["footer grammar", [['Messer Fixture · canon 2.4.0 · built 2026-11-13', 'Messer Fixture · canon 2.4.0 · 2026-11-13']], /footer meta reads/],
