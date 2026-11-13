@@ -174,6 +174,12 @@ The system does not own a voice, but it owns the small words that appear in ever
   genuinely needed — a first-time reader needs the why, not every reader — put it in a
   `HybridTooltip` (hover on a pointer, tap on touch). No helper paragraph under a heading, no caption
   under a caption. Minimal is the default; text is the exception.
+- **One fact, printed once.** A number belongs to the control that owns it, not to that control and
+  the heading above it: a project's count on its filter chip and again in the strip under it is the
+  same number twice, one line apart. The same goes for a value repeated down every row of a list the
+  list is already scoped by — when the scope names the project, the rows do not need a project column.
+  Redundancy reads as two facts that happen to agree, which is exactly how a reader learns to distrust
+  both.
 - **Verbs.** `Save`, `Cancel`, `Delete`, `Create`, `Retry`. Not `Update` for a save, not `Apply`, not
   `Submit`, not `OK` in a destructive dialog.
 - **Empty state.** What this is, why it is empty, one action. No illustration required.
