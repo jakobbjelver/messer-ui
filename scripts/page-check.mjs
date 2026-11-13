@@ -238,6 +238,23 @@ const measurePage = async () => {
           track: railNav ? px(getComputedStyle(railNav).borderLeftWidth) : 0,
           extras: [...rail.children].filter((c) => !c.matches("nav, .pg-rail__group")).map((c) => text(c).slice(0, 40)),
           top: railTop.map((a) => ({ n: text(a.querySelector(".pg-rail__n")), label: text(a) })),
+          all: [...rail.querySelectorAll("nav a")].map((a) => {
+            const id = (a.getAttribute("href") ?? "").slice(1);
+            const target = document.getElementById(id);
+            const head = target
+              ? target.matches("h2, h3, h4")
+                ? target
+                : target.querySelector("h2, h3")
+              : null;
+            const numeral = head ? head.querySelector(".pg-sec__n") : null;
+            return {
+              n: text(a.querySelector(".pg-rail__n")),
+              label: text(a),
+              id,
+              hasHead: Boolean(head),
+              headN: numeral ? text(numeral) : null,
+            };
+          }),
           lastAudit: /last audit/i.test(text(rail)),
         }
       : { present: false },
@@ -286,8 +303,20 @@ function judge(m) {
     ok(m.rail.track === 0, `the rail draws a ${m.rail.track}px track — the numeral column is the rail's structure`);
     ok(m.rail.extras.length === 0, `the rail carries a block below the contents (${m.rail.extras.join(", ")}) — a timestamp here is a second view of the same fact`);
     ok(!m.rail.lastAudit, "the rail is labelled \"Last audit\" — the block owns the audit time, the footer the build time");
-    const badN = m.rail.top.filter((i) => !/^\d{2}$/.test(i.n));
+    const badN = m.rail.all.filter((i) => !/^\d{2}$/.test(i.n));
     ok(badN.length === 0, `${badN.length} rail entr${badN.length === 1 ? "y has" : "ies have"} no two-digit numeral ("${badN.slice(0, 3).map((i) => `${i.n || "∅"} ${i.label}`).join('", "')}${badN.length > 3 ? `", … ${badN.length - 3} more` : '"'})`);
+
+    // A4b — the rail's numeral and the heading's numeral are the same fact. A contents list that
+    // prints 06 above a heading numbered "6." is two numberings of one document.
+    const noHead = [];
+    const disagree = [];
+    for (const e of m.rail.all) {
+      if (!e.hasHead) continue;
+      if (!e.headN) noHead.push(`${e.n} ${e.label}`);
+      else if (e.headN !== e.n) disagree.push(`${e.label}: rail ${e.n}, heading ${e.headN}`);
+    }
+    ok(noHead.length === 0, `${noHead.length} heading${noHead.length === 1 ? " has" : "s have"} no numeral while the rail prints one (${noHead.slice(0, 4).join(", ")}) — the same "01" style belongs on both`);
+    ok(disagree.length === 0, `the rail and the heading print different numerals (${disagree.slice(0, 4).join("; ")})`);
   }
 
   // A5 — data on its own paper.
@@ -470,6 +499,7 @@ const GOOD = `<!doctype html><html lang="en"><head><meta charset="utf-8">
   .pg-hero h1 { font-family:"Golos Text",sans-serif; font-size:40px; margin:10px 0; }
   .pg-sec { margin-top:40px; border-top:1px solid var(--border); }
   .pg-sec__title { font-family:"Golos Text",sans-serif; font-size:24px; margin:0 0 16px; }
+  .pg-sec__n { font-family:monospace; font-size:10.5px; }
   .pg-data { background:var(--surface); border:1px solid var(--border); }
   .pg-prose ol { list-style: decimal outside; padding-left:22px; }
   .pg-prose li::marker { color:var(--text-3); }
@@ -490,25 +520,25 @@ const GOOD = `<!doctype html><html lang="en"><head><meta charset="utf-8">
   <div class="pg-actions"><button aria-label="Switch theme">t</button></div>
 </div></header>
 <main>
-  <aside class="pg-rail"><nav><a href="#one"><span class="pg-rail__n">00</span>One</a><a href="#two"><span class="pg-rail__n">01</span>Two</a></nav></aside>
+  <aside class="pg-rail"><nav><a href="#one"><span class="pg-rail__n">01</span>One</a><a href="#two"><span class="pg-rail__n">02</span>Two</a></nav></aside>
   <section class="pg-hero"><p class="m-label">Fixture kind</p><h1>Fixture</h1></section>
-  <section class="pg-sec" id="one"><h2 class="pg-sec__title">One</h2>
+  <section class="pg-sec" id="one"><h2 class="pg-sec__title"><span class="pg-sec__n">01</span>One</h2>
     <div class="bl">
       <span class="bl__meta">audit · 2026-11-13 03:00 CET</span>
       <button class="bl__sev-btn" data-sev="all" aria-pressed="true">All</button>
       <button class="bl__sev-btn" data-sev="error" aria-pressed="false">Errors</button>
       <button class="bl__chip" data-proj="all" aria-pressed="true">All</button>
       <button class="bl__chip" data-proj="fixture" aria-pressed="false">Fixture</button>
-      <ol class="bl__list"><li class="bl__item">
-        <span class="bl__rank">01</span>
+      <div class="bl__scope"><span class="bl__scope-name">All projects</span>
         <span class="m-badge" data-badge>auto-fix</span>
         <label class="bl__sw"><input class="m-switch" type="checkbox" role="switch" aria-label="Auto-fix Fixture"><span class="bl__sw-t">fix</span></label>
-      </li></ol>
+      </div>
+      <ol class="bl__list"><li class="bl__item"><span class="bl__rank">01</span></li></ol>
     </div>
     <div class="pg-data"><table><tbody><tr><td>cell</td></tr></tbody></table></div>
     <div class="pg-prose"><ol><li>a prose step</li></ol><pre><code>x</code></pre></div>
   </section>
-  <section class="pg-sec" id="two"><h2 class="pg-sec__title">Two</h2></section>
+  <section class="pg-sec" id="two"><h2 class="pg-sec__title"><span class="pg-sec__n">02</span>Two</h2></section>
 </main>
 <footer class="pg-foot"><span class="pg-foot__meta">Messer Fixture · canon 2.4.0 · built 2026-11-13</span></footer>
 </body></html>`;
@@ -524,7 +554,9 @@ function broken(mutations) {
 
 const CASES = [
   ["nav out of order", [['<a href="#one">One</a><a href="#two">Two</a>', '<a href="#two">Two</a><a href="#one">One</a>']], /nav order does not follow/],
-  ["rail numeral", [['<span class="pg-rail__n">00</span>', '<span class="pg-rail__n">0.</span>']], /no two-digit numeral/],
+  ["rail numeral", [['<span class="pg-rail__n">01</span>', '<span class="pg-rail__n">1.</span>']], /no two-digit numeral/],
+  ["heading numeral disagrees", [['<span class="pg-sec__n">02</span>Two', '<span class="pg-sec__n">2.</span>Two']], /print different numerals/],
+  ["heading has no numeral", [['<span class="pg-sec__n">02</span>Two', 'Two']], /no numeral while the rail prints one/],
   ["rail track", [["</style>", ".pg-rail nav { border-left:1px solid #e4e4e4; }</style>"]], /draws a 1px track/],
   ["rail trailer", [['</nav></aside>', '</nav><div class="m-label">Last audit</div></aside>']], /carries a block below the contents/],
   ["transparent data", [["</style>", ".bl { background:transparent; }</style>"]], /data block is transparent/],
@@ -535,7 +567,7 @@ const CASES = [
   ["sub-10px text", [["</style>", ".bl__meta { font-size:9px; }</style>"]], /text below 10px/],
   ["duplicate timestamp", [["<h1>Fixture</h1>", "<h1>Fixture 2026-11-13 03:00</h1>"]], /prints twice in one view/],
   ["footer grammar", [['Messer Fixture · canon 2.4.0 · built 2026-11-13', 'Messer Fixture · canon 2.4.0 · 2026-11-13']], /footer meta reads/],
-  ["two h1", [['<h2 class="pg-sec__title">Two</h2>', '<h2 class="pg-sec__title">Two</h2><h1>Second</h1>']], /2 h1 elements/],
+  ["two h1", [['<span class="pg-sec__n">02</span>Two</h2>', '<span class="pg-sec__n">02</span>Two</h2><h1>Second</h1>']], /2 h1 elements/],
   ["two pressed", [['data-sev="error" aria-pressed="false"', 'data-sev="error" aria-pressed="true"']], /severity filter has 2 selected/],
   ["no eyebrow", [['<p class="m-label">Fixture kind</p>', ""]], /no eyebrow/],
 ];

@@ -658,7 +658,9 @@ const summary = (run) => {
       bodyOk ? "14px" : "✗",
       fontsOk ? "G / M" : "✗",
       badHover ? `✗ ${badHover}` : `${run.hover?.sampled ?? 0} ok`,
-      maxMs > contract.hover.durationMaxMs ? `✗ ${maxMs}ms` : `${maxMs}ms`,
+      // The motion column reads the motion budget, not the hover budget: two numbers for one rule is how
+      // a green page starts printing a red mark (a 240 ms --dur-slow fill is legal and is not a hover).
+      maxMs > (contract.motion?.durationMaxMs ?? 240) ? `✗ ${maxMs}ms` : `${maxMs}ms`,
     ],
     ok: !run.fails.length,
   };
