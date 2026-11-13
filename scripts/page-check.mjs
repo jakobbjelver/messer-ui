@@ -168,6 +168,21 @@ const measurePage = async () => {
     if (bg.a !== 255) transparent.push(`${el.tagName.toLowerCase()}${el.className ? "." + String(el.className).trim().split(/\s+/)[0] : ""} (alpha ${(bg.a / 255).toFixed(2)})`);
   }
 
+  // A table must have opaque paper behind it, whether or not its wrapper carries .pg-data. Judging the
+  // wrapper alone passed a document whose law tables had lost theirs: transparent, unbordered, and
+  // 106px wider than a 390px viewport.
+  const bareTables = [];
+  for (const table of document.querySelectorAll("table")) {
+    if (!visible(table)) continue;
+    let node = table;
+    let opaque = false;
+    while (node && node !== document.body) {
+      if (rgba(getComputedStyle(node).backgroundColor).a === 255) { opaque = true; break; }
+      node = node.parentElement;
+    }
+    if (!opaque) bareTables.push(String(table.className) || table.tagName.toLowerCase());
+  }
+
   const list = document.querySelector(".bl__list");
   const badges = [...document.querySelectorAll(".bl [data-badge], .bl .m-badge, .pg-sec .m-badge")].map((el) => {
     const cs = getComputedStyle(el);
@@ -227,6 +242,7 @@ const measurePage = async () => {
         }
       : { present: false },
     transparent,
+    bareTables,
     list: list ? { style: getComputedStyle(list).listStyleType } : null,
     badges,
     switches,
@@ -276,6 +292,7 @@ function judge(m) {
 
   // A5 — data on its own paper.
   ok(m.transparent.length === 0, `§16 a data block is transparent, so the drafting sheet runs through it (${m.transparent.join(", ")})`);
+  ok(m.bareTables.length === 0, `§16 a table has no opaque surface behind it (${m.bareTables.join(", ")}) — it also loses the wrap that keeps it from overflowing`);
 
   // A6 — the dashboard is a list of rows, not a numbered document list.
   if (m.list) ok(m.list.style === "none", `the dashboard list renders markers (list-style: ${m.list.style}) — a rank column and a marker double-number every row`);
@@ -512,6 +529,7 @@ const CASES = [
   ["rail trailer", [['</nav></aside>', '</nav><div class="m-label">Last audit</div></aside>']], /carries a block below the contents/],
   ["transparent data", [["</style>", ".bl { background:transparent; }</style>"]], /data block is transparent/],
   ["list marker", [["</style>", ".bl__list { list-style:decimal outside; }</style>"]], /renders markers/],
+  ["bare table", [["<div class=\"pg-data\"><table>", "<div><table>"]], /no opaque surface behind it/],
   ["wrapping badge", [["</style>", ".m-badge { white-space:normal; height:auto; }</style>"]], /white-space: nowrap/],
   ["custom switch", [['<input class="m-switch" type="checkbox" role="switch" aria-label="Auto-fix Fixture">', '<button role="switch" aria-label="Auto-fix Fixture" class="sw"></button>']], /not the canon .m-switch input|does not carry the .m-switch/],
   ["sub-10px text", [["</style>", ".bl__meta { font-size:9px; }</style>"]], /text below 10px/],
