@@ -174,13 +174,19 @@ The system does not own a voice, but it owns the small words that appear in ever
   genuinely needed — a first-time reader needs the why, not every reader — put it in a
   `HybridTooltip` (hover on a pointer, tap on touch). No helper paragraph under a heading, no caption
   under a caption. Minimal is the default; text is the exception.
+- **One fact, printed once.** A number belongs to the control that owns it, not to that control and
+  the heading above it: a project's count on its filter chip and again in the strip under it is the
+  same number twice, one line apart. The same goes for a value repeated down every row of a list the
+  list is already scoped by — when the scope names the project, the rows do not need a project column.
+  Redundancy reads as two facts that happen to agree, which is exactly how a reader learns to distrust
+  both.
 - **Verbs.** `Save`, `Cancel`, `Delete`, `Create`, `Retry`. Not `Update` for a save, not `Apply`, not
   `Submit`, not `OK` in a destructive dialog.
 - **Empty state.** What this is, why it is empty, one action. No illustration required.
 - **Error.** What happened, then what to do. No blame, no "Oops", no exclamation marks. Auth never
   enumerates accounts: "Invalid email or password" for both a wrong address and a wrong password.
 - **Confirmation.** Name the object and the count — "Delete 3 requests?", never "Are you sure?".
-- **Dates and numbers.** Absolute date in `title`, relative in the label; numbers are tabular (rule 6).
+- **Dates and numbers.** Absolute date in `data-tip`, relative in the label; numbers are tabular (rule 6).
 - **Case.** Sentence case everywhere except the meta label (rule 5).
 
 ## 13. The mark
@@ -223,7 +229,7 @@ app's page (Studio — no shell, no topbar, its own scoped sheet) and an **immer
 no chrome of its own (swipe's deck, `variant: none`), which carries the theme control in its settings
 instead of in an `actions` slot. Every other surface takes a shell, and its header row follows §16.
 
-## 15. Never a native dropdown
+## 15. Never a native dropdown or tooltip
 
 A `<select>` opens an OS menu: it ignores the theme, the type scale and the control height, and it
 looks like a different application. Use the `Select` block (Radix `@radix-ui/react-select`) for every
@@ -232,6 +238,15 @@ flat `--surface` panel with `--surface-2` highlight and a check on the current i
 
 `scripts/check.mjs` fails the static pass on a `<select` in app source. A styled native control is
 still a native control — restyling the closed box does not fix the menu.
+
+A `title` attribute is the same mistake one level down: the browser draws that tooltip with its own
+font, its own delay and its own colours, it is the one surface on a page that cannot follow the theme,
+and it opens from hover alone — never from the keyboard, never on touch. **Never `title=`.** A control
+that needs a sentence carries `data-tip`: the `HybridTooltip` block in port 1, and the shared
+`page/tip.js` beside the block in a generated document (hover on a pointer, tap on touch, focus from the
+keyboard, Escape or a scroll to close). `scripts/page-check.mjs` fails any generated document that
+carries a `title` attribute, so the rule cannot rot quietly. A `<title>` element inside an `<svg>` is
+accessible markup, not a tooltip, and stays.
 
 ## The accent contract
 
@@ -291,6 +306,10 @@ widths at once (a nested narrower strip under a wider container is a bug, not a 
   49 px bar puts the selected rule on a different half pixel than the 48 px one beside it — measure
   the box, not the row. `AppShell` renders `h-12` + `border-b` (48 total, 47 content) and a generated
   document matches it: `height: 47px` on the row, `border-bottom: 1px` on the bar.
+- **The bar sticks.** `AppShell`'s topbar and a generated document's `.pg-bar` are `position: sticky`
+  at `top: 0`, on an opaque `--surface`, `z-index: 30`: the page scrolls under the header, and a
+  scrolled screen never loses its identity or its navigation. The sidebar variant's mobile topbar
+  sticks the same way; an immersive screen (`variant="none"`) has no bar to stick.
 - `AppShell` takes `container` (`default` | `narrow` | `wide` | `none`) and a page renders
   `PageContainer` with the same value. The shell and the page must not disagree — hence both read the
   same prop/token rather than each carrying a number.
