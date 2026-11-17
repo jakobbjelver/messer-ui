@@ -48,3 +48,8 @@ npm run validate       # registry validate (needs the repo pushed)
 
 `npm run check` green (brand check, build, sink) with the evidence pasted into the commit or PR. No
 new hex outside `canon/tokens.json` and `brand/`. No new font. No second icon family.
+
+A change that a *project* asked for follows `docs/PROPOSALS.md`: the failing surface, the measured
+cost, the shape, and the rule id if a static check can see it. Prove a new static rule with a case in
+`scripts/check-selftest.mjs`; prove a new block by installing it in an app and running `tsc` (the
+registry itself is not typechecked).

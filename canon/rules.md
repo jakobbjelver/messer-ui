@@ -358,6 +358,10 @@ print a serif paper, but its board and desk stay Golos + JetBrains.
 
 Maximum five open overrides per project. The sixth is a design conversation, not a commit.
 
+**When the canon itself is wrong**, the override is not the answer: file a proposal. The surface, the
+measured cost, the shape and the rule id — `docs/PROPOSALS.md` in this repository — and the rule changes
+for every project instead of for one.
+
 ## 18. Badges
 
 A badge is a word in a box, not a stamp.
