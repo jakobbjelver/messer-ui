@@ -7,3 +7,8 @@ screenshots/*.png
 !screenshots/.gitkeep
 report.json
 reports/
+
+# host-local: one machine's actions and working set
+actions/
+.hermes/
+docs/SKILL.template.md
