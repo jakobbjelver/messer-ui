@@ -1,0 +1,43 @@
+# PROJECT.yaml — "Messer UI"
+# The design system is a published package, not a deployed service: it has no container, no database
+# and no runtime of its own. The audit measures its gates through messer-ui's own scripts.
+
+schema: 1
+standard: "1.3"
+name: "messer-ui"
+display: "Messer UI"
+family: "messer"
+status: "active"
+tier: "design"
+kind: "repo"
+skill: "messer-ui"
+
+stack:
+  backend: "none"
+  frontend: "none"
+  router: "none"
+  data: "none"
+  ui: "messer-ui"
+  brand: "messer-ui"
+  port: 1
+
+deploy:
+  kind: "none"                   # distributed as a shadcn registry, not an image
+
+dev:
+  command: "npm run check"
+  ports: []
+
+visibility: "public"
+contributions: "closed"          # closed | open — proposals are read, patches are not taken
+channels: "issues"               # a canon proposal or a measured rule failure
+
+health: ""
+
+pwa: false
+settings: false
+
+exceptions:
+  - id: no-hosting
+    reason: A design system has no deployable. Consumers install the registry items; there is no image, no stack and no domain to publish.
+    expires: 2027-12-31

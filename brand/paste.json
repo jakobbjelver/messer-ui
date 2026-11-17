@@ -1,7 +1,10 @@
 {
   "project": "paste",
   "title": "Paste",
-  "mark": { "glyph": "ClipboardText" },
+  "pitch": "A single-user pastebin for text, images and files.",
+  "mark": {
+    "glyph": "ClipboardText"
+  },
   "accent": {
     "light": "oklch(0.30 0.008 260)",
     "dark": "oklch(0.92 0.004 260)"

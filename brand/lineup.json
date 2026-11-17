@@ -1,7 +1,11 @@
 {
   "project": "lineup",
   "title": "Lineup",
-  "mark": { "glyph": "MicrophoneStage", "source": "phosphor" },
+  "pitch": "A season board for the artists you actually listen to.",
+  "mark": {
+    "glyph": "MicrophoneStage",
+    "source": "phosphor"
+  },
   "accent": {
     "light": "oklch(0.52 0.17 128)",
     "dark": "oklch(0.84 0.19 128)"

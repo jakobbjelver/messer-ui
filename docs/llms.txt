@@ -1,0 +1,51 @@
+# Messer UI
+
+> One visual family, eight surfaces, measured not eyeballed. A platform-neutral canon, a pinned React
+> reference implementation, and ports that are checked against the reference.
+
+Read this before changing anything. `AGENTS.md` is the contract; `canon/rules.md` is the law.
+
+## Run
+
+```bash
+npm install
+npm run check       # brand + build + sink + conformance + selftest — the gate
+npm run validate    # npx shadcn registry validate jakobbjelver/messer-ui
+```
+
+A consumer adds the registry base once and then pulls items:
+
+```bash
+npx shadcn@latest add jakobbjelver/messer-ui/app-shell
+```
+
+## Contract
+
+- `canon/tokens.json` — the only hand-authored values (DTCG). Everything else is generated from it.
+- `canon/rules.md` — the ten rules, the state contract, copy, the mark, layout, overrides, badges.
+- `registry.json` — the shadcn distribution, generated from `registry/`; a consumer reads this.
+- `fixtures/kitchen-sink.html` — the visual oracle every port must render.
+- `fixtures/violations.html` — breaks each rule once; `npm run selftest` proves the checker notices.
+
+## Invariants
+
+1. **One accent per project.** The accent is a signal, not a palette; `brand:check` fails a value that
+   drops below AA or drifts within 12° of a status hue.
+2. **Square corners, hairline borders, no shadows** except overlays. Depth means "this floats above".
+3. **Mono is the machine voice, Golos is the human voice.** Data looks like data at a glance.
+4. **Status is icon + label; colour reinforces, never carries meaning alone.**
+5. **Generated files are committed** (`theme.css`, `registry/**`) so the registry validates without a
+   build step — and a hand edit to one of them is a bug, not a shortcut.
+
+## Do not
+
+- Add a second UI primitive base (Radix via shadcn is the one; Base UI is a dated legacy exception).
+- Hand-draw a mark: `npm run marks` renders favicon, dark favicon, apple-touch icon, OG card and the
+  README banner from `brand/<project>.json`.
+- Add a rule without a check: a MUST with no measurement is prose, and prose drifts.
+- Change a token without re-running `npm run build` — the diff is the release note.
+
+## Licence
+
+MIT. Contributions are closed; a measured rule failure or a proposal is welcome as an issue — see
+[`CONTRIBUTING.md`](CONTRIBUTING.md) and [`docs/PROPOSALS.md`](docs/PROPOSALS.md).

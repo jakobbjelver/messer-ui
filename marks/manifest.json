@@ -3,66 +3,99 @@
     "favicon.svg": "sha256:d6dbbe002eaf2757a2e50c306f98fdb4674dbecdfab07376b211e440f56ad583",
     "favicon-dark.svg": "sha256:74d7d24397cc78f0e7051df14cbd54bcc4f9185c84083c002c4f9000f8c1f2d3",
     "favicon-32.png": "sha256:050059e4c5b0304ef01123fcd36e3bf4578cae76f63a6c4631c4eafd4f77b432",
-    "apple-touch-icon.png": "sha256:04e3bd3127dddcf807f61d0fabec68f8642706ac4af48b508ad50297a9004dcd"
+    "apple-touch-icon.png": "sha256:04e3bd3127dddcf807f61d0fabec68f8642706ac4af48b508ad50297a9004dcd",
+    "banner": null
   },
   "lineup": {
     "favicon.svg": "sha256:5057d1d0744fecd95ecf331353b5ded68a025091c44c6fbb03f612ba09e0cecd",
     "favicon-dark.svg": "sha256:909f7c8a8c42a1c99c6ff7ee796ed9576f5b8983b266c5ddf2e964100c1957da",
     "favicon-32.png": "sha256:b6455b27ef7d35530d3953f6dd3536948ef318697673da641bbcb3d1918c2e4a",
-    "apple-touch-icon.png": "sha256:6fe81f88d333788042a9cb9205cdc988124407730c87c5b1d81953c0b2909ffa"
+    "apple-touch-icon.png": "sha256:6fe81f88d333788042a9cb9205cdc988124407730c87c5b1d81953c0b2909ffa",
+    "banner": {
+      "hash": "sha256:83fc4aa27177c4fa111a5e7fff7eaba8fbc0f78df872a0f86b64b63c85f425c3",
+      "pitch": "A season board for the artists you actually listen to."
+    }
   },
   "messer-projects": {
     "favicon.svg": "sha256:657cb9c9c3b97023744e8a91103a5ff8c2222700790d899cf19ab9ee6d3cdb4c",
     "favicon-dark.svg": "sha256:341fc34beb736bf8d06afbbf46013c8484645426ddff00cfeb50f0b9b3c400fc",
     "favicon-32.png": "sha256:5600c5add504883802f894ce77b728c5c05430f1eb03e3468d262b0fb85d14c4",
-    "apple-touch-icon.png": "sha256:f900f1d47b82cd8a75c16b1eef34bab1309a5e81a60a01d9e6a889ae4e88549c"
+    "apple-touch-icon.png": "sha256:f900f1d47b82cd8a75c16b1eef34bab1309a5e81a60a01d9e6a889ae4e88549c",
+    "banner": null
   },
   "messer-swipe": {
     "favicon.svg": "sha256:019df5c216d0326334ee452c28bf5931852a50f179295c71181a750c8e1db312",
     "favicon-dark.svg": "sha256:a6f5c48fb57e097186799f68e0725e0841e9b7a029af52540b8fb2bfd136888f",
     "favicon-32.png": "sha256:b15354eb6a5b62217c00adfc7754d79c070b84955cbba0807193682d5a7657b3",
-    "apple-touch-icon.png": "sha256:811226a1eb2c3179a63db0eff160f1c3708a0b9c4f15599b083e0ffd068b744b"
+    "apple-touch-icon.png": "sha256:811226a1eb2c3179a63db0eff160f1c3708a0b9c4f15599b083e0ffd068b744b",
+    "banner": {
+      "hash": "sha256:75e166d576b0e67e53a16dccf4aa9a6e9128382954894173612b4b18c42a04a3",
+      "pitch": "Swipe on what to watch next, alone or with a group."
+    }
+  },
+  "messer-ui": {
+    "favicon.svg": "sha256:6e40a4f3f98d37d2e5e41c8a43db27eee0a48c3272d40381362388c9505b7554",
+    "favicon-dark.svg": "sha256:8d75c6a237a5d60deb556f7fa80c80510865c7ddcddadbf3b1a6dfd277d7dd7f",
+    "favicon-32.png": "sha256:2bd332059bf44878aa2fd4931b609ebd0adaa06017e1c8328461fa39aa074159",
+    "apple-touch-icon.png": "sha256:1e623d5f04278402f3733211b6b1e0ec1077b36a94d2148d5a11131f265d70ec",
+    "banner": {
+      "hash": "sha256:a2694225e85057db1b514d0b078caf44798c20e84943581e4fbfb2f1a2e121fb",
+      "pitch": "One visual family, eight surfaces, measured not eyeballed."
+    }
   },
   "messer": {
     "favicon.svg": "sha256:870ecad785cfa72c60fb6b4b76612694fad1ad8a97aaf0cf2acc6d790a5bdeca",
     "favicon-dark.svg": "sha256:35e5aefa0b8023dbed8f6f40af398b1a9a0dd8855028263e975cf4fc5ca55048",
     "favicon-32.png": "sha256:d44005e045d45c85970f3e5ffc8946567850f817d43adca0da655143d85bc54a",
-    "apple-touch-icon.png": "sha256:f654cc038cac7e73a1cc539ea32ebf0b5ce0d1c69eee2579bc9843ec67384813"
+    "apple-touch-icon.png": "sha256:f654cc038cac7e73a1cc539ea32ebf0b5ce0d1c69eee2579bc9843ec67384813",
+    "banner": null
   },
   "news": {
     "favicon.svg": "sha256:9bcb1876d3c05398abb2d40fb835577cd9564e5879a6c2fc6f65e0c8742f8d8c",
     "favicon-dark.svg": "sha256:d5d814911789aa529bb1736836b8f7c74d092ce8e8b0e8ec031bd056f5b690e3",
     "favicon-32.png": "sha256:2c4cda1df95a897ab9f060ccb2ac73fc43f2dc1f705bf8a334ae0750da15d1a9",
-    "apple-touch-icon.png": "sha256:c6144985ef5392059c192cbdc7f1326177d91db02ebe0cbccaba7d429e848a91"
+    "apple-touch-icon.png": "sha256:c6144985ef5392059c192cbdc7f1326177d91db02ebe0cbccaba7d429e848a91",
+    "banner": null
   },
   "paste": {
     "favicon.svg": "sha256:689cff0b137830b49d228f723a9e36bac13beb804fe27221d27a1d3445356599",
     "favicon-dark.svg": "sha256:9e0ba324a1f53d83f37ecf07a7fac28fdb096285f369aa31c726ce0cac88f8b1",
     "favicon-32.png": "sha256:8e05829bec2aabdf19cdca219f4eb095688d26890e973953abefe9e8049fb91b",
-    "apple-touch-icon.png": "sha256:4272dc3485a76343c215898bceda39b4ee487cd1fa1f55dd96c22667b8abd9b2"
+    "apple-touch-icon.png": "sha256:4272dc3485a76343c215898bceda39b4ee487cd1fa1f55dd96c22667b8abd9b2",
+    "banner": {
+      "hash": "sha256:9f348b63b8398e6af4ab2a25e516729f998fac606d3b5973f67f2bf18fc16034",
+      "pitch": "A single-user pastebin for text, images and files."
+    }
   },
   "portal": {
     "favicon.svg": "sha256:3cc65fb5bb989679b2096e28f6f5b842c4046fdcde58f1db0aaa88ab04ebe1cb",
     "favicon-dark.svg": "sha256:26dac93632e9d15d3811996418374a5b74423562984e909e05169990dfc3715d",
     "favicon-32.png": "sha256:2aa98089d2565991e3ee58002be8f66a15fa5840365cac4e4d6a0c049f5f7830",
-    "apple-touch-icon.png": "sha256:b7e6c1e53a91b0e445f163d274f09134ec3fb020e2957e8c4ef0811341eb1525"
+    "apple-touch-icon.png": "sha256:b7e6c1e53a91b0e445f163d274f09134ec3fb020e2957e8c4ef0811341eb1525",
+    "banner": null
   },
   "request-games": {
     "favicon.svg": "sha256:0ac9d77a52941f1a6ff68653b3f39ba033387a66dcecf0d7cb628365f963ea6d",
     "favicon-dark.svg": "sha256:3a0f4085cc39efc8781a4f3e3da8ce1fc20b6129b70492478f87c651df2800c3",
     "favicon-32.png": "sha256:5f83ed67ecf3b5355b52b0991c535e7272ebaddd2e64210f14c758c4404c3778",
-    "apple-touch-icon.png": "sha256:38fb167979f91b2ada872600e112f31b9c74af731b0d03012842dc7bef88909c"
+    "apple-touch-icon.png": "sha256:38fb167979f91b2ada872600e112f31b9c74af731b0d03012842dc7bef88909c",
+    "banner": null
   },
   "studio": {
     "favicon.svg": "sha256:c7d9e9780c1a6b0d157232b22a295458968a38eacc7b0c8d3961f6c5c488e8dd",
     "favicon-dark.svg": "sha256:d0ab7b9f7fdd7f80d4eefe42e2a349da7de8bf3d57565748b1a63491ded35eae",
     "favicon-32.png": "sha256:85aa3106b33cd550fa6b8282214f2ae0e5d3860474c155532229b9ee01504efd",
-    "apple-touch-icon.png": "sha256:8c6227d0b783b579b14dd9094f26a38021312d51bbbf6bb6518c5dc271f37630"
+    "apple-touch-icon.png": "sha256:8c6227d0b783b579b14dd9094f26a38021312d51bbbf6bb6518c5dc271f37630",
+    "banner": null
   },
   "transcode": {
     "favicon.svg": "sha256:f01522620df64ea30f9d00d9c7e3a4dafc73215a9b0f01029563463d1aef4e68",
     "favicon-dark.svg": "sha256:09a7f25884fc0f3ef7b0c807f2814b708f22557af6be465f876fb2e349f8329b",
     "favicon-32.png": "sha256:bf7cd55b8e6bc5c35e77a70d7accdf21f6e129f6f110026f2ace099330e60528",
-    "apple-touch-icon.png": "sha256:2a68e33d3038855582d229b204adfb34fa719a13f11bbc567638d926aad6ee27"
+    "apple-touch-icon.png": "sha256:2a68e33d3038855582d229b204adfb34fa719a13f11bbc567638d926aad6ee27",
+    "banner": {
+      "hash": "sha256:aa11a9b4379379daa646c649d596d069da4f9dcca0a6a98ee971e6416831877b",
+      "pitch": "A transcode pipeline that runs itself."
+    }
   }
 }

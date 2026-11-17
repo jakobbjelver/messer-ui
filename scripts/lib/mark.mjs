@@ -6,6 +6,7 @@
 
 import fs from "node:fs";
 import path from "node:path";
+import crypto from "node:crypto";
 import { fileURLToPath } from "node:url";
 
 /** Vendored Lucide glyphs live in the canon repo, not in the Phosphor package. */
@@ -19,6 +20,25 @@ export const MARK_FILES = [
   "apple-touch-icon.png",
   "og.png",
 ];
+
+/**
+ * The README hero banner (STANDARD §11.2.1): the mark, the wordmark and the pitch, rasterised because
+ * a repo-relative SVG in a README cannot load the brand's woff2 and the wordmark would fall back to the
+ * viewer's font. Only a brand that declares `pitch` gets one — a private project has no title page.
+ */
+export const BANNER_FILES = ["banner-light.png", "banner-dark.png"];
+
+/**
+ * The banner is raster, so its bytes are not comparable across machines — but its *inputs* are. The
+ * manifest carries this fingerprint, so editing `pitch` (or the palette) without regenerating fails
+ * brand:check instead of shipping a banner that says yesterday's sentence.
+ */
+export const bannerFingerprint = ({ pitch, glyph, source, rotate, colors }) =>
+  "sha256:" +
+  crypto
+    .createHash("sha256")
+    .update([pitch, glyph, source ?? "phosphor", rotate ?? 0, ...colors].join("|"))
+    .digest("hex");
 
 /**
  * Rasterised OG cards are not byte-stable across machines (font hinting and AA differ between a

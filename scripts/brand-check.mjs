@@ -4,8 +4,8 @@ import fs from "node:fs";
 import path from "node:path";
 import crypto from "node:crypto";
 import { fileURLToPath } from "node:url";
-import { parseColor, contrast, accentFg, hueDistance, chartRamp, categoricalRamp, STATUS_HUES } from "./lib/color.mjs";
-import { GLYPH_SOURCES, glyphFile, MARK_FILES, MARK_HASHED } from "./lib/mark.mjs";
+import { parseColor, contrast, accentFg, hueDistance, chartRamp, categoricalRamp, STATUS_HUES, oklchToHex } from "./lib/color.mjs";
+import { GLYPH_SOURCES, glyphFile, MARK_FILES, MARK_HASHED, bannerFingerprint } from "./lib/mark.mjs";
 import { readApps } from "./lib/apps.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -114,12 +114,45 @@ for (const brand of brands) {
       fails.push(`${brand.project}: missing marks/${brand.project}/${name}`);
     }
   }
-  for (const [name, hash] of Object.entries(files)) {
+  const { banner, ...hashes } = files;
+  for (const [name, hash] of Object.entries(hashes)) {
     const file = path.join(MARKS, brand.project, name);
     if (!fs.existsSync(file)) fails.push(`${brand.project}: missing marks/${brand.project}/${name}`);
     else if (sha(fs.readFileSync(file)) !== hash) {
       fails.push(`${brand.project}: marks/${brand.project}/${name} is stale — run npm run marks`);
     }
+  }
+
+  // The README hero (STANDARD §11.2.1). Presence for a brand that declares a pitch; the fingerprint
+  // catches the drift a raster cannot be hashed for — a pitch edited after the banner was rendered.
+  if (brand.pitch) {
+    if (brand.pitch.length > 64) fails.push(`${brand.project}: pitch is ${brand.pitch.length} chars (limit 64)`);
+    if (/[!]/.test(brand.pitch)) fails.push(`${brand.project}: pitch ends in an exclamation mark — say it once, calmly`);
+    if (/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/u.test(brand.pitch)) fails.push(`${brand.project}: pitch carries an emoji`);
+    const widths = ["banner-light.png", "banner-dark.png"];
+    for (const name of widths) {
+      if (!fs.existsSync(path.join(MARKS, brand.project, name))) {
+        fails.push(`${brand.project}: missing marks/${brand.project}/${name} — run npm run marks`);
+      }
+    }
+    const want = bannerFingerprint({
+      pitch: brand.pitch,
+      glyph,
+      source,
+      rotate: brand.mark?.rotate,
+      colors: [
+        oklchToHex(tokens.color.light.text.$value),
+        oklchToHex(tokens.color.light.bg.$value),
+        oklchToHex(tokens.color.dark.text.$value),
+        oklchToHex(tokens.color.dark.bg.$value),
+      ],
+    });
+    if (!banner) fails.push(`${brand.project}: brand declares a pitch but the manifest has no banner — run npm run marks`);
+    else if (banner.hash !== want) {
+      fails.push(`${brand.project}: banner is stale (pitch or palette changed since it was rendered) — run npm run marks`);
+    }
+  } else if (banner) {
+    warns.push(`${brand.project}: banners exist but brand/${brand.project}.json has no pitch — delete them or write the sentence`);
   }
 }
 

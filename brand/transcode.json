@@ -1,7 +1,10 @@
 {
   "project": "transcode",
   "title": "Transcode",
-  "mark": { "glyph": "FilmSlate" },
+  "pitch": "A transcode pipeline that runs itself.",
+  "mark": {
+    "glyph": "FilmSlate"
+  },
   "accent": {
     "light": "oklch(0.30 0.008 260)",
     "dark": "oklch(0.92 0.004 260)"

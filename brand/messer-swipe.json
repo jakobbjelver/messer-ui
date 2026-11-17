@@ -1,6 +1,7 @@
 {
   "project": "messer-swipe",
   "title": "Swipe",
+  "pitch": "Swipe on what to watch next, alone or with a group.",
   "mark": {
     "glyph": "CardsThree",
     "source": "phosphor",
