@@ -3,7 +3,7 @@
   "version": "2.5.0",
   "private": true,
   "type": "module",
-  "description": "Messer UI — the shared design system for Messer and Jakob Bjelvér projects.",
+  "description": "Messer UI \u2014 the shared design system for Messer and Jakob Bjelv\u00e9r projects.",
   "license": "MIT",
   "engines": {
     "node": ">=22"
@@ -27,7 +27,8 @@
     "validate": "npx shadcn@latest registry validate jakobbjelver/messer-ui",
     "check": "npm run brand:check && npm run build && npm run sink && npm run conformance && npm run chrome:selftest && npm run selftest",
     "blocks": "node scripts/blocks.mjs",
-    "sheet": "node scripts/contact-sheet.mjs --tile portal=../messer-portal/web/out --tile ai-router=../messer-ai-router/packages/dashboard/dist"
+    "sheet": "node scripts/contact-sheet.mjs --tile portal=../messer-portal/web/out --tile ai-router=../messer-ai-router/packages/dashboard/dist",
+    "shot": "node scripts/shot.mjs"
   },
   "devDependencies": {
     "@fontsource-variable/golos-text": "^5.3.0",

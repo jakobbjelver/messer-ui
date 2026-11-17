@@ -1,0 +1,12 @@
+{
+  "project": "jara",
+  "title": "JARA",
+  "pitch": "A running app that keeps every run on your phone.",
+  "mark": {
+    "glyph": "PersonSimpleRun"
+  },
+  "accent": {
+    "light": "oklch(0.30 0.008 260)",
+    "dark": "oklch(0.92 0.004 260)"
+  }
+}

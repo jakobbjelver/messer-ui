@@ -6,6 +6,16 @@
     "apple-touch-icon.png": "sha256:04e3bd3127dddcf807f61d0fabec68f8642706ac4af48b508ad50297a9004dcd",
     "banner": null
   },
+  "jara": {
+    "favicon.svg": "sha256:bf3a12b433996ebedcff09b9e6758ded66f8e3cae7bb5dac8563a0c64d7c2258",
+    "favicon-dark.svg": "sha256:7dac46a591bf72f8eb8679f08bc1c4b75c95132f99b43c8c011343bcf2e731f2",
+    "favicon-32.png": "sha256:b7f7c34a52418c153ecb9eeb320c66eace52c630df2e45a02aa87d7eec28fe3b",
+    "apple-touch-icon.png": "sha256:71c287e32b34808f41b21d29838db6049b9a4aeff5ba84e2b2e7dc0f14f2d908",
+    "banner": {
+      "hash": "sha256:7119c15ecb91d026b7d90592799b8c5c0b5b437dd74d70e9a872f846e635b8a4",
+      "pitch": "A running app that keeps every run on your phone."
+    }
+  },
   "lineup": {
     "favicon.svg": "sha256:5057d1d0744fecd95ecf331353b5ded68a025091c44c6fbb03f612ba09e0cecd",
     "favicon-dark.svg": "sha256:909f7c8a8c42a1c99c6ff7ee796ed9576f5b8983b266c5ddf2e964100c1957da",
