@@ -6,7 +6,7 @@
 
 **One visual family, eight surfaces, measured not eyeballed.**
 
-`MIT` · `v2.0.0`
+`MIT` · `v2.5.0`
 <!-- /messer:hero -->
 
 **The idea:** a platform-neutral canon (`canon/`), a pinned React reference implementation
