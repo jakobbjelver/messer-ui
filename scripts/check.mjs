@@ -357,6 +357,20 @@ if (app) {
     // R15: a native <select> opens an OS menu that ignores the theme (skip comments; prose may name it).
     const code = src.replace(/\/\*[\s\S]*?\*\//g, "").replace(/^\s*\/\/.*$/gm, "");
     if (/<select[\s>]/.test(code)) fails.push(`${rel}: native <select> — use the Select block (§15)`);
+    // R16: a <label> activates its FIRST labelable descendant, so a button inside one fires its own
+    // action whenever the label is tapped anywhere — the password field regenerated its value on iOS
+    // while every desktop click looked correct. Nested fields are legal HTML but steal the activation,
+    // so they warn; a button or link is always a failure.
+    for (const m of code.matchAll(/<label\b[^>]*>([\s\S]{0,2000}?)<\/label>/g)) {
+      const inner = m[1];
+      const control = /<(button|a|select|textarea)\b/.exec(inner);
+      if (control) {
+        const tag = control[1];
+        const msg = `${rel}: <${tag}> inside a <label> — the label activates it on tap (R16)`;
+        if (tag === "button" || tag === "a") fails.push(msg);
+        else warns.push(msg);
+      }
+    }
   }
 
   // canon version: the installed theme.css is a copy of ours; a stale copy is how a rule change

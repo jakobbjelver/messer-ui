@@ -58,6 +58,11 @@ and shouts in a form with a dozen rows.
 The distinction is the rule: *meta* text is mono-caps, *form* text is prose. Both are fixed — a
 project may not invent a third label style.
 
+**One action may sit on the label row,** right-aligned, when it belongs to the field rather than to
+the page: `Generate` beside `Password`, `Reveal` beside a secret. It is a sibling of the label, never
+inside it and never inside the input — a control inside a `<label>` is activated by any tap in the row
+(rule 16 of the gate, `form-field` block).
+
 ## 6. Tabular numbers
 
 `font-variant-numeric: tabular-nums` on all data text, and right-alignment for numeric table columns.
@@ -187,6 +192,12 @@ The system does not own a voice, but it owns the small words that appear in ever
   enumerates accounts: "Invalid email or password" for both a wrong address and a wrong password.
 - **Confirmation.** Name the object and the count — "Delete 3 requests?", never "Are you sure?".
 - **Dates and numbers.** Absolute date in `data-tip`, relative in the label; numbers are tabular (rule 6).
+- **Disabled says why.** A disabled control carries one sentence, below itself, naming what would
+  enable it. A control that greys out with no reason is indistinguishable from a bug. If the reason
+  is a feature this build does not have, the control is not there at all.
+- **No vocabulary for absent features.** Copy may only name what this deployment has: a note about
+  public pastes in a build without public links is a sentence about nothing, and the reader will look
+  for the feature.
 - **Case.** Sentence case everywhere except the meta label (rule 5).
 
 ## 13. The mark
@@ -275,6 +286,8 @@ accessible markup, not a tooltip, and stays.
 | Drawer / Sheet | ✓ | ✗ | this is the line: a project that needs a drawer becomes port 1 |
 | Popover, Dropdown, Tooltip, HoverCard | ✓ | ✗ | native `popover` attribute allowed for simple cases |
 | Command palette, Combobox, DatePicker, DataTable | ✓ | ✗ | |
+| Form field (label row, one action, hint/error) | ✓ | ✗ | `form-field` block, §5 |
+| Settings page (one save, provenance rows) | ✓ | ✗ | `settings-page` block, §22 |
 
 **Port 2 is frozen.** It ships atoms only — no new `.m-*` recipes, no new templates, no shell work and
 no new fixtures. Security and correctness fixes only. The exit condition is the one line that ends the
@@ -387,7 +400,13 @@ A page below the top level has one way out, and it is the same in every project:
   to today's edition", "Back to search". "Back" alone is legal only when the destination has no name.
   Sentence case, Golos, 14 px.
 - **Dynamic by origin, fixed in shape.** The label and the `href` come from the link that opened the
-  page (router state), falling back to the parent route when the URL was opened cold. The button's
+  page (router state), falling back to the parent route when the URL was opened cold. A fixed parent
+  is a guess: from Settings opened out of Recent, "Back to the composer" is simply wrong.
+- **Keep a trail, not a referrer.** A single-page app has no `document.referrer`, and router state
+  dies on reload. Keep a small per-tab stack in `sessionStorage`, push the path on every settled
+  route, and label the control from the entry before the current one. Hand the click to
+  `history.back()` only when the trail says the previous entry is the same destination; otherwise let
+  the anchor navigate. On a cold load the trail is empty and the parent is the honest fallback. The button's
   width follows that label; the internal spacing does not — 8 px between arrow and text, 10 px inline
   padding, 16 px to the page title below.
 - **Left-aligned with the content column**, above the title, never in the page header's `actions`
@@ -424,3 +443,45 @@ repository — carries a Phosphor `ArrowUpRight` after its label.
   labelled link, so §9 governs it instead.
 - The same geometry applies in a React shell and a generated static document; the markup differs,
   the affordance does not.
+
+## 22. Settings
+
+A settings page is a form whose values outlive the request, and it has one shape.
+
+- **A page, not a modal.** One gear in the shell's `actions`, left of the theme toggle, on every route
+  of the app — and never on a public host, where the values belong to the deployment's owner.
+- **One Save.** The page owns the draft, the bar carries the count, `Save` is disabled while clean or
+  pending. A per-row `Save` is legal only when the page has exactly one setting. Twenty buttons is
+  twenty chances to forget one; one button over twenty rows turns a typo into a page-wide rejection,
+  which is why the *error* still lands per row.
+- **Three words, never two meanings.** `DEFAULT` — nothing was written. `CUSTOM` — the page wrote
+  this, and a `Reset` beside it returns to the default. The environment's variable in a mono code box —
+  the value is pinned, the control is disabled, and the stored value survives underneath so removing
+  the variable restores it. `UNSAVED` is a fourth marker and sits next to the label; it never replaces
+  the provenance, because a row can be both.
+- **Units for the reader.** MiB, not bytes. "24 hours", not `86400`. Toggle chips, not a
+  comma-separated string. The API keeps the machine unit; the page converts, at the edge, once.
+- **A boot-only key says so.** "Restart to change", always read-only, in its own collapsed group.
+- **Provenance is a label, not decoration:** 10.5 px mono caps (rule 5), the variable in `--surface-2`
+  with a hairline border, and a 14 px lock only when the value cannot be changed here.
+- **The block is `settings-page`** (with `settings-row`); a section inside deeper settings uses
+  `settings-section bar={false}` so the page's single bar stays the only one.
+
+## 23. Installable surface
+
+When a project ships as a home-screen app (`pwa: true` in its manifest), the UI side has four rules and
+one warning.
+
+- **The first header row is not under the status bar.** `apple-mobile-web-app-status-bar-style` is
+  `default`. `black-translucent` draws the page under iOS's frosted material, and the header looks
+  out of focus — padding the top again makes it worse.
+- **Safe areas only where the platform does not inset.** `padding-bottom: env(safe-area-inset-bottom)`
+  on the sticky control; nothing extra at the top in standalone.
+- **An install row, not an install prompt.** iOS has no `beforeinstallprompt`: one dismissible row
+  (Safari, not standalone, shown once) that says Share → Add to Home Screen.
+- **Click targets keep their size; legends do not.** Keycaps disappear on touch, the control keeps its
+  height, and the label and icon centre in what is left.
+- **Warning: the static assets need a session-free path.** The icon, manifest, worker and favicons are
+  fetched before any cookie exists; behind an access layer the tile falls back to a letter. See the
+  project standard's deploy section. The icon is cached at install: after changing it, remove and
+  re-add the tile.

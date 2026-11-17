@@ -380,6 +380,25 @@ const blockItems = [
     dependencies: [],
   },
   {
+    name: "form-field",
+    title: "Messer UI — form field",
+    description:
+      "Label row with one action at its right end, control, one line of hint or error. The label never wraps the control (R16).",
+    files: [{ path: "registry/form-field/form-field.tsx", type: "registry:ui", target: "components/ui/form-field.tsx" }],
+    dependencies: [],
+  },
+  {
+    name: "settings-page",
+    title: "Messer UI — settings page",
+    description:
+      "One page-level Save with a count; rows carry provenance (default / custom / env) and their own error.",
+    files: [
+      { path: "registry/settings-page/settings-page.tsx", type: "registry:ui", target: "components/ui/settings-page.tsx" },
+      { path: "registry/settings-page/settings-row.tsx", type: "registry:ui", target: "components/ui/settings-row.tsx" },
+    ],
+    dependencies: [],
+  },
+  {
     name: "copy-button",
     title: "Messer UI — copy button",
     description: "Icon-only copy control at a control height, accessible name, check mark for 1.5s after copying.",

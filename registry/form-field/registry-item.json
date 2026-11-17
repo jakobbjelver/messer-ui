@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "type": "registry:block",
+  "name": "form-field",
+  "title": "Messer UI — form field",
+  "description": "Label row with one action at its right end, control, one line of hint or error. The label never wraps the control (R16).",
+  "files": [
+    {
+      "path": "registry/form-field/form-field.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/form-field.tsx"
+    }
+  ],
+  "dependencies": []
+}

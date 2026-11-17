@@ -5,8 +5,10 @@
 //
 // A gate that cannot be shown failing is not a gate.
 
+import fs from "node:fs";
+import os from "node:os";
 import path from "node:path";
-import { spawn } from "node:child_process";
+import { spawn, spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 import { serve } from "./lib/serve.mjs";
 
@@ -75,4 +77,23 @@ if (missing.length) {
   process.exit(1);
 }
 
-console.log(`\nselftest  ${seen.length}/${EXPECT.length} checks fired as expected ✓`);
+// R16 is a static rule, so the browser fixture cannot prove it: give it a throwaway app.
+const tmpApp = fs.mkdtempSync(path.join(os.tmpdir(), "messer-r16-"));
+fs.writeFileSync(
+  path.join(tmpApp, "bad.tsx"),
+  'export function F() {\n  return (\n    <label htmlFor="pw">\n      <span>Password</span>\n      <button type="button">Generate</button>\n    </label>\n  );\n}\n',
+);
+const r16 = spawnSync(process.execPath, [path.join(ROOT, "scripts/check.mjs"), "--app", tmpApp, "--static", "--json"], { encoding: "utf8" });
+let r16fails = [];
+try {
+  r16fails = JSON.parse(r16.stdout).fails ?? [];
+} catch {}
+const r16ok = r16fails.some((f) => /inside a <label>/.test(f));
+console.log(`  ${r16ok ? "✓" : "✗"} ${'R16'.padEnd(12)} a <button> inside a <label>`);
+if (!r16ok) {
+  console.error("       expected a R16 failure, got:", r16fails.join(" | ") || r16.stdout.slice(0, 200));
+  process.exitCode = 1;
+}
+fs.rmSync(tmpApp, { recursive: true, force: true });
+
+console.log(`\nselftest  ${seen.length + (r16ok ? 1 : 0)}/${EXPECT.length + 1} checks fired as expected ✓`);
