@@ -20,6 +20,11 @@ port 2  atoms     frozen: compiled .m-* recipes, no JS  request-games (until it 
 port 3  lookalike SwiftUI / Flutter, tokens only        later
 ```
 
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/brand/screen-dark.png">
+  <img src="docs/brand/screen-light.png" alt="The kitchen sink: every atom in one page, the oracle each port renders at /ui" width="1200">
+</picture>
+
 ## The ten rules
 
 | # | Rule | Why |

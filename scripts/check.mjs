@@ -301,8 +301,12 @@ if (app) {
   // scanner pointed at a fixed directory goes quietly green on everything else.
   const SKIP_DIRS = new Set(["node_modules", ".next", ".git", ".messer-ui", "dist", "build", "out",
     "coverage", "vendor", "__pycache__", ".turbo", ".astro", "playwright-report", ".studio",
-    ".vercel", ".cache", "storybook-static", ".test-out"]);
+    ".vercel", ".cache", "storybook-static", ".test-out",
+    // Fixtures are input, not shipped source: a scraped ticket page or the canon's own kitchen sink
+    // carries a native <select> by construction, and failing the app for it taught nothing (2026-11-22).
+    "testdata", "test-data", "fixtures", "__fixtures__", "__snapshots__", "__mocks__", "e2e"]);
   const SKIP_FILES = new Set(["app.css", "styles.css"]); // build output, not source
+  const SKIP_FILE_RE = /\.(test|spec|stories)\./;       // a test double is not a shipped surface
   const walk = (dir, out = []) => {
     if (!fs.existsSync(dir)) return out;
     for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
@@ -310,6 +314,7 @@ if (app) {
       if (e.isDirectory() ? SKIP_DIRS.has(e.name) || /^dist-/.test(e.name) : SKIP_FILES.has(e.name)) continue;
       const p = path.join(dir, e.name);
       if (e.isDirectory()) walk(p, out);
+      else if (SKIP_FILE_RE.test(e.name)) continue;
       else if (/\.(tsx?|jsx?|css|html|gohtml|tmpl)$/.test(e.name)) out.push(p);
     }
     return out;

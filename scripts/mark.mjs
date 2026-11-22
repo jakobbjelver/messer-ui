@@ -82,6 +82,9 @@ const ogHtml = (brand, glyph, ink, paper, fontBase, source = "phosphor", rotate 
  * mark is never the accent), no gradient, no second tagline. Drawn at 1200×300 CSS in a 2× page, so the
  * PNG is 2400×600. It is raster on purpose: a repo-relative SVG in a README cannot load the brand's
  * woff2, and the wordmark would silently render in the viewer's fallback face.
+ *
+ * The lockup is centred and set entirely in Golos: the mono wordmark read as a terminal label in a
+ * 4:1 cover, and the picture is the one place the family does not need the mono voice (2026-11-22).
  */
 const bannerHtml = (brand, glyph, { bg, fg, markInk, markPaper }, fontBase, source, rotate) => {
   const name = (brand.title || brand.project).toUpperCase();
@@ -89,13 +92,16 @@ const bannerHtml = (brand, glyph, { bg, fg, markInk, markPaper }, fontBase, sour
   @font-face{font-family:"Golos Text";src:url("${fontBase}/node_modules/@fontsource-variable/golos-text/files/golos-text-latin-wght-normal.woff2") format("woff2");font-weight:400 900}
   @font-face{font-family:"JetBrains Mono";src:url("${fontBase}/node_modules/@fontsource-variable/jetbrains-mono/files/jetbrains-mono-latin-wght-normal.woff2") format("woff2");font-weight:100 800}
   html,body{margin:0;padding:0;width:1200px;height:300px;background:${bg};overflow:hidden}
-  body{display:flex;align-items:center;gap:44px;box-sizing:border-box;padding:0 64px;color:${fg};font-family:"Golos Text",sans-serif}
-  .mark{width:112px;height:112px;flex:0 0 112px}
-  .name{font-family:"JetBrains Mono",monospace;font-size:38px;letter-spacing:.1em;line-height:1.1;text-transform:uppercase}
-  .pitch{font-size:26px;opacity:.72;margin-top:12px;max-width:800px}
+  body{display:flex;align-items:center;justify-content:center;box-sizing:border-box;padding:0 64px;color:${fg};font-family:"Golos Text",sans-serif}
+  .lockup{display:flex;align-items:center;gap:36px}
+  .mark{width:104px;height:104px;flex:0 0 104px}
+  .name{font-size:42px;font-weight:600;letter-spacing:.02em;line-height:1.1}
+  .pitch{font-size:25px;opacity:.68;margin-top:10px;max-width:760px}
 </style></head><body>
-  <div class="mark">${markSvg(glyph, { ink: markInk, paper: markPaper, size: 112, source, rotate }, ICONS)}</div>
-  <div><div class="name">${name}</div><div class="pitch">${brand.pitch}</div></div>
+  <div class="lockup">
+    <div class="mark">${markSvg(glyph, { ink: markInk, paper: markPaper, size: 104, source, rotate }, ICONS)}</div>
+    <div><div class="name">${name}</div><div class="pitch">${brand.pitch}</div></div>
+  </div>
 </body></html>`;
 };
 
