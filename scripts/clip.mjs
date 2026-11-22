@@ -43,9 +43,13 @@ const theme = flag("theme", "light");
 const fps = Number(flag("fps", 8));
 const colors = Number(flag("colors", 256));
 const maxMB = Number(flag("max", 3));
+const trim = Number(flag("trim", 0));   // seconds to drop from the head (the wizard before the flow)
+const settle = Number(flag("settle", 0)); // seconds to wait after the flow, before keys/taps
+const tail = Number(flag("tail", 0));   // keep only the last N seconds — a long wait for a poster costs frames
 const fills = all("fill");
 const clicks = all("click");
 const keys = all("key");       // e.g. --key ArrowRight, for a deck that answers the keyboard
+const taps = all("tap");       // "x,y" in viewport px, for icon-only controls with no accessible name
 
 function loadPlaywright() {
   const roots = [
@@ -98,9 +102,15 @@ try {
   }
 
   await page.mouse.move(width / 2, height / 2);
+  if (settle) await page.waitForTimeout(settle * 1000);
   for (const key of keys) {
     await page.keyboard.press(key);
     await page.waitForTimeout(1400);
+  }
+  for (const spec of taps) {
+    const [x, y] = spec.split(",").map(Number);
+    await page.mouse.click(x, y);
+    await page.waitForTimeout(1600);
   }
   const steps = Math.round((hold * 1000) / 1200);
   let dir = 1;
@@ -118,10 +128,12 @@ try {
   const target = path.join(out, `${name}.gif`);
   // One palette per clip, sierra dithering, no audio: the shape GitHub renders inline.
   execFileSync("ffmpeg", [
-    "-y", "-v", "error", "-i", src,
+    "-y", "-v", "error", ...(trim ? ["-ss", String(trim)] : []), ...(tail ? ["-sseof", String(-Math.abs(tail))] : []), "-i", src,
     "-vf", `fps=${fps},scale=${width}:-1:flags=lanczos,split[a][b];[a]palettegen=max_colors=${colors}[p];[b][p]paletteuse=dither=sierra2_4a`,
     "-loop", "0", target,
   ], { stdio: ["ignore", "ignore", "pipe"] });
+  const dur = Number(execFileSync("ffprobe", ["-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", src]).toString().trim());
+  console.log(`clip  recorded ${dur.toFixed(1)}s${trim ? `, trimmed to ${(dur - trim).toFixed(1)}s` : ""}`);
 
   const kb = Math.round(fs.statSync(target).size / 1024);
   written.push({ target, kb });
