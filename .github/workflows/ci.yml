@@ -27,9 +27,11 @@ jobs:
       # reasons; the browser download is the only part the measurements need.
       - run: npx playwright install chromium
       # marks are generated: regenerate them and fail if the committed assets are stale.
-      # og.png is rasterised and not byte-stable across machines (font hinting), so it is
-      # generated but excluded from the diff; the SVGs and icons are hashed and compared.
-      - run: npm run marks && git diff --exit-code -- marks/ ':(exclude)marks/*/og.png'
+      # Raster output is not byte-stable across machines (font hinting, AA): og.png and the banner pair
+      # are generated but excluded from the diff — `brand:check` compares the fingerprint of their
+      # inputs (pitch, glyph, palette) instead, which is the drift that matters. SVGs and icons are
+      # hashed and compared byte for byte.
+      - run: npm run marks && git diff --exit-code -- marks/ ':(exclude)marks/*/og.png' ':(exclude)marks/*/banner-*.png'
       - run: npm run sink
       # every new rule check must be able to fail: the violations fixture proves it, and the chrome
       # check carries its own fixture suite (a headless page gate needs a served page, its selftest
