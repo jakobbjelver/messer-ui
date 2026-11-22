@@ -25,6 +25,8 @@ port 3  lookalike SwiftUI / Flutter, tokens only        later
   <img src="docs/brand/screen-light.png" alt="The kitchen sink: every atom in one page, the oracle each port renders at /ui" width="1200">
 </picture>
 
+<img src="docs/brand/demo.gif" alt="The canon in motion: the kitchen sink, atom by atom" width="1200">
+
 ## The ten rules
 
 | # | Rule | Why |
@@ -60,6 +62,18 @@ npm run validate         # npx shadcn registry validate jakobbjelver/messer-ui
 npm run showcase         # build the family showcase into showcase/dist
 npm run sheet -- --tile portal=~/Repos/messer-portal/web/out    # contact sheet
 ```
+
+A public title page gets two pictures from the same instance: a still and a clip. Both are scripts, so
+they can be regenerated when the shell moves:
+
+```bash
+node scripts/shot.mjs --url <seeded> --out ../messer-<p>/docs/brand --name screen
+node scripts/clip.mjs --url <seeded> --out ../messer-<p>/docs/brand --name demo \
+  --fill 'input[placeholder="Display name"]=Messer' --click "button=Start" --hold 4
+```
+
+`clip.mjs` drives Playwright, then encodes a paletted GIF with ffmpeg and refuses anything over 3 MB.
+A stateful flow (a wizard, a name, a session) has to be scripted — a bare scroll records the wrong screen.
 
 ## Three tiers, and what is frozen
 
