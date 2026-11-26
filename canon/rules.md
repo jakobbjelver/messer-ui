@@ -4,7 +4,7 @@ The fingerprint. A project may look like itself; it may not look like a differen
 project is allowed to choose is listed under §14; a declared override (§17) is the only other way out.
 Everything here is fixed.
 
-**Review rules.** The paragraphs marked *(review rule)* in §10, §12, §16, §20 and §21 are the current
+**Review rules.** The paragraphs marked *(review rule)* in §10, §12, §16, §20, §21 and §22 are the current
 layout, copy and navigation checklist. They are queued for the next canon revision and do not change
 the canon version yet.
 
@@ -198,6 +198,14 @@ The system does not own a voice, but it owns the small words that appear in ever
   a version string lives on the page that owns it, never on two pages; a list visible on the same
   screen is its own summary, so do not add a count/table/paragraph that restates it; and an exact
   read-only value (the assembled prompt) is not paired with a prose preview of itself. *(review rule)*
+- **Counted nouns are pluralised, never abbreviated with `(s)`.** Write `1 note` / `2 notes`,
+  `0 added` / `1 added`, with a shared `plural(n, one, many)` helper; `note(s)`, `file(s)` and
+  `finding(s)` are a visible failure of the copy, not a shorthand. A zero is omitted from a
+  change sentence rather than printed as `0 added · 0 removed · 0 moved`. *(review rule)*
+- **A sentence a first-time reader needs is an `InfoTip`, not standing copy.** The standard 28px
+  `Info` trigger opens the family tooltip on a pointer and its popover on touch; the hint sits beside
+  the label or field it explains. A paragraph under a card heading explaining the card is the
+  defect this rule exists to remove. *(review rule)*
 - **Verbs.** `Save`, `Cancel`, `Delete`, `Create`, `Retry`. Not `Update` for a save, not `Apply`, not
   `Submit`, not `OK` in a destructive dialog.
 - **Empty state.** What this is, why it is empty, one action. No illustration required.
@@ -359,6 +367,15 @@ widths at once (a nested narrower strip under a wider container is a bug, not a 
 - **A long list is not a wall.** Over 12 rows, show the first 8–12 with a count and
   `SeeMoreButton`/`useSeeMore` (`Show all N` / `Show fewer`); a list at or below the limit has no See
   more control. *(review rule)*
+- **A page-final list is infinite, not See more.** When a list is the last content on a page and can
+  grow without a natural end — a per-flight table, a history — put it at the bottom with nothing below
+  it and reveal one page at a time with `useInfiniteReveal`/`InfiniteSentinel` as the reader scrolls.
+  A See more control belongs to a list that has other content below it; an infinite list never
+  carries one. *(review rule)*
+- **A collapsible is the `disclosure` block.** The chevron and its label share one 32px row, the
+  trigger is a real button with `aria-expanded` and `aria-controls`, and the panel is mounted only
+  while open. A raw `<details>` with a hand-built summary repeats the browser's marker and can drop
+  the icon onto its own line; do not build one. *(review rule)*
 - **A nav badge is a count of work waiting on the person, and it clears when the work does.** `NavBadge`
   (in `app-shell`) renders nothing at zero: a decision to answer, a proposal to apply — never a total the
   screen already shows, never a status, never more than two rooms in one app. It does **not** clear when
@@ -456,7 +473,7 @@ A page below the top level has one way out, and it is the same in every project:
   width follows that label; the internal spacing does not — 8 px between arrow and text, 10 px inline
   padding, 16 px to the page title below.
 - **Left-aligned with the content column**, above the title, never in the page header's `actions`
-  slot (actions point forward).
+  slot (actions point forward). *(review rule)*
 - **One implementation:** the `back-link` block. An app resolves its origin into `href` and `label`
   and passes them in; it does not restyle the control. `history.back()` may be wired through
   `onNavigate` when returning should restore the origin's own state, but the `href` must still be a
@@ -488,9 +505,10 @@ repository — carries a Phosphor `ArrowUpRight` after its label.
   an `svg`/`img`. An icon-only *action* in the bar's action slot (source, theme) is a control, not a
   labelled link, so §9 governs it instead.
 - **A root path is a nav item, not an in-page link.** Every root room is in the shell's nav; a card,
-  footer or header action is never the only route to a root (`System →`, `Edit taste →`). The bar fits
-  every root at 390 px; if it cannot, a root menu is a named exception, never a silent hide.
-  *(review rule)*
+  footer or header action is never the only route to a root (`System →`, `Edit taste →`). Settings and
+  System are the exception: they are chrome-level controls in the shell's `actions` (§22), not root
+  rooms. The bar fits every root at 390 px; if it cannot, a root menu is a named exception, never a
+  silent hide. *(review rule)*
 - The same geometry applies in a React shell and a generated static document; the markup differs,
   the affordance does not.
 
@@ -500,6 +518,12 @@ A settings page is a form whose values outlive the request, and it has one shape
 
 - **A page, not a modal.** One gear in the shell's `actions`, left of the theme toggle, on every route
   of the app — and never on a public host, where the values belong to the deployment's owner.
+- **Settings and System are chrome, not roots.** A project with a Settings page, a System page or
+  both exposes each as a 32px icon button in the shell's `actions`, left of the theme toggle; the
+  Settings gear and the System control are different icons. The control carries
+  `aria-current="page"` and the selected treatment (§11) while its page is open, exactly like the
+  Warden's settings gear. Neither is a nav item, and `AppShell`'s `active` stays `""` on that route.
+  *(review rule)*
 - **The gear carries the selected state, and no root nav item is selected while settings is open.** A
   detail route (`/fixes/:id`, `/jobs/:id`) selects its room; a chrome-level surface (settings, a
   specimen sheet) selects no root. `AppShell`'s `active` therefore never falls back to `/`: pass the

@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "type": "registry:block",
+  "name": "disclosure",
+  "title": "Messer UI — disclosure",
+  "description": "The one collapsible: a 32px button with its chevron and label on one row, `aria-expanded`/`aria-controls`, and the panel mounted only while open. Never a raw `<details>` summary.",
+  "files": [
+    {
+      "path": "registry/disclosure/disclosure.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/disclosure.tsx"
+    }
+  ],
+  "dependencies": [
+    "@phosphor-icons/react"
+  ]
+}

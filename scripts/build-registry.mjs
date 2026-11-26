@@ -368,8 +368,24 @@ const blockItems = [
     name: "hybrid-tooltip",
     title: "Messer UI — hybrid tooltip",
     description:
-      "One tooltip for pointer and touch: hover shows a tooltip, a coarse pointer opens a popover on tap. Requires the app's own `tooltip` and `popover` components.",
+      "One tooltip for pointer and touch: hover shows a tooltip, a coarse pointer opens a popover on tap. Exports `InfoTip`, the standard 28px info trigger for a sentence that does not belong as standing copy. Requires the app's own `tooltip` and `popover` components; its provider supplies the touch context.",
     files: [{ path: "registry/hybrid-tooltip/hybrid-tooltip.tsx", type: "registry:ui", target: "components/ui/hybrid-tooltip.tsx" }],
+    dependencies: ["@phosphor-icons/react"],
+  },
+  {
+    name: "disclosure",
+    title: "Messer UI — disclosure",
+    description:
+      "The one collapsible: a 32px button with its chevron and label on one row, `aria-expanded`/`aria-controls`, and the panel mounted only while open. Never a raw `<details>` summary.",
+    files: [{ path: "registry/disclosure/disclosure.tsx", type: "registry:ui", target: "components/ui/disclosure.tsx" }],
+    dependencies: ["@phosphor-icons/react"],
+  },
+  {
+    name: "infinite-list",
+    title: "Messer UI — infinite list",
+    description:
+      "For a page-final list that can grow without a natural end: `useInfiniteReveal` reveals one page at a time as its sentinel enters the viewport; `InfiniteSentinel` owns the row. Not a See more replacement for lists that sit above other content.",
+    files: [{ path: "registry/infinite-list/infinite-list.tsx", type: "registry:ui", target: "components/ui/infinite-list.tsx" }],
     dependencies: [],
   },
   {

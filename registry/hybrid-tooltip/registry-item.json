@@ -3,7 +3,7 @@
   "type": "registry:block",
   "name": "hybrid-tooltip",
   "title": "Messer UI — hybrid tooltip",
-  "description": "One tooltip for pointer and touch: hover shows a tooltip, a coarse pointer opens a popover on tap. Requires the app's own `tooltip` and `popover` components.",
+  "description": "One tooltip for pointer and touch: hover shows a tooltip, a coarse pointer opens a popover on tap. Exports `InfoTip`, the standard 28px info trigger for a sentence that does not belong as standing copy. Requires the app's own `tooltip` and `popover` components; its provider supplies the touch context.",
   "files": [
     {
       "path": "registry/hybrid-tooltip/hybrid-tooltip.tsx",
@@ -11,5 +11,7 @@
       "target": "components/ui/hybrid-tooltip.tsx"
     }
   ],
-  "dependencies": []
+  "dependencies": [
+    "@phosphor-icons/react"
+  ]
 }

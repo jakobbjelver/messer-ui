@@ -136,11 +136,12 @@ const measureChrome = async () => {
   const rrect = row ? row.getBoundingClientRect() : null;
   const rcs = row ? getComputedStyle(row) : null;
 
-  // §11 selected: measure the item that carries aria-current; force one if the page has none, so the
-  // state is measured whatever the page's scrollspy is doing. A generated front marks *nothing* at the
-  // top of the page on purpose — the hero is the document's opening, not a section — so forcing here is
-  // the normal case, not a defect, and it is not reported.
-  let selected = links.find((a) => a.getAttribute("aria-current"));
+  // §11 selected: measure the item that carries aria-current; force a nav item only when the page
+  // has no chrome-level selection at all. Settings/System are chrome actions (canon §22), so their
+  // icon carries the selected state and no root nav item is selected.
+  let selected = links.find((a) => a.getAttribute("aria-current"))
+    ?? [...header.querySelectorAll("[aria-current='page']")].find((el) => !nav?.contains(el))
+    ?? null;
   const forced = !selected && links.length > 0;
   if (forced) selected = links[0];
   // idempotent: the second theme pass meets the attribute the first one left behind

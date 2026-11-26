@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "type": "registry:block",
+  "name": "infinite-list",
+  "title": "Messer UI — infinite list",
+  "description": "For a page-final list that can grow without a natural end: `useInfiniteReveal` reveals one page at a time as its sentinel enters the viewport; `InfiniteSentinel` owns the row. Not a See more replacement for lists that sit above other content.",
+  "files": [
+    {
+      "path": "registry/infinite-list/infinite-list.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/infinite-list.tsx"
+    }
+  ],
+  "dependencies": []
+}
