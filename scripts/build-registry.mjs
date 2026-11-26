@@ -177,6 +177,30 @@ const baseShellRules = {
   ":focus-visible": { outline: "2px solid var(--ring)", "outline-offset": "2px", "border-radius": "0" },
 };
 
+// The loader block's own marks: four pixels of currentColor, nine of them, one wave. Here rather
+// than in the component so a port without Tailwind's arbitrary-property build gets the same mark.
+const loaderRules = `
+/* loader — the canon's loading mark (registry/loader). Nine 4px cells, one wave. */
+.messer-loader {
+  display: grid;
+  grid-template-columns: repeat(3, 4px);
+  gap: 2px;
+}
+.messer-loader > span {
+  width: 4px;
+  height: 4px;
+  background: currentColor;
+  animation: messer-loader-wave 1.1s ease-in-out infinite;
+}
+@keyframes messer-loader-wave {
+  0%, 100% { opacity: 0.25; }
+  50% { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .messer-loader > span { animation: none; opacity: 0.6; }
+}
+`;
+
 write(
   "packages/css/type.css",
   `${HEADER}\n\n@layer base {\n${rulesToCss(typeRules)}\n}\n`,
@@ -206,7 +230,7 @@ ${decl(colorTheme, "  ")}
 @layer base {
 ${rulesToCss(baseShellRules)}
 }
-`,
+${loaderRules}`,
 );
 
 // ── brand css (file-based install; the CLI's cssVars merge mangles extra keys) ─
@@ -362,6 +386,14 @@ const blockItems = [
     description:
       "A long list's first 8 rows and one accessible Show all N / Show fewer control. `useSeeMore` owns the slice and the controlled list id; the button renders nothing when the list fits.",
     files: [{ path: "registry/see-more/see-more.tsx", type: "registry:ui", target: "components/ui/see-more.tsx" }],
+    dependencies: [],
+  },
+  {
+    name: "loader",
+    title: "Messer UI — loader",
+    description:
+      "The canon's one loading mark: nine 4px squares in a 3x3 grid, one wave, reduced-motion aware. Sits in the region the content will fill, whose height the caller reserves. Never a skeleton.",
+    files: [{ path: "registry/loader/loader.tsx", type: "registry:ui", target: "components/ui/loader.tsx" }],
     dependencies: [],
   },
   {

@@ -1,4 +1,4 @@
-/* messer-ui canon 2.5.0 — generated from canon/ and brand/; do not edit. */
+/* messer-ui canon 2.6.0 — generated from canon/ and brand/; do not edit. */
 /* Values come from canon/tokens.json and brand/portal.json. */
 
 :root {
@@ -187,4 +187,24 @@
     outline-offset: 2px;
     border-radius: 0;
   }
+}
+
+/* loader — the canon's loading mark (registry/loader). Nine 4px cells, one wave. */
+.messer-loader {
+  display: grid;
+  grid-template-columns: repeat(3, 4px);
+  gap: 2px;
+}
+.messer-loader > span {
+  width: 4px;
+  height: 4px;
+  background: currentColor;
+  animation: messer-loader-wave 1.1s ease-in-out infinite;
+}
+@keyframes messer-loader-wave {
+  0%, 100% { opacity: 0.25; }
+  50% { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .messer-loader > span { animation: none; opacity: 0.6; }
 }

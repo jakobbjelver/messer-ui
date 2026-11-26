@@ -19,8 +19,10 @@
     "ruleWidth": 2
   },
   "loading": {
-    "skeletonFor": "content",
-    "spinnerFor": "action"
+    "loaderFor": "content",
+    "spinnerFor": "action",
+    "skeleton": false,
+    "note": "§11: one loader mark in the region the content will fill, its height reserved; a spinner only inside the control that was pressed. A skeleton is not a loading state in this family."
   },
   "motion": {
     "durationMaxMs": 240,

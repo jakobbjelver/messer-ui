@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "type": "registry:block",
+  "name": "loader",
+  "title": "Messer UI — loader",
+  "description": "The canon's one loading mark: nine 4px squares in a 3x3 grid, one wave, reduced-motion aware. Sits in the region the content will fill, whose height the caller reserves. Never a skeleton.",
+  "files": [
+    {
+      "path": "registry/loader/loader.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/loader.tsx"
+    }
+  ],
+  "dependencies": []
+}

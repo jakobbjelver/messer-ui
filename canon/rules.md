@@ -168,7 +168,7 @@ them; `canon/states.json` is the machine copy of this table.
 | active | the hover step. No press animation, no transform, no colour change. |
 | selected | 8–10 % accent tint + a 2 px accent rule (left in a sidebar, bottom in a topbar). Never a filled accent row. |
 | disabled | text at 40–50 % opacity, no hover state, `aria-disabled` — not `pointer-events: none`, so it stays focusable and announced. |
-| loading | skeleton for content, spinner for an action. Never both in one region. |
+| loading | one loader mark (`loader` block) in the exact region the content will fill, its height reserved. A spinner only inside the control that was pressed. Never a skeleton: a grey copy of the layout is wrong the moment the content differs. |
 
 Transitions use `--dur-fast` and `--ease`; only `background-color`, `border-color`, `color`, `opacity`
 and `transform` may animate. `prefers-reduced-motion: reduce` removes all of it. A hover that changes
@@ -347,9 +347,15 @@ widths at once (a nested narrower strip under a wider container is a bug, not a 
 - **A table shares the card's gutter.** Inside a `CardContent p-0`, the first and last cells pad with
   `px-6`, so the table's first cell and the card's title share an x. A table that starts 24 px left of
   its own title reads as a different object. *(review rule)*
-- **Loading reserves its region.** One `Loader` sits in the exact region the content will fill, and
-  that region keeps its minimum height while the query runs: the card and chrome must not jump when
-  the data arrives. No skeleton, no text placeholder that collapses. *(review rule)*
+- **Loading reserves its region.** One `Loader` (`registry/loader`) sits in the exact region the
+  content will fill, and that region keeps its minimum height while the query runs: the card and chrome
+  must not jump when the data arrives. No skeleton, no text placeholder that collapses.
+  *(review rule)*
+- **A row with a detail page is a link, and the row is the hit area.** The title is a real anchor; its
+  `after:absolute after:inset-0` covers the row; the title underlines on row hover
+  (`group-hover:underline`), not only on the title's own hover. A control inside the row is
+  `relative z-10` and owns its click. Never an `onClick` on the row: the anchor keeps ctrl-click,
+  middle-click and the keyboard. *(review rule)*
 - **A long list is not a wall.** Over 12 rows, show the first 8–12 with a count and
   `SeeMoreButton`/`useSeeMore` (`Show all N` / `Show fewer`); a list at or below the limit has no See
   more control. *(review rule)*
@@ -488,6 +494,11 @@ A settings page is a form whose values outlive the request, and it has one shape
 
 - **A page, not a modal.** One gear in the shell's `actions`, left of the theme toggle, on every route
   of the app — and never on a public host, where the values belong to the deployment's owner.
+- **The gear carries the selected state, and no root nav item is selected while settings is open.** A
+  detail route (`/fixes/:id`, `/jobs/:id`) selects its room; a chrome-level surface (settings, a
+  specimen sheet) selects no root. `AppShell`'s `active` therefore never falls back to `/`: pass the
+  room or `""`. The opener is 32 px, `aria-current="page"`, selected treatment from §11 (tint + 2 px
+  rule), never a filled accent square. *(review rule)*
 - **One Save.** The page owns the draft, the bar carries the count, `Save` is disabled while clean or
   pending. A per-row `Save` is legal only when the page has exactly one setting. Twenty buttons is
   twenty chances to forget one; one button over twenty rows turns a typo into a page-wide rejection,
