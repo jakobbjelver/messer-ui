@@ -397,6 +397,14 @@ const blockItems = [
     dependencies: [],
   },
   {
+    name: "document-title",
+    title: "Messer UI — document title",
+    description:
+      "`formatTitle` + `useDocumentTitle`: `<Screen> · <Product>` with a `(n) ` prefix when work is waiting on the person. One function per app, so a title cannot disagree with itself or go stale.",
+    files: [{ path: "registry/document-title/document-title.ts", type: "registry:ui", target: "components/ui/document-title.ts" }],
+    dependencies: [],
+  },
+  {
     name: "stat",
     title: "Messer UI — stat",
     description:

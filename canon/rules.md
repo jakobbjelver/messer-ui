@@ -359,6 +359,12 @@ widths at once (a nested narrower strip under a wider container is a bug, not a 
 - **A long list is not a wall.** Over 12 rows, show the first 8–12 with a count and
   `SeeMoreButton`/`useSeeMore` (`Show all N` / `Show fewer`); a list at or below the limit has no See
   more control. *(review rule)*
+- **A nav badge is a count of work waiting on the person, and it clears when the work does.** `NavBadge`
+  (in `app-shell`) renders nothing at zero: a decision to answer, a proposal to apply — never a total the
+  screen already shows, never a status, never more than two rooms in one app. It does **not** clear when
+  the page is visited; an indicator that disappears on a click teaches the reader to click instead of
+  act. The number goes in the tab title too (§24), so a backgrounded app still says something is pending.
+  *(judgement rule — the temptation is to badge everything; the rule is the opposite)*
 - `check` measures the header row against the page container at 1280 px and fails on a mismatch.
 
 ## 17. Overrides — a decision, not drift
@@ -534,3 +540,22 @@ one warning.
   fetched before any cookie exists; behind an access layer the tile falls back to a letter. See the
   project standard's deploy section. The icon is cached at install: after changing it, remove and
   re-add the tile.
+
+## 24. The document head
+
+The tab is part of the product: it is what a backgrounded app, a bookmark and a shared link read.
+
+- **One function per app.** `formatTitle`/`useDocumentTitle` (`document-title` block) is the only place a
+  title is assembled. Five hand-written `document.title = …` calls are five titles that disagree, and a
+  stale one after navigation is a bug.
+- **`<Screen> · <Product>`.** `·` is U+00B7 with spaces; the product is the stable suffix and is exactly
+  the display name. The root is the product alone — no tagline, no second separator, no `|`, `—` or `-`.
+  A detail route passes the item's own name (`Router's UPnP … · Messer Warden`).
+- **A count prefix, when work is waiting on the person:** `(2) Now · Messer Warden`. The same number as
+  the nav badge (§16), from the same source, cleared when the count reaches zero — never on a visit. It
+  is the one thing a title says that a screenshot cannot.
+- **60 characters, and the product survives.** Over the cap the screen is clipped; below a readable
+  minimum it is dropped rather than reduced to an ellipsis in a tab. The `index.html` `<title>` is the
+  product name — the no-JS fallback the first route change replaces.
+- **The description is one sentence**, ≤155 characters, saying what the surface is for; `og:title` and
+  `og:description` mirror the title and description on public pages, and only there.

@@ -20,6 +20,29 @@ export type NavItem = {
   external?: boolean;
 };
 
+/**
+ * A count on a nav item, for work that is **waiting on the person** — a decision to answer, a proposal
+ * to apply — never for a total the screen already shows. It renders nothing at zero, so it clears when
+ * the work is done, not when the page is visited; and a reader who clicks without acting keeps it.
+ *
+ * Beside `nav`, not inside it: an app composes `<NavBadge count={n} label="waiting on you" />` into
+ * `NavItem.badge`. Give it a `label`: the number alone is not a description.
+ */
+export type NavBadgeProps = { count: number; label?: string; max?: number };
+
+export function NavBadge({ count, label, max = 99 }: NavBadgeProps) {
+  if (!count || count <= 0) return null;
+  return (
+    <span
+      data-state-badge=""
+      aria-label={label ? `${count} ${label}` : `${count} waiting`}
+      className="ml-auto inline-flex h-4 min-w-4 shrink-0 items-center justify-center border border-primary/30 bg-primary/10 px-1 font-mono text-[10.5px] font-medium leading-none tabular-nums text-[var(--foreground)]"
+    >
+      {count > max ? `${max}+` : count}
+    </span>
+  );
+}
+
 export type ContainerStop = "default" | "narrow" | "wide" | "none";
 
 type LinkProps = {
@@ -228,6 +251,7 @@ export function AppShell({
                   </span>
                 ) : null}
                 <span>{item.label}</span>
+                {item.badge ? <span className="ml-1 shrink-0">{item.badge}</span> : null}
               </Link>
             );
           })}
