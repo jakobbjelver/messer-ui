@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "type": "registry:block",
+  "name": "confirm-dialog",
+  "title": "Messer UI — confirm dialog",
+  "description": "The one confirmation shape: a Radix AlertDialog with a 32px cancel and a destructive/default action, focus trapping and labelled/described semantics. Use it for start, close, reset and other irreversible actions.",
+  "files": [
+    {
+      "path": "registry/confirm-dialog/confirm-dialog.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/confirm-dialog.tsx"
+    }
+  ],
+  "dependencies": [
+    "radix-ui"
+  ]
+}

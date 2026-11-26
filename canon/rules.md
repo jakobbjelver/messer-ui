@@ -368,10 +368,19 @@ widths at once (a nested narrower strip under a wider container is a bug, not a 
   `SeeMoreButton`/`useSeeMore` (`Show all N` / `Show fewer`); a list at or below the limit has no See
   more control. *(review rule)*
 - **A page-final list is infinite, not See more.** When a list is the last content on a page and can
-  grow without a natural end — a per-flight table, a history — put it at the bottom with nothing below
-  it and reveal one page at a time with `useInfiniteReveal`/`InfiniteSentinel` as the reader scrolls.
-  A See more control belongs to a list that has other content below it; an infinite list never
-  carries one. *(review rule)*
+  grow without a natural end — a per-flight table, a history — put it at the bottom and reveal one page
+  at a time with `useInfiniteReveal`/`InfiniteSentinel` as the reader scrolls. It is followed only by
+  the **page footer** (disclaimers, generated timestamp, migration note) and never by a card, action or
+  another content block; the footer is part of the page, not an item in the list. A See more control
+  belongs to a list that has other content below it; an infinite list never carries one. *(review rule)*
+- **A page's disclaimers belong in the page footer, not between cards.** A sentence about what the
+  data includes, what predates the current schema or when the page was generated goes in the
+  `page-footer` block after the last content. The global shell footer carries the version only.
+  *(review rule)*
+- **An irreversible or start action asks once.** Start, close, reset and other actions with a
+  consequence use the `confirm-dialog` block: the title names the object, the description names the
+  consequence, and the confirm label repeats the action. Never a native `window.confirm`, never
+  "Are you sure?". *(review rule)*
 - **A collapsible is the `disclosure` block.** The chevron and its label share one 32px row, the
   trigger is a real button with `aria-expanded` and `aria-controls`, and the panel is mounted only
   while open. A raw `<details>` with a hand-built summary repeats the browser's marker and can drop

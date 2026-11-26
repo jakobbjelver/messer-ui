@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "type": "registry:block",
+  "name": "page-footer",
+  "title": "Messer UI — page footer",
+  "description": "The page's own footer for disclaimers, generated timestamps and migration notes. It sits after the last content — including a page-final infinite list — never as a paragraph between cards. The global shell footer keeps only the version.",
+  "files": [
+    {
+      "path": "registry/page-footer/page-footer.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/page-footer.tsx"
+    }
+  ],
+  "dependencies": []
+}

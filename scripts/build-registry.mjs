@@ -405,6 +405,22 @@ const blockItems = [
     dependencies: [],
   },
   {
+    name: "page-footer",
+    title: "Messer UI — page footer",
+    description:
+      "The page's own footer for disclaimers, generated timestamps and migration notes. It sits after the last content — including a page-final infinite list — never as a paragraph between cards. The global shell footer keeps only the version.",
+    files: [{ path: "registry/page-footer/page-footer.tsx", type: "registry:ui", target: "components/ui/page-footer.tsx" }],
+    dependencies: [],
+  },
+  {
+    name: "confirm-dialog",
+    title: "Messer UI — confirm dialog",
+    description:
+      "The one confirmation shape: a Radix AlertDialog with a 32px cancel and a destructive/default action, focus trapping and labelled/described semantics. Use it for start, close, reset and other irreversible actions.",
+    files: [{ path: "registry/confirm-dialog/confirm-dialog.tsx", type: "registry:ui", target: "components/ui/confirm-dialog.tsx" }],
+    dependencies: ["radix-ui"],
+  },
+  {
     name: "empty-state",
     title: "Messer UI — empty state",
     description:

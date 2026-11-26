@@ -7,7 +7,7 @@
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "messer-style",
       "type": "registry:style",
-      "title": "Messer UI — style",
+      "title": "Messer UI \u2014 style",
       "description": "The fixed frame: Lyra geometry, neutral surfaces, zero radius, Golos Text + JetBrains Mono, Phosphor icons. Install first, then a brand.",
       "cssVars": {
         "theme": {
@@ -125,7 +125,7 @@
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "messer-fonts",
       "type": "registry:theme",
-      "title": "Messer UI — fonts",
+      "title": "Messer UI \u2014 fonts",
       "description": "Golos Text (human voice) and JetBrains Mono (machine voice). With next/font, keep this item and expose --font-golos / --font-jetbrains; the stack picks them up.",
       "cssVars": {
         "theme": {
@@ -138,7 +138,7 @@
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "messer-fingerprint",
       "type": "registry:style",
-      "title": "Messer UI — fingerprint",
+      "title": "Messer UI \u2014 fingerprint",
       "description": "The ten rules as CSS: heading voices, one label style, tabular numbers, hairline borders, square focus, reduced motion. No colours.",
       "css": {
         "*": {
@@ -240,7 +240,7 @@
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "type": "registry:ui",
       "name": "status-badge",
-      "title": "Messer UI — status badge",
+      "title": "Messer UI \u2014 status badge",
       "description": "Rule 8 as a component: icon + label, colour reinforcing only. Four statuses, one shape.",
       "files": [
         {
@@ -257,7 +257,7 @@
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "type": "registry:ui",
       "name": "page-header",
-      "title": "Messer UI — page header",
+      "title": "Messer UI \u2014 page header",
       "description": "Eyebrow (mono), title (h1, human voice), optional description and right-aligned actions.",
       "files": [
         {
@@ -272,8 +272,8 @@
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "type": "registry:block",
       "name": "back-link",
-      "title": "Messer UI — back link",
-      "description": "The one way back (canon §20): a 32px outlined control with a Phosphor arrow and a destination label. Presentational — the app resolves the origin into `href`/`label` and may restore its state through `onNavigate`.",
+      "title": "Messer UI \u2014 back link",
+      "description": "The one way back (canon \u00a720): a 32px outlined control with a Phosphor arrow and a destination label. Presentational \u2014 the app resolves the origin into `href`/`label` and may restore its state through `onNavigate`.",
       "files": [
         {
           "path": "registry/back-link/back-link.tsx",
@@ -289,8 +289,8 @@
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "type": "registry:block",
       "name": "nav-link",
-      "title": "Messer UI — nav link",
-      "description": "The family's text link (canon §21): a 12px destination arrow — ArrowRight internal, ArrowUpRight external — with a hover underline. Presentational; the app supplies href and may route through linkComponent.",
+      "title": "Messer UI \u2014 nav link",
+      "description": "The family's text link (canon \u00a721): a 12px destination arrow \u2014 ArrowRight internal, ArrowUpRight external \u2014 with a hover underline. Presentational; the app supplies href and may route through linkComponent.",
       "files": [
         {
           "path": "registry/nav-link/nav-link.tsx",
@@ -306,7 +306,7 @@
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "type": "registry:block",
       "name": "row-link",
-      "title": "Messer UI — row link",
+      "title": "Messer UI \u2014 row link",
       "description": "A row that navigates as one target: the title is the anchor, its inset pseudo-element is the hit area, and the hover underline plus destination arrow ride on the row's `group`. Give the row `class=\"group relative\"`.",
       "files": [
         {
@@ -323,7 +323,7 @@
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "type": "registry:block",
       "name": "checkbox",
-      "title": "Messer UI — checkbox",
+      "title": "Messer UI \u2014 checkbox",
       "description": "Native checkbox styled with appearance-none: square, 16px, no shadow, focus from the base ring. Works in Radix, Base UI and Astro without a primitive. Optional label; indeterminate is the input's own property.",
       "files": [
         {
@@ -340,8 +340,8 @@
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "type": "registry:block",
       "name": "app-shell",
-      "title": "Messer UI — app shell",
-      "description": "Sidebar or topbar frame: brand mark, nav with aria-current and an accent rule, user block and version footer. Presentational: pass `active` and `linkComponent` — no framework imports.",
+      "title": "Messer UI \u2014 app shell",
+      "description": "Sidebar or topbar frame: brand mark, nav with aria-current and an accent rule, user block and version footer. Presentational: pass `active` and `linkComponent` \u2014 no framework imports.",
       "files": [
         {
           "path": "registry/app-shell/app-shell.tsx",
@@ -355,8 +355,8 @@
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "type": "registry:block",
       "name": "page-container",
-      "title": "Messer UI — page container",
-      "description": "The page's measure (canon §16): one of three container stops from the canon tokens (default 1152, narrow 896, wide 1440) with the shared gutter. Pass the same `container` to AppShell so the topbar's row lines up with the content.",
+      "title": "Messer UI \u2014 page container",
+      "description": "The page's measure (canon \u00a716): one of three container stops from the canon tokens (default 1152, narrow 896, wide 1440) with the shared gutter. Pass the same `container` to AppShell so the topbar's row lines up with the content.",
       "files": [
         {
           "path": "registry/page-container/page-container.tsx",
@@ -370,7 +370,7 @@
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "type": "registry:block",
       "name": "theme-toggle",
-      "title": "Messer UI — theme toggle",
+      "title": "Messer UI \u2014 theme toggle",
       "description": "The 32 px outlined light/dark control for AppShell's `actions` slot. Presentational: pass `dark` and `onToggle` and keep the storage hook in the app (next-themes or a local useTheme).",
       "files": [
         {
@@ -387,7 +387,7 @@
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "type": "registry:block",
       "name": "hybrid-tooltip",
-      "title": "Messer UI — hybrid tooltip",
+      "title": "Messer UI \u2014 hybrid tooltip",
       "description": "One tooltip for pointer and touch: hover shows a tooltip, a coarse pointer opens a popover on tap. Exports `InfoTip`, the standard 28px info trigger for a sentence that does not belong as standing copy. Requires the app's own `tooltip` and `popover` components; its provider supplies the touch context.",
       "files": [
         {
@@ -404,7 +404,7 @@
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "type": "registry:block",
       "name": "disclosure",
-      "title": "Messer UI — disclosure",
+      "title": "Messer UI \u2014 disclosure",
       "description": "The one collapsible: a 32px button with its chevron and label on one row, `aria-expanded`/`aria-controls`, and the panel mounted only while open. Never a raw `<details>` summary.",
       "files": [
         {
@@ -421,7 +421,7 @@
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "type": "registry:block",
       "name": "infinite-list",
-      "title": "Messer UI — infinite list",
+      "title": "Messer UI \u2014 infinite list",
       "description": "For a page-final list that can grow without a natural end: `useInfiniteReveal` reveals one page at a time as its sentinel enters the viewport; `InfiniteSentinel` owns the row. Not a See more replacement for lists that sit above other content.",
       "files": [
         {
@@ -435,8 +435,40 @@
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "type": "registry:block",
+      "name": "page-footer",
+      "title": "Messer UI \u2014 page footer",
+      "description": "The page's own footer for disclaimers, generated timestamps and migration notes. It sits after the last content \u2014 including a page-final infinite list \u2014 never as a paragraph between cards. The global shell footer keeps only the version.",
+      "files": [
+        {
+          "path": "registry/page-footer/page-footer.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/page-footer.tsx"
+        }
+      ],
+      "dependencies": []
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "type": "registry:block",
+      "name": "confirm-dialog",
+      "title": "Messer UI \u2014 confirm dialog",
+      "description": "The one confirmation shape: a Radix AlertDialog with a 32px cancel and a destructive/default action, focus trapping and labelled/described semantics. Use it for start, close, reset and other irreversible actions.",
+      "files": [
+        {
+          "path": "registry/confirm-dialog/confirm-dialog.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/confirm-dialog.tsx"
+        }
+      ],
+      "dependencies": [
+        "radix-ui"
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "type": "registry:block",
       "name": "empty-state",
-      "title": "Messer UI — empty state",
+      "title": "Messer UI \u2014 empty state",
       "description": "What this is, why it is empty, one action. Panel or bare, icon decorative, title carries the meaning. `align=\"top\"` for a page-level empty state (horizontally centred, under the header); `center` for a card.",
       "files": [
         {
@@ -451,7 +483,7 @@
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "type": "registry:block",
       "name": "see-more",
-      "title": "Messer UI — see more",
+      "title": "Messer UI \u2014 see more",
       "description": "A long list's first 8 rows and one accessible Show all N / Show fewer control. `useSeeMore` owns the slice and the controlled list id; the button renders nothing when the list fits.",
       "files": [
         {
@@ -466,7 +498,7 @@
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "type": "registry:block",
       "name": "loader",
-      "title": "Messer UI — loader",
+      "title": "Messer UI \u2014 loader",
       "description": "The canon's one loading mark: nine 4px squares in a 3x3 grid, one wave, reduced-motion aware. Sits in the region the content will fill, whose height the caller reserves. Never a skeleton.",
       "files": [
         {
@@ -481,8 +513,8 @@
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "type": "registry:block",
       "name": "document-title",
-      "title": "Messer UI — document title",
-      "description": "`formatTitle` + `useDocumentTitle`: `<Screen> · <Product>` with a `(n) ` prefix when work is waiting on the person. One function per app, so a title cannot disagree with itself or go stale.",
+      "title": "Messer UI \u2014 document title",
+      "description": "`formatTitle` + `useDocumentTitle`: `<Screen> \u00b7 <Product>` with a `(n) ` prefix when work is waiting on the person. One function per app, so a title cannot disagree with itself or go stale.",
       "files": [
         {
           "path": "registry/document-title/document-title.ts",
@@ -496,7 +528,7 @@
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "type": "registry:block",
       "name": "stat",
-      "title": "Messer UI — stat",
+      "title": "Messer UI \u2014 stat",
       "description": "One number with its label: mono-caps label, tabular value, optional trend as icon + value with status colour reinforcing.",
       "files": [
         {
@@ -511,7 +543,7 @@
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "type": "registry:block",
       "name": "page-toolbar",
-      "title": "Messer UI — page toolbar",
+      "title": "Messer UI \u2014 page toolbar",
       "description": "The row between the page header and the content: search and filters left, actions right, 32px tall.",
       "files": [
         {
@@ -526,7 +558,7 @@
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "type": "registry:block",
       "name": "time",
-      "title": "Messer UI — time",
+      "title": "Messer UI \u2014 time",
       "description": "A timestamp in the machine voice: mono, tabular, absolute value in the title. Relative, absolute or both; no date library.",
       "files": [
         {
@@ -541,7 +573,7 @@
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "type": "registry:block",
       "name": "form-field",
-      "title": "Messer UI — form field",
+      "title": "Messer UI \u2014 form field",
       "description": "Label row with one action at its right end, control, one line of hint or error. The label never wraps the control (R16).",
       "files": [
         {
@@ -556,7 +588,7 @@
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "type": "registry:block",
       "name": "settings-page",
-      "title": "Messer UI — settings page",
+      "title": "Messer UI \u2014 settings page",
       "description": "One page-level Save with a count; rows carry provenance (default / custom / env) and their own error.",
       "files": [
         {
@@ -576,7 +608,7 @@
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "type": "registry:block",
       "name": "copy-button",
-      "title": "Messer UI — copy button",
+      "title": "Messer UI \u2014 copy button",
       "description": "Icon-only copy control at a control height, accessible name, check mark for 1.5s after copying.",
       "files": [
         {
@@ -593,7 +625,7 @@
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "type": "registry:block",
       "name": "auth-card",
-      "title": "Messer UI — auth card",
+      "title": "Messer UI \u2014 auth card",
       "description": "The auth screen frame: no shell, one 380px column, mark above a bordered card, footer link row, error as a role=alert row. Login and signup share it.",
       "files": [
         {
@@ -610,7 +642,7 @@
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "type": "registry:block",
       "name": "login-form",
-      "title": "Messer UI — login form",
+      "title": "Messer UI \u2014 login form",
       "description": "Email + password, visibility toggle, pending spinner, autocomplete wired, no form library. onSubmit returns { error }; show 'Invalid email or password' and nothing more.",
       "files": [
         {
@@ -627,7 +659,7 @@
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "type": "registry:page",
       "name": "page-login",
-      "title": "Messer UI — login page",
+      "title": "Messer UI \u2014 login page",
       "description": "app/login/page.tsx composing auth-card + login-form. Replace the fetch with your auth client. Vite: <Route path=\"/login\">; Astro: mount as an island.",
       "files": [
         {
@@ -648,7 +680,7 @@
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "type": "registry:block",
       "name": "error-state",
-      "title": "Messer UI — error state",
+      "title": "Messer UI \u2014 error state",
       "description": "404 / 500 / not allowed: 64px mono code, title, description, one or two actions.",
       "files": [
         {
@@ -663,7 +695,7 @@
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "type": "registry:page",
       "name": "page-not-found",
-      "title": "Messer UI — not found page",
+      "title": "Messer UI \u2014 not found page",
       "description": "app/not-found.tsx rendering error-state; app/error.tsx wires the same block with a 500 and reset. Vite/Astro render error-state directly.",
       "files": [
         {
@@ -681,7 +713,7 @@
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "type": "registry:block",
       "name": "settings-section",
-      "title": "Messer UI — settings section",
+      "title": "Messer UI \u2014 settings section",
       "description": "One settings block: title, description, fields, sticky save bar with dirty state. The parent owns dirty; the section owns pending.",
       "files": [
         {
@@ -696,7 +728,7 @@
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "messer-agent",
       "type": "registry:item",
-      "title": "Messer UI — agent files",
+      "title": "Messer UI \u2014 agent files",
       "description": "AGENTS.md and MESSER.md for a consuming project: the rules an agent must follow, the commands it must run, and where deviations are recorded.",
       "files": [
         {
@@ -715,7 +747,7 @@
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "brand-ai-router",
       "type": "registry:theme",
-      "title": "Messer UI — AI Router",
+      "title": "Messer UI \u2014 AI Router",
       "description": "Accent and chart ramp for AI Router. Nothing else: radii, type and geometry come from messer-style.",
       "cssVars": {
         "light": {
@@ -756,7 +788,7 @@
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "brand-crate",
       "type": "registry:theme",
-      "title": "Messer UI — Crate",
+      "title": "Messer UI \u2014 Crate",
       "description": "Accent and chart ramp for Crate. Nothing else: radii, type and geometry come from messer-style.",
       "cssVars": {
         "light": {
@@ -797,7 +829,7 @@
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "brand-gura",
       "type": "registry:theme",
-      "title": "Messer UI — Gura",
+      "title": "Messer UI \u2014 Gura",
       "description": "Accent and chart ramp for Gura. Nothing else: radii, type and geometry come from messer-style.",
       "cssVars": {
         "light": {
@@ -838,7 +870,7 @@
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "brand-jara",
       "type": "registry:theme",
-      "title": "Messer UI — JARA",
+      "title": "Messer UI \u2014 JARA",
       "description": "Accent and chart ramp for JARA. Nothing else: radii, type and geometry come from messer-style.",
       "cssVars": {
         "light": {
@@ -879,7 +911,7 @@
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "brand-lineup",
       "type": "registry:theme",
-      "title": "Messer UI — Lineup",
+      "title": "Messer UI \u2014 Lineup",
       "description": "Accent and chart ramp for Lineup. Nothing else: radii, type and geometry come from messer-style.",
       "cssVars": {
         "light": {
@@ -920,7 +952,7 @@
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "brand-llm",
       "type": "registry:theme",
-      "title": "Messer UI — LLM",
+      "title": "Messer UI \u2014 LLM",
       "description": "Accent and chart ramp for LLM. Nothing else: radii, type and geometry come from messer-style.",
       "cssVars": {
         "light": {
@@ -961,7 +993,7 @@
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "brand-messer-projects",
       "type": "registry:theme",
-      "title": "Messer UI — Messer Projects",
+      "title": "Messer UI \u2014 Messer Projects",
       "description": "Accent and chart ramp for Messer Projects. Nothing else: radii, type and geometry come from messer-style.",
       "cssVars": {
         "light": {
@@ -1002,7 +1034,7 @@
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "brand-messer-swipe",
       "type": "registry:theme",
-      "title": "Messer UI — Swipe",
+      "title": "Messer UI \u2014 Swipe",
       "description": "Accent and chart ramp for Swipe. Nothing else: radii, type and geometry come from messer-style.",
       "cssVars": {
         "light": {
@@ -1043,7 +1075,7 @@
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "brand-messer-ui",
       "type": "registry:theme",
-      "title": "Messer UI — Messer UI",
+      "title": "Messer UI \u2014 Messer UI",
       "description": "Accent and chart ramp for Messer UI. Nothing else: radii, type and geometry come from messer-style.",
       "cssVars": {
         "light": {
@@ -1084,7 +1116,7 @@
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "brand-messer",
       "type": "registry:theme",
-      "title": "Messer UI — Messer",
+      "title": "Messer UI \u2014 Messer",
       "description": "Accent and chart ramp for Messer. Nothing else: radii, type and geometry come from messer-style.",
       "cssVars": {
         "light": {
@@ -1125,7 +1157,7 @@
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "brand-news",
       "type": "registry:theme",
-      "title": "Messer UI — Messer News",
+      "title": "Messer UI \u2014 Messer News",
       "description": "Accent and chart ramp for Messer News. Nothing else: radii, type and geometry come from messer-style.",
       "cssVars": {
         "light": {
@@ -1166,7 +1198,7 @@
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "brand-paste",
       "type": "registry:theme",
-      "title": "Messer UI — Paste",
+      "title": "Messer UI \u2014 Paste",
       "description": "Accent and chart ramp for Paste. Nothing else: radii, type and geometry come from messer-style.",
       "cssVars": {
         "light": {
@@ -1207,7 +1239,7 @@
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "brand-portal",
       "type": "registry:theme",
-      "title": "Messer UI — Portal",
+      "title": "Messer UI \u2014 Portal",
       "description": "Accent and chart ramp for Portal. Nothing else: radii, type and geometry come from messer-style.",
       "cssVars": {
         "light": {
@@ -1248,7 +1280,7 @@
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "brand-request-games",
       "type": "registry:theme",
-      "title": "Messer UI — Request Games",
+      "title": "Messer UI \u2014 Request Games",
       "description": "Accent and chart ramp for Request Games. Nothing else: radii, type and geometry come from messer-style.",
       "cssVars": {
         "light": {
@@ -1289,7 +1321,7 @@
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "brand-studio",
       "type": "registry:theme",
-      "title": "Messer UI — Site Studio",
+      "title": "Messer UI \u2014 Site Studio",
       "description": "Accent and chart ramp for Site Studio. Nothing else: radii, type and geometry come from messer-style.",
       "cssVars": {
         "light": {
@@ -1330,7 +1362,7 @@
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "brand-transcode",
       "type": "registry:theme",
-      "title": "Messer UI — Transcode",
+      "title": "Messer UI \u2014 Transcode",
       "description": "Accent and chart ramp for Transcode. Nothing else: radii, type and geometry come from messer-style.",
       "cssVars": {
         "light": {
@@ -1371,7 +1403,7 @@
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "brand-warden",
       "type": "registry:theme",
-      "title": "Messer UI — Warden",
+      "title": "Messer UI \u2014 Warden",
       "description": "Accent and chart ramp for Warden. Nothing else: radii, type and geometry come from messer-style.",
       "cssVars": {
         "light": {
