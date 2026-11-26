@@ -6,6 +6,26 @@
     "apple-touch-icon.png": "sha256:04e3bd3127dddcf807f61d0fabec68f8642706ac4af48b508ad50297a9004dcd",
     "banner": null
   },
+  "crate": {
+    "favicon.svg": "sha256:0e8681535ef2fcd7db814fd621a1507b70095f660202ed1e6c3f9ee0b325ee31",
+    "favicon-dark.svg": "sha256:fcc02cdc2d1be7b7672197f6e6c0e6159de4e2ce82a9ce3e16cea20d046da637",
+    "favicon-32.png": "sha256:5fdc5bafb57b8c6addca014cc6d98669a3bfaaf5c6e161d82c6cba2e13d23570",
+    "apple-touch-icon.png": "sha256:9fdced7121d952694dc9953b3036cfb8398f07c713ed614e300fd40b5a2bc2e6",
+    "banner": {
+      "hash": "sha256:c84d2929f4a238f66f834c4c9ba9ab8f673d4140904cec5a6293f66e90c341ce",
+      "pitch": "Eight records at a time; keep only what stays."
+    }
+  },
+  "gura": {
+    "favicon.svg": "sha256:b95a1431cdcea0161dc63f64b81b0ee3de6d915edfb0e61a4022bd5499e975e7",
+    "favicon-dark.svg": "sha256:c56cae7763e4c34e5709b2d7746739856637a80b61a613a1c1aba6990e25d11b",
+    "favicon-32.png": "sha256:9cee6ca7f63d35adf2694ffd59c7de25fd406e08e88be48a168b7fe1cdbeeb94",
+    "apple-touch-icon.png": "sha256:845854648f1ed78ec2a3042ecea77f0e5266b0e6653e8821d917e02e2c4aae1c",
+    "banner": {
+      "hash": "sha256:9935ea1b89d64760a962872bd70fe8ee36abb2b59e7890298ba1d8bda064a666",
+      "pitch": "Guitar practice: sessions, shapes, songs and a log."
+    }
+  },
   "jara": {
     "favicon.svg": "sha256:bf3a12b433996ebedcff09b9e6758ded66f8e3cae7bb5dac8563a0c64d7c2258",
     "favicon-dark.svg": "sha256:7dac46a591bf72f8eb8679f08bc1c4b75c95132f99b43c8c011343bcf2e731f2",
@@ -106,6 +126,16 @@
     "banner": {
       "hash": "sha256:aa11a9b4379379daa646c649d596d069da4f9dcca0a6a98ee971e6416831877b",
       "pitch": "A transcode pipeline that runs itself."
+    }
+  },
+  "warden": {
+    "favicon.svg": "sha256:fab605bd0d39f5671defb7ebb8f56d7528931e4e99e280a16962a5b5d4f1a55a",
+    "favicon-dark.svg": "sha256:1ce9c7acb0c2019dc843d67d88451c72c5c37f8927afb58b0e12a0f9e4c0faba",
+    "favicon-32.png": "sha256:b8cc6485bf3e0bbb2664be468a767be14ea12d314eaf2fb7b5c8f290c7dc8adf",
+    "apple-touch-icon.png": "sha256:daaad4ee9cf0bdc6ba2e14f42b7357786c987b85c41a72f71828bd54c7a40874",
+    "banner": {
+      "hash": "sha256:347fd6d5fb14eceeb3504e2cd83853b40bf091ce744b295274fd4c4bca67a0ed",
+      "pitch": "Every estate fix in one register; every hard call on one page."
     }
   }
 }

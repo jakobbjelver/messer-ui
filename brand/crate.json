@@ -1,0 +1,12 @@
+{
+  "project": "crate",
+  "title": "Crate",
+  "pitch": "Eight records at a time; keep only what stays.",
+  "mark": {
+    "glyph": "VinylRecord"
+  },
+  "accent": {
+    "light": "oklch(0.30 0.008 260)",
+    "dark": "oklch(0.92 0.004 260)"
+  }
+}

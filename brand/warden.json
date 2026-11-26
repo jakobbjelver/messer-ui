@@ -1,0 +1,12 @@
+{
+  "project": "warden",
+  "title": "Warden",
+  "pitch": "Every estate fix in one register; every hard call on one page.",
+  "mark": {
+    "glyph": "ShieldCheck"
+  },
+  "accent": {
+    "light": "oklch(0.30 0.008 260)",
+    "dark": "oklch(0.92 0.004 260)"
+  }
+}

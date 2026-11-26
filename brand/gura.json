@@ -1,0 +1,10 @@
+{
+  "project": "gura",
+  "title": "Gura",
+  "mark": { "glyph": "Metronome" },
+  "accent": {
+    "light": "oklch(0.30 0.008 260)",
+    "dark": "oklch(0.92 0.004 260)"
+  },
+  "pitch": "Guitar practice: sessions, shapes, songs and a log."
+}
