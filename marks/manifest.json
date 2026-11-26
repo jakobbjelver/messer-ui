@@ -46,6 +46,16 @@
       "pitch": "A season board for the artists you actually listen to."
     }
   },
+  "llm": {
+    "favicon.svg": "sha256:d4e1885716829ae2aa627f8f91a7a0d51f47d7d2e690cdf2639e114901612180",
+    "favicon-dark.svg": "sha256:39e1ffcd6b5739555dac7a2d0913b8378f50bf738868fdde7600a9b61eb90680",
+    "favicon-32.png": "sha256:0f2f50490d85649801085fdc9e4371a421ca052c9a614014b776090c492dff90",
+    "apple-touch-icon.png": "sha256:29eadd026ff5933f5dad72cb259756e9ef578ba647ef5cb767f6a8c78ec0a7a9",
+    "banner": {
+      "hash": "sha256:64dd2e790c8bb73e3fc19c4e3f9c97b5f4680de909df00e6e536547b50e2a48f",
+      "pitch": "Small models on our own metal."
+    }
+  },
   "messer-projects": {
     "favicon.svg": "sha256:657cb9c9c3b97023744e8a91103a5ff8c2222700790d899cf19ab9ee6d3cdb4c",
     "favicon-dark.svg": "sha256:341fc34beb736bf8d06afbbf46013c8484645426ddff00cfeb50f0b9b3c400fc",

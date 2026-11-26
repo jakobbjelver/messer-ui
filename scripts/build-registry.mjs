@@ -333,6 +333,22 @@ const blockItems = [
     dependencies: ["@phosphor-icons/react"],
   },
   {
+    name: "nav-link",
+    title: "Messer UI — nav link",
+    description:
+      "The family's text link (canon §21): a 12px destination arrow — ArrowRight internal, ArrowUpRight external — with a hover underline. Presentational; the app supplies href and may route through linkComponent.",
+    files: [{ path: "registry/nav-link/nav-link.tsx", type: "registry:ui", target: "components/ui/nav-link.tsx" }],
+    dependencies: ["@phosphor-icons/react"],
+  },
+  {
+    name: "row-link",
+    title: "Messer UI — row link",
+    description:
+      "A row that navigates as one target: the title is the anchor, its inset pseudo-element is the hit area, and the hover underline plus destination arrow ride on the row's `group`. Give the row `class=\"group relative\"`.",
+    files: [{ path: "registry/row-link/row-link.tsx", type: "registry:ui", target: "components/ui/row-link.tsx" }],
+    dependencies: ["@phosphor-icons/react"],
+  },
+  {
     name: "checkbox",
     title: "Messer UI — checkbox",
     description:

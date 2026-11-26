@@ -512,6 +512,11 @@ repository — carries a Phosphor `ArrowUpRight` after its label.
 - The same geometry applies in a React shell and a generated static document; the markup differs,
   the affordance does not.
 
+Two blocks implement the rule: **`nav-link`** (a label plus its destination arrow, `tone="quiet"` for
+the colophon) and **`row-link`** (a title anchor whose `after:inset-0` makes the whole row the target —
+the row carries `group relative` and the title underlines on row hover; a control inside the row takes
+`relative z-10` and owns its click). A new surface uses those two rather than a hand-rolled arrow.
+
 ## 22. Settings
 
 A settings page is a form whose values outlive the request, and it has one shape.

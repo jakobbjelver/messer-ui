@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "type": "registry:block",
+  "name": "row-link",
+  "title": "Messer UI — row link",
+  "description": "A row that navigates as one target: the title is the anchor, its inset pseudo-element is the hit area, and the hover underline plus destination arrow ride on the row's `group`. Give the row `class=\"group relative\"`.",
+  "files": [
+    {
+      "path": "registry/row-link/row-link.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/row-link.tsx"
+    }
+  ],
+  "dependencies": [
+    "@phosphor-icons/react"
+  ]
+}
