@@ -6,6 +6,11 @@ export type EmptyStateProps = {
   description?: ReactNode;
   action?: ReactNode;
   variant?: "panel" | "bare";
+  /**
+   * `center` for a card, drawer or bare block; `top` for a page-level empty state, which is
+   * horizontally centred in the page stop and starts directly under the header (canon §16).
+   */
+  align?: "center" | "top";
   className?: string;
 };
 
@@ -19,12 +24,14 @@ export function EmptyState({
   description,
   action,
   variant = "panel",
+  align = "center",
   className,
 }: EmptyStateProps) {
   return (
     <div
       className={[
-        "grid place-items-center gap-2 px-4 py-8 text-center",
+        "grid gap-2 px-4 py-8 text-center",
+        align === "top" ? "content-start justify-items-center" : "place-items-center",
         variant === "panel" ? "border border-border bg-[var(--surface)]" : "",
         className ?? "",
       ].join(" ")}

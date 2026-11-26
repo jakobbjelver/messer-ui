@@ -352,8 +352,16 @@ const blockItems = [
     name: "empty-state",
     title: "Messer UI — empty state",
     description:
-      "What this is, why it is empty, one action. Panel or bare, icon decorative, title carries the meaning.",
+      "What this is, why it is empty, one action. Panel or bare, icon decorative, title carries the meaning. `align=\"top\"` for a page-level empty state (horizontally centred, under the header); `center` for a card.",
     files: [{ path: "registry/empty-state/empty-state.tsx", type: "registry:ui", target: "components/ui/empty-state.tsx" }],
+    dependencies: [],
+  },
+  {
+    name: "see-more",
+    title: "Messer UI — see more",
+    description:
+      "A long list's first 8 rows and one accessible Show all N / Show fewer control. `useSeeMore` owns the slice and the controlled list id; the button renders nothing when the list fits.",
+    files: [{ path: "registry/see-more/see-more.tsx", type: "registry:ui", target: "components/ui/see-more.tsx" }],
     dependencies: [],
   },
   {

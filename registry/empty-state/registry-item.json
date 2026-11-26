@@ -3,7 +3,7 @@
   "type": "registry:block",
   "name": "empty-state",
   "title": "Messer UI — empty state",
-  "description": "What this is, why it is empty, one action. Panel or bare, icon decorative, title carries the meaning.",
+  "description": "What this is, why it is empty, one action. Panel or bare, icon decorative, title carries the meaning. `align=\"top\"` for a page-level empty state (horizontally centred, under the header); `center` for a card.",
   "files": [
     {
       "path": "registry/empty-state/empty-state.tsx",

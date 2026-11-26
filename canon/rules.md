@@ -4,6 +4,10 @@ The fingerprint. A project may look like itself; it may not look like a differen
 project is allowed to choose is listed under §14; a declared override (§17) is the only other way out.
 Everything here is fixed.
 
+**Review rules.** The paragraphs marked *(review rule)* in §10, §12, §16, §20 and §21 are the current
+layout, copy and navigation checklist. They are queued for the next canon revision and do not change
+the canon version yet.
+
 ## 1. Square corners
 
 `border-radius: 0` on every surface, control, chip, panel and overlay. The whitelist is short and
@@ -145,6 +149,11 @@ the control-height sweep.
 
 Width is not density — the page's measure and gutter live in §16.
 
+**A button beside an input is the input's height — 32.** `sm` (28) is a toolbar or compact-row action,
+never a form row: a 28 px Add beside a 32 px field reads as a mistake because it is one. A button whose
+label becomes a progress label (`Verify` → `Verifying…`) keeps its width; the row must not reflow.
+*(review rule)*
+
 ---
 
 ## 11. Interaction states
@@ -185,6 +194,10 @@ The system does not own a voice, but it owns the small words that appear in ever
   list is already scoped by — when the scope names the project, the rows do not need a project column.
   Redundancy reads as two facts that happen to agree, which is exactly how a reader learns to distrust
   both.
+- **One fact, printed once — across pages too.** A value that has an owner does not get a second home:
+  a version string lives on the page that owns it, never on two pages; a list visible on the same
+  screen is its own summary, so do not add a count/table/paragraph that restates it; and an exact
+  read-only value (the assembled prompt) is not paired with a prose preview of itself. *(review rule)*
 - **Verbs.** `Save`, `Cancel`, `Delete`, `Create`, `Retry`. Not `Update` for a save, not `Apply`, not
   `Submit`, not `OK` in a destructive dialog.
 - **Empty state.** What this is, why it is empty, one action. No illustration required.
@@ -327,6 +340,19 @@ widths at once (a nested narrower strip under a wider container is a bug, not a 
   `PageContainer` with the same value. The shell and the page must not disagree — hence both read the
   same prop/token rather than each carrying a number.
 - **Body copy** inside any stop caps at `72ch`. A table or a board may use the full stop.
+- **Empty states have a vertical home.** A page-level empty state is horizontally centred in the
+  content stop and starts directly under the page header, not at the vertical middle of a tall page:
+  `<EmptyState align="top" />` inside a centred wrapper. A card, drawer or bare block may centre its
+  empty state (`align="center"`). *(review rule)*
+- **A table shares the card's gutter.** Inside a `CardContent p-0`, the first and last cells pad with
+  `px-6`, so the table's first cell and the card's title share an x. A table that starts 24 px left of
+  its own title reads as a different object. *(review rule)*
+- **Loading reserves its region.** One `Loader` sits in the exact region the content will fill, and
+  that region keeps its minimum height while the query runs: the card and chrome must not jump when
+  the data arrives. No skeleton, no text placeholder that collapses. *(review rule)*
+- **A long list is not a wall.** Over 12 rows, show the first 8–12 with a count and
+  `SeeMoreButton`/`useSeeMore` (`Show all N` / `Show fewer`); a list at or below the limit has no See
+  more control. *(review rule)*
 - `check` measures the header row against the page container at 1280 px and fails on a mismatch.
 
 ## 17. Overrides — a decision, not drift
@@ -397,6 +423,10 @@ kicker — never for language. It is the machine whisper, not a way to fit more 
 
 A page below the top level has one way out, and it is the same in every project:
 
+- **A root page has no back control.** Back is for a page below the top level. Every root room is a
+  shell nav item (§21); a root that carries a back link — or is reachable only through a link on
+  another page — is a navigation defect, not a hierarchy. Nested pages (history, settings, an item)
+  use `back-link` to their root. *(review rule)*
 - **A button, not a word.** A 32 px outlined control (`--surface`, `--border-strong`, square) with a
   Phosphor `ArrowLeft` at 16 px, bold, `currentColor`. Never a bare `←` character, never a ghost text
   link, never a breadcrumb posing as a control.
@@ -445,6 +475,10 @@ repository — carries a Phosphor `ArrowUpRight` after its label.
   mechanical exemption, and it is measured: `chrome-check.mjs` fails a header nav item that renders
   an `svg`/`img`. An icon-only *action* in the bar's action slot (source, theme) is a control, not a
   labelled link, so §9 governs it instead.
+- **A root path is a nav item, not an in-page link.** Every root room is in the shell's nav; a card,
+  footer or header action is never the only route to a root (`System →`, `Edit taste →`). The bar fits
+  every root at 390 px; if it cannot, a root menu is a named exception, never a silent hide.
+  *(review rule)*
 - The same geometry applies in a React shell and a generated static document; the markup differs,
   the affordance does not.
 

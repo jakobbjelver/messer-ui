@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "type": "registry:block",
+  "name": "see-more",
+  "title": "Messer UI — see more",
+  "description": "A long list's first 8 rows and one accessible Show all N / Show fewer control. `useSeeMore` owns the slice and the controlled list id; the button renders nothing when the list fits.",
+  "files": [
+    {
+      "path": "registry/see-more/see-more.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/see-more.tsx"
+    }
+  ],
+  "dependencies": []
+}

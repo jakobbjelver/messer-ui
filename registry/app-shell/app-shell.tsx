@@ -178,7 +178,7 @@ export function AppShell({
       <div
         data-shell-row=""
         className={[
-          "mx-auto flex h-full w-full items-center gap-3 px-4 md:px-8",
+          "mx-auto flex h-full w-full items-center gap-1 px-4 sm:gap-3 md:px-8",
           // The generated fronts' `.pg-bar__row` is 47px + hairline, 32px padding, 16px gap;
           // an end-aligned bar is that bar, so it takes that gap too.
           navAlign === "end" ? "sm:gap-4" : "sm:gap-6",
@@ -196,7 +196,7 @@ export function AppShell({
         <nav
           aria-label="Main"
           className={[
-            "flex min-w-0 flex-1 items-center gap-0.5 overflow-x-auto",
+            "flex min-w-0 flex-1 items-center gap-0 overflow-x-auto sm:gap-0.5",
             // `end` right-aligns the LINKS inside the row's free space rather than
             // narrowing the nav: a second `ml-auto` here would split that space with the
             // actions wrapper's own and leave the nav floating mid-bar.
@@ -216,7 +216,7 @@ export function AppShell({
                 target={item.external ? "_blank" : undefined}
                 rel={item.external ? "noreferrer" : undefined}
                 className={[
-                  "relative flex h-8 shrink-0 items-center gap-1.5 px-2 text-sm no-underline transition-[background-color,color] duration-150",
+                  "relative flex h-8 shrink-0 items-center gap-1.5 px-1 text-[12.5px] no-underline transition-[background-color,color] duration-150 sm:px-2 sm:text-sm",
                   current
                     ? "bg-primary/10 text-[var(--foreground)] after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 after:bg-primary"
                     : rowIdle,
