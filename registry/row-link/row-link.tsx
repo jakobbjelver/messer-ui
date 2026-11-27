@@ -1,5 +1,5 @@
 import type { ComponentPropsWithoutRef, ElementType, MouseEvent, ReactNode } from "react";
-import { ArrowRight, ArrowUpRight } from "@phosphor-icons/react/dist/ssr";
+import { ArrowLeft, ArrowRight, ArrowUpRight } from "@phosphor-icons/react/dist/ssr";
 
 type RowLinkTargetProps = {
   href: string;
@@ -22,11 +22,15 @@ type RowLinkTargetProps = {
  *
  * In a `<table>` the later cells paint over the pseudo-element, so a table row needs a row-level
  * click handler as well (the archive does); on a div-based list the overlay owns the whole target.
+ *
+ * `dir="prev"` is the same row read backwards: the arrow leads the label and points left, because a
+ * "previous" that points forward misstates where the click goes. An external row is always forward.
  */
 export function RowLink({
   href,
   children,
   external = false,
+  dir = "next",
   linkComponent,
   onNavigate,
   className = "",
@@ -35,11 +39,14 @@ export function RowLink({
   href: string;
   children: ReactNode;
   external?: boolean;
+  /** `prev` leads with a left arrow; the default trails with a right one. */
+  dir?: "next" | "prev";
   linkComponent?: ElementType<RowLinkTargetProps>;
   onNavigate?: (event: MouseEvent<HTMLAnchorElement>) => void;
 }) {
   const Comp = (linkComponent ?? "a") as ElementType;
-  const Arrow = external ? ArrowUpRight : ArrowRight;
+  const leading = dir === "prev" && !external;
+  const Arrow = external ? ArrowUpRight : dir === "prev" ? ArrowLeft : ArrowRight;
   const target = external ? (props.target ?? "_blank") : props.target;
   const rel = external ? (props.rel ?? "noreferrer") : props.rel;
   return (
@@ -59,8 +66,9 @@ export function RowLink({
         .trim()}
       {...props}
     >
+      {leading ? <Arrow weight="bold" size={12} aria-hidden="true" className="shrink-0 text-[var(--text-3)]" /> : null}
       {children}
-      <Arrow weight="bold" size={12} aria-hidden="true" className="shrink-0 text-[var(--text-3)]" />
+      {leading ? null : <Arrow weight="bold" size={12} aria-hidden="true" className="shrink-0 text-[var(--text-3)]" />}
     </Comp>
   );
 }
